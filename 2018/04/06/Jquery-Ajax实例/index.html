@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Jquery在异步提交方面封装的很好，直接用AJAX非常麻烦，Jquery大大简化了我们的操作，不用考虑浏览器的诧异了。推荐一篇不错的jQuery Ajax 实例文章，忘记了可以去看看，地址为：http:&#x2F;&#x2F;www.cnblogs.com&#x2F;yeer&#x2F;archive&#x2F;2009&#x2F;07&#x2F;23&#x2F;1529460.html 和 http:&#x2F;&#x2F;www.w3school.com.cn&#x2F;jquery&#x2F;  我们常用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jquery Ajax实例">
+<meta property="og:url" content="http://www.xiang007.com/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="Jquery在异步提交方面封装的很好，直接用AJAX非常麻烦，Jquery大大简化了我们的操作，不用考虑浏览器的诧异了。推荐一篇不错的jQuery Ajax 实例文章，忘记了可以去看看，地址为：http:&#x2F;&#x2F;www.cnblogs.com&#x2F;yeer&#x2F;archive&#x2F;2009&#x2F;07&#x2F;23&#x2F;1529460.html 和 http:&#x2F;&#x2F;www.w3school.com.cn&#x2F;jquery&#x2F;  我们常用">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-04-06T02:52:43.000Z">
+<meta property="article:modified_time" content="2023-03-09T01:59:11.335Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.xiang007.com/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Jquery Ajax实例 | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Jquery Ajax实例
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-06 10:52:43" itemprop="dateCreated datePublished" datetime="2018-04-06T10:52:43+08:00">2018-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>Jquery在异步提交方面封装的很好，直接用AJAX非常麻烦，Jquery大大简化了我们的操作，不用考虑浏览器的诧异了。<br>推荐一篇不错的jQuery Ajax 实例文章，忘记了可以去看看，地址为：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yeer/archive/2009/07/23/1529460.html">http://www.cnblogs.com/yeer/archive/2009/07/23/1529460.html</a> 和 <a target="_blank" rel="noopener" href="http://www.w3school.com.cn/jquery/">http://www.w3school.com.cn/jquery/</a></p>
+</blockquote>
+<p>我们常用的一些$.post、$.get只是一些简单的、便捷的使用方法，如果要处理复杂的逻辑，还是需要用到jQuery.ajax()。因为jQuery.ajax()有它自身的处理机制，对于数据类型、cache、请求方式、返回处理等有详细的处理方式。</p>
+<span id="more"></span>
+<h3 id="ajax的一般格式"><a href="#ajax的一般格式" class="headerlink" title="$.ajax的一般格式"></a>$.ajax的一般格式</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_ invoke__">ajax</span>(&#123;</span><br><span class="line">     <span class="attr">type</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">     <span class="attr">url</span>: url ,</span><br><span class="line">    <span class="attr">data</span>: data ,</span><br><span class="line">    <span class="attr">success</span>: success ,</span><br><span class="line">    <span class="attr">dataType</span>: dataType</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="ajax的参数描述"><a href="#ajax的参数描述" class="headerlink" title="$.ajax的参数描述:"></a>$.ajax的参数描述:</h4><ul>
+<li>url 必需。规定把请求发送到哪个 URL。</li>
+<li>data 可选。映射或字符串值。规定连同请求发送到服务器的数据。</li>
+<li>success (data, textStatus, jqXHR) 可选。请求成功时执行的回调函数。</li>
+<li>dataType 可选。规定预期的服务器响应的数据类型。 （xml、html、script、json、jsonp、text）</li>
+<li>cache(cacheBoolean) 可选。jQuery 1.2 新功能，设置为 false 将不缓存此页面。</li>
+<li>contents 配对的对象，用来确定jQuery将如何解析响应，给定其内容类型。</li>
+</ul>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><p>如果要处理$.ajax()得到的数据，则需要使用回调函数。beforeSend、error、dataFilter、success、complete。</p>
+<ul>
+<li>beforeSend 在发送请求之前调用，并且传入一个XMLHttpRequest作为参数。</li>
+<li>error 在请求出错时调用。传入XMLHttpRequest对象，描述错误类型的字符串以及一个异常对象（如果有的话）</li>
+<li>dataFilter 在请求成功之后调用。传入返回的数据以及”dataType”参数的值。并且必须返回新的数据（可能是处理过的）传递给success回调函数。</li>
+<li>success 当请求之后调用。传入返回后的数据，以及包含成功代码的字符串。</li>
+<li>complete 当请求完成之后调用这个函数，无论成功或失败。传入XMLHttpRequest对象，以及一个包含成功或错误代码的字符串。</li>
+</ul>
+<h3 id="ajax需要注意的一些地方"><a href="#ajax需要注意的一些地方" class="headerlink" title="$.ajax需要注意的一些地方"></a>$.ajax需要注意的一些地方</h3><ul>
+<li>data主要方式有三种，html拼接的，json数组，form表单经serialize()序列化的；通过dataType指定，不指定智能判断</li>
+<li>$.ajax只提交form以文本方式，如果异步提交包含上传是传过不过去,需要使用jquery.form.js的$.ajaxSubmit</li>
+</ul>
+<h3 id="ajax我的实际应用例子"><a href="#ajax我的实际应用例子" class="headerlink" title="$.ajax我的实际应用例子"></a>$.ajax我的实际应用例子</h3><h4 id="1、-ajax带json数据的异步请求"><a href="#1、-ajax带json数据的异步请求" class="headerlink" title="1、$.ajax带json数据的异步请求"></a>1、$.ajax带json数据的异步请求</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aj = $.<span class="title function_ invoke__">ajax</span>( &#123;  </span><br><span class="line">      <span class="attr">url</span>:<span class="string">&#x27;productManager_reverseUpdate&#x27;</span>,// 跳转到 action  </span><br><span class="line">      <span class="attr">data</span>:&#123;  </span><br><span class="line">              selRollBack : selRollBack,  </span><br><span class="line">              selOperatorsCode : selOperatorsCode,  </span><br><span class="line">              PROVINCECODE : PROVINCECODE,  </span><br><span class="line">               pass2 : pass2  </span><br><span class="line">      &#125;,  </span><br><span class="line">     <span class="attr">type</span>:<span class="string">&#x27;post&#x27;</span>,  </span><br><span class="line">     <span class="attr">cache</span>:<span class="literal">false</span>,  </span><br><span class="line">     <span class="attr">dataType</span>:<span class="string">&#x27;json&#x27;</span>,  </span><br><span class="line">     <span class="attr">success</span>:function(data) &#123;  </span><br><span class="line">         <span class="keyword">if</span>(data.msg ==<span class="string">&quot;true&quot;</span> )&#123;  </span><br><span class="line">             <span class="comment">// view(&quot;修改成功！&quot;);  </span></span><br><span class="line">             <span class="title function_ invoke__">alert</span>(<span class="string">&quot;修改成功！&quot;</span>);  </span><br><span class="line">             window.location.<span class="title function_ invoke__">reload</span>();  </span><br><span class="line">         &#125;<span class="keyword">else</span>&#123;  </span><br><span class="line">             <span class="title function_ invoke__">view</span>(data.msg);  </span><br><span class="line">         &#125;  </span><br><span class="line">      &#125;,  </span><br><span class="line">      error : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">           <span class="comment">// view(&quot;异常！&quot;);  </span></span><br><span class="line">           <span class="title function_ invoke__">alert</span>(<span class="string">&quot;异常！&quot;</span>);  </span><br><span class="line">      &#125;  </span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、-ajax序列化表格内容为字符串的异步请求"><a href="#2、-ajax序列化表格内容为字符串的异步请求" class="headerlink" title="2、$.ajax序列化表格内容为字符串的异步请求"></a>2、$.ajax序列化表格内容为字符串的异步请求</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">noTips</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">     <span class="keyword">var</span> formParam = $(<span class="string">&quot;#form1&quot;</span>).<span class="title function_ invoke__">serialize</span>();<span class="comment">//序列化表格内容为字符串  </span></span><br><span class="line">     $.<span class="title function_ invoke__">ajax</span>(&#123;  </span><br><span class="line">         <span class="attr">type</span>:<span class="string">&#x27;post&#x27;</span>,      </span><br><span class="line">         <span class="attr">url</span>:<span class="string">&#x27;Notice_noTipsNotice&#x27;</span>,  </span><br><span class="line">         <span class="attr">data</span>:formParam,  </span><br><span class="line">         <span class="attr">cache</span>:<span class="literal">false</span>,  </span><br><span class="line">         <span class="attr">dataType</span>:<span class="string">&#x27;json&#x27;</span>,  </span><br><span class="line">         <span class="attr">success</span>:function(data)&#123;  </span><br><span class="line">         &#125;  </span><br><span class="line">     &#125;);  </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、-ajax拼接url的异步请求"><a href="#3、-ajax拼接url的异步请求" class="headerlink" title="3、$.ajax拼接url的异步请求"></a>3、$.ajax拼接url的异步请求</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> yz=$.<span class="title function_ invoke__">ajax</span>(&#123;  </span><br><span class="line">      <span class="attr">type</span>:<span class="string">&#x27;post&#x27;</span>,  </span><br><span class="line">      <span class="attr">url</span>:<span class="string">&#x27;validatePwd2_checkPwd2?password2=&#x27;</span>+password2,  </span><br><span class="line">      <span class="attr">data</span>:&#123;&#125;,  </span><br><span class="line">      <span class="attr">cache</span>:<span class="literal">false</span>,  </span><br><span class="line">      <span class="attr">dataType</span>:<span class="string">&#x27;json&#x27;</span>,  </span><br><span class="line">      <span class="attr">success</span>:function(data)&#123;  </span><br><span class="line">           <span class="keyword">if</span>( data.msg ==<span class="string">&quot;false&quot;</span> ) <span class="comment">//服务器返回false，就将validatePassword2的值改为pwd2Error，这是异步，需要考虑返回时间  </span></span><br><span class="line">           &#123;  </span><br><span class="line">                textPassword2.<span class="title function_ invoke__">html</span>(<span class="string">&quot;&lt;font color=&#x27;red&#x27;&gt;业务密码不正确！&lt;/font&gt;&quot;</span>);  </span><br><span class="line">                $(<span class="string">&quot;#validatePassword2&quot;</span>).<span class="title function_ invoke__">val</span>(<span class="string">&quot;pwd2Error&quot;</span>);  </span><br><span class="line">                checkPassword2 = <span class="literal">false</span>;  </span><br><span class="line">                <span class="keyword">return</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">       &#125;,  </span><br><span class="line">       error:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;  </span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="ajax拼接data的异步请求"><a href="#ajax拼接data的异步请求" class="headerlink" title="$.ajax拼接data的异步请求"></a>$.ajax拼接data的异步请求</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_ invoke__">ajax</span>(&#123;   </span><br><span class="line">     <span class="attr">url</span>:<span class="string">&#x27;&lt;%=request.getContextPath()%&gt;/kc/kc_checkMerNameUnique.action&#x27;</span>,   </span><br><span class="line">     <span class="attr">type</span>:<span class="string">&#x27;post&#x27;</span>,   </span><br><span class="line">     <span class="attr">data</span>:<span class="string">&#x27;merName=&#x27;</span>+values,   </span><br><span class="line">     async : <span class="literal">false</span>, //默认为<span class="literal">true</span> 异步   </span><br><span class="line">     <span class="attr">error</span>:function()&#123;   </span><br><span class="line">        <span class="title function_ invoke__">alert</span>(<span class="string">&#x27;error&#x27;</span>);   </span><br><span class="line">     &#125;,   </span><br><span class="line">     success:<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;   </span><br><span class="line">        $(<span class="string">&quot;#&quot;</span>+divs).<span class="title function_ invoke__">html</span>(data);   </span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/03/07/%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E5%87%BD%E6%95%B0%EF%BC%88%E8%8E%B7%E5%8F%96%E6%97%A0%E9%99%90%E6%9E%81%E8%8F%9C%E5%8D%95-%E6%89%B9%E9%87%8F%E6%8E%92%E5%BA%8F%EF%BC%89/" rel="prev" title="两个重要函数（获取无限极菜单+批量排序）">
+      <i class="fa fa-chevron-left"></i> 两个重要函数（获取无限极菜单+批量排序）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/07/%E8%8E%B7%E5%8F%96Bing%E6%AF%8F%E6%97%A5%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/" rel="next" title="获取Bing每日背景图片">
+      获取Bing每日背景图片 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax%E7%9A%84%E4%B8%80%E8%88%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">$.ajax的一般格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax%E7%9A%84%E5%8F%82%E6%95%B0%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">$.ajax的参数描述:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9"><span class="nav-number">3.</span> <span class="nav-text">$.ajax需要注意的一些地方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax%E6%88%91%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E4%BE%8B%E5%AD%90"><span class="nav-number">4.</span> <span class="nav-text">$.ajax我的实际应用例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-ajax%E5%B8%A6json%E6%95%B0%E6%8D%AE%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">1、$.ajax带json数据的异步请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81-ajax%E5%BA%8F%E5%88%97%E5%8C%96%E8%A1%A8%E6%A0%BC%E5%86%85%E5%AE%B9%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">4.2.</span> <span class="nav-text">2、$.ajax序列化表格内容为字符串的异步请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81-ajax%E6%8B%BC%E6%8E%A5url%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.</span> <span class="nav-text">3、$.ajax拼接url的异步请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax%E6%8B%BC%E6%8E%A5data%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="nav-number">4.4.</span> <span class="nav-text">$.ajax拼接data的异步请求</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Map接口概述 1、Map提供了一种映射的关系，其中的元素是以键值对（key-value）的形式存储的，能够实现根据key快速查找value。（类似于PHP中的关联数组） 2、Map中的键值对以Entry类型的对象实例形式存在 3、键（key值）不可重复，value值可以 4、每个键最多只能映射到一个值 5、Map接口提供了分别返回key值集合、value值集合以及Entry（键值对）集合的方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java学习-part.07（集合框架Map-HashMap）">
+<meta property="og:url" content="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-07%EF%BC%88%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6Map-HashMap%EF%BC%89/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="Map接口概述 1、Map提供了一种映射的关系，其中的元素是以键值对（key-value）的形式存储的，能够实现根据key快速查找value。（类似于PHP中的关联数组） 2、Map中的键值对以Entry类型的对象实例形式存在 3、键（key值）不可重复，value值可以 4、每个键最多只能映射到一个值 5、Map接口提供了分别返回key值集合、value值集合以及Entry（键值对）集合的方法">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-05-25T11:06:37.000Z">
+<meta property="article:modified_time" content="2023-03-09T01:59:11.184Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-07%EF%BC%88%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6Map-HashMap%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Java学习-part.07（集合框架Map-HashMap） | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-07%EF%BC%88%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6Map-HashMap%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java学习-part.07（集合框架Map-HashMap）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-25 19:06:37" itemprop="dateCreated datePublished" datetime="2018-05-25T19:06:37+08:00">2018-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><ul>
+<li>1、Map提供了一种映射的关系，其中的元素是以键值对（key-value）的形式存储的，能够实现根据key快速查找value。（类似于PHP中的关联数组）</li>
+<li>2、Map中的键值对以Entry类型的对象实例形式存在</li>
+<li>3、键（key值）不可重复，value值可以</li>
+<li>4、每个键最多只能映射到一个值</li>
+<li>5、Map接口提供了分别返回key值集合、value值集合以及Entry（键值对）集合的方法</li>
+<li>6、Map支持泛型，形式如：Map&lt;K,V&gt;<span id="more"></span></li>
+</ul>
+<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><ul>
+<li>1、HashMap是Map的一个重要的实现类，也是最常用的，基于哈希表实现</li>
+<li>2、HashMap中的Entry对象是无序排列的</li>
+<li>3、Key值和value值都可以为null，但是一个HashMap只能有一个Key值为null的映射（key值不可重复）</li>
+</ul>
+<p>以下是HashMap使用的实例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">package com.collection;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Map的方式添加</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapPutStudent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Map&lt;String,Student&gt; students;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">MapPutStudent</span>() &#123;</span><br><span class="line">		this.students = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Student&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 通过输入得到的学生信息，添加到HashMap中</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_ invoke__">testPut</span>() &#123;</span><br><span class="line">		<span class="keyword">final</span> <span class="keyword">int</span> ADD_NUMS = <span class="number">3</span>;</span><br><span class="line">		<span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(i&lt;ADD_NUMS) &#123;</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;请输入学生ID：&quot;</span>);</span><br><span class="line">			Scanner input = <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">			String sid = input.<span class="title function_ invoke__">next</span>();</span><br><span class="line">			<span class="comment">//HashMap的key是不能重复的</span></span><br><span class="line">			<span class="keyword">if</span>(students.<span class="title function_ invoke__">get</span>(sid) == <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;请输入学生姓名：&quot;</span>);</span><br><span class="line">				String name = input.<span class="title function_ invoke__">next</span>();</span><br><span class="line">				<span class="comment">//生成新的学生对象 (学生类：Student.java)</span></span><br><span class="line">				Student stuObj = <span class="keyword">new</span> <span class="title class_">Student</span>(sid,name);</span><br><span class="line">				<span class="comment">//添加到hashMap中</span></span><br><span class="line">				students.<span class="title function_ invoke__">put</span>(sid, stuObj);</span><br><span class="line">				i++;</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;您输入的id已经存在了&quot;</span>);</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 通过KeySet方法获取所有的key，然后通过key获得value的值</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_ invoke__">testKeySet</span>() &#123;</span><br><span class="line">		<span class="comment">//通过keySet方法返回key的集合</span></span><br><span class="line">		Set&lt;String&gt; keys = students.<span class="title function_ invoke__">keySet</span>();</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;成功添加&quot;</span>+ keys.<span class="title function_ invoke__">size</span>() +<span class="string">&quot;个学生&quot;</span>);</span><br><span class="line">		<span class="comment">//遍历keys获得每一个key的值，然后通过key获取value值</span></span><br><span class="line">		<span class="keyword">for</span>(String key:keys) &#123;</span><br><span class="line">			Student st = this.students.<span class="title function_ invoke__">get</span>(key);</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;学生：&quot;</span> + st.name);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span>(String[] args) &#123;</span><br><span class="line">		MapPutStudent mp = <span class="keyword">new</span> <span class="title class_">MapPutStudent</span>();</span><br><span class="line">		mp.<span class="title function_ invoke__">testPut</span>();</span><br><span class="line">		mp.<span class="title function_ invoke__">testKeySet</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>删除HashMap操作实例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 根据方法remove删除操作</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_ invoke__">testRemove</span>() &#123;</span><br><span class="line">		<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;请输入需要删除的学生ID：&quot;</span>);</span><br><span class="line">			Scanner input = <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">			String id = input.<span class="title function_ invoke__">next</span>();</span><br><span class="line">			Student stu = students.<span class="title function_ invoke__">get</span>(id);</span><br><span class="line">			<span class="keyword">if</span>(stu == <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;输入的id不存在&quot;</span>);</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			students.<span class="title function_ invoke__">remove</span>(id);</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;成功删除：&quot;</span> + stu.name);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>HashMap中的常用方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,Student&gt; mp = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Student&gt;();</span><br><span class="line"></span><br><span class="line">mp.<span class="title function_ invoke__">put</span>(key,value);  <span class="comment">//添加值</span></span><br><span class="line">mp.<span class="title function_ invoke__">put</span>(key,value);  <span class="comment">//如果key存在，就是修改该值</span></span><br><span class="line">mp.<span class="title function_ invoke__">keySet</span>();       <span class="comment">//返回key集合</span></span><br><span class="line">mp.<span class="title function_ invoke__">entrySet</span>();     <span class="comment">//返回键值对集合</span></span><br><span class="line">mp.<span class="title function_ invoke__">remove</span>(key);    <span class="comment">//删除元素</span></span><br><span class="line">mp.<span class="title function_ invoke__">equals</span>();       <span class="comment">//等于</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-06%EF%BC%88%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6collection-ArrayList%E3%80%81HashSet%EF%BC%89/" rel="prev" title="Java学习-part.06（集合框架collection-ArrayList、HashSet）">
+      <i class="fa fa-chevron-left"></i> Java学习-part.06（集合框架collection-ArrayList、HashSet）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/20/centos7-centos-7-2-var-run-php-fpm-php-fpm-sock%E4%B8%8D%E5%AD%98%E5%9C%A8/" rel="next" title="centos7 - centos 7.2 /var/run/php-fpm/php-fpm.sock不存在">
+      centos7 - centos 7.2 /var/run/php-fpm/php-fpm.sock不存在 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Map接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap"><span class="nav-number">1.2.</span> <span class="nav-text">HashMap</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>

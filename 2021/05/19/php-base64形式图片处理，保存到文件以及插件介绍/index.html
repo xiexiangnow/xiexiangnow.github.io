@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="网页上有些图片的src或者css背景图片都是后面跟了一大串字符串，比如： 123456data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX 5RTAAAAA3NCSVQICAjb4U&#x2F;gAAAABlBMVEX&#x2F;&#x2F;&#x2F;+ZmZmOUEqyAAAAAnRSTlMA&#x2F;1uR IrUAAAAJcEhZcwAACusAAArrAYKLD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php base64形式图片处理，保存到文件以及插件介绍">
+<meta property="og:url" content="http://www.xiang007.com/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="网页上有些图片的src或者css背景图片都是后面跟了一大串字符串，比如： 123456data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX 5RTAAAAA3NCSVQICAjb4U&#x2F;gAAAABlBMVEX&#x2F;&#x2F;&#x2F;+ZmZmOUEqyAAAAAnRSTlMA&#x2F;1uR IrUAAAAJcEhZcwAACusAAArrAYKLD">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/base64-01.png">
+<meta property="og:image" content="http://www.xiang007.com/img/base64-02.png">
+<meta property="og:image" content="http://www.xiang007.com/img/base64-03.png">
+<meta property="article:published_time" content="2021-05-19T07:45:00.000Z">
+<meta property="article:modified_time" content="2023-03-09T08:16:56.209Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/base64-01.png">
+
+<link rel="canonical" href="http://www.xiang007.com/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>php base64形式图片处理，保存到文件以及插件介绍 | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php base64形式图片处理，保存到文件以及插件介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-19 15:45:00" itemprop="dateCreated datePublished" datetime="2021-05-19T15:45:00+08:00">2021-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 16:16:56" itemprop="dateModified" datetime="2023-03-09T16:16:56+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>网页上有些图片的src或者css背景图片都是后面跟了一大串字符串，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX </span><br><span class="line"><span class="number">5</span>RTAAAAA3NCSVQICAjb4U/gAAAABlBMVEX<span class="comment">///+ZmZmOUEqyAAAAAnRSTlMA/1uR </span></span><br><span class="line">IrUAAAAJcEhZcwAACusAAArrAYKLDVoAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDk </span><br><span class="line">vMjAvMTIGkKG+AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26L </span><br><span class="line">yyjAAAAB1JREFUCJljONjA8LiBoZyBwY6BQQZMAtlAkYMNAF1fBs/zPvcnAAAAA </span><br><span class="line">ElFTkSuQmCC ....</span><br></pre></td></tr></table></figure>
+
+<p>Data URI scheme是在RFC2397中定义的，目的是将一些小的数据，直接嵌入到网页中，从而不用再从外部文件载入。比如上面那串字符，其实是一张小图片，将这些字符复制黏贴到火狐的地址栏中并转到，就能看到它了，一张1X36的白灰png图片。</p>
+<p>在上面的Data URI中，data表示取得数据的协定名称，image&#x2F;png 是数据类型名称，base64 是数据的编码方法，逗号后面就是这个image&#x2F;png文件base64编码后的数据。</p>
+<span id="more"></span>
+
+<p>目前，Data URI scheme支持的类型有：<br>data:,文本数据<br>data:text&#x2F;plain,文本数据<br>data:text&#x2F;html,HTML代码<br>data:text&#x2F;html;base64,base64编码的HTML代码<br>data:text&#x2F;css,CSS代码<br>data:text&#x2F;css;base64,base64编码的CSS代码<br>data:text&#x2F;javascript,Javascript代码<br>data:text&#x2F;javascript;base64,base64编码的Javascript代码<br>data:image&#x2F;gif;base64,base64编码的gif图片数据<br>data:image&#x2F;png;base64,base64编码的png图片数据<br>data:image&#x2F;jpeg;base64,base64编码的jpeg图片数据<br>data:image&#x2F;x-icon;base64,base64编码的icon图片数据</p>
+<p>目前，IE8、Firfox、Chrome、Opera浏览器都支持这种小文件嵌入。</p>
+<h3 id="以下是php处理实战："><a href="#以下是php处理实战：" class="headerlink" title="以下是php处理实战："></a>以下是php处理实战：</h3><h4 id="插件准备"><a href="#插件准备" class="headerlink" title="插件准备"></a>插件准备</h4><p>插件地址：<a target="_blank" rel="noopener" href="https://www.jq22.com/jquery-info18454">https://www.jq22.com/jquery-info18454</a><br>如果地址失效可以根据下面操作：</p>
+<h4 id="插件渲染"><a href="#插件渲染" class="headerlink" title="插件渲染"></a>插件渲染</h4><p><code>资源准备:</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://www.jq22.com/jquery/jquery-1.10.2.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;imgFileupload.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>html和css:</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">        .box&#123;</span><br><span class="line">            margin: <span class="number">50</span>px auto;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade&#123;</span><br><span class="line">            width: <span class="number">100</span>%;padding: <span class="number">10</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header&#123;</span><br><span class="line">            height: <span class="number">50</span>px;width: <span class="number">100</span>%;line-height:<span class="number">50</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header span&#123;</span><br><span class="line">            display: block;<span class="keyword">float</span>:left;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header span.imgTitle&#123;</span><br><span class="line">            line-height:<span class="number">50</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header span.imgTitle b&#123;</span><br><span class="line">            color:red;margin:<span class="number">0</span> <span class="number">5</span>px;line-height: <span class="number">57</span>px;display: block;<span class="keyword">float</span>: right;font-size: <span class="number">20</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header span.imgClick&#123;</span><br><span class="line">            width: <span class="number">50</span>px;height: <span class="number">50</span>px;margin-left: <span class="number">10</span>px;cursor: pointer;</span><br><span class="line">            background: <span class="title function_ invoke__">url</span>(/libs/img-file-update/img/addUpload.png) no-repeat center center;background-size:cover;</span><br><span class="line">            background-size: <span class="number">40</span>px <span class="number">40</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .header span.imgcontent&#123;</span><br><span class="line">            color:<span class="comment">#999;margin-left:120px;line-height: 50px;</span></span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .imgAll&#123;</span><br><span class="line">            width: <span class="number">100</span>%;    margin-top: <span class="number">5</span>px;</span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .imgAll ul:after&#123;</span><br><span class="line">            visibility: hidden;  display: block; font-size: <span class="number">0</span>; content: <span class="string">&quot;.&quot;</span>;  clear: both; height: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .imgAll li&#123;</span><br><span class="line">            width: <span class="number">100</span>px;height: <span class="number">100</span>px;border:solid <span class="number">1</span>px <span class="comment">#ccc;margin:8px 5px;float: left;position: relative;box-shadow: 0 0 10px #eee;</span></span><br><span class="line">        &#125;</span><br><span class="line">        .imgFileUploade .imgAll li img&#123;</span><br><span class="line">            position: absolute;top:<span class="number">0</span>;left:<span class="number">0</span>;width: <span class="number">100</span>%;height: <span class="number">100</span>%;display: block;</span><br><span class="line">        &#125;</span><br><span class="line">        .delImg&#123;</span><br><span class="line">            position: absolute;top:-<span class="number">10</span>px;right:-<span class="number">7</span>px;width: <span class="number">22</span>px;height: <span class="number">22</span>px;background: <span class="comment">#000;border-radius: 50%;display: block;text-align:  center;line-height: 22px;color:#fff;font-weight: 700;font-style:normal;cursor: pointer;</span></span><br><span class="line">        &#125;</span><br><span class="line">        .box,.box2,.box3,.box4&#123;</span><br><span class="line">            border:solid <span class="number">1</span>px <span class="comment">#ccc;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dl <span class="class"><span class="keyword">class</span>=&quot;<span class="title">zs_f</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">dt</span>&gt;图片信息：&lt;/<span class="title">dt</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">box</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;    &lt;!-- <span class="title">box</span>为插件容器 --&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">dl</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>js</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 图片上传插件加载 初始化</span></span><br><span class="line">   <span class="keyword">var</span> imgFile = <span class="keyword">new</span> <span class="title class_">ImgUploadeFiles</span>(<span class="string">&#x27;.box&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">       this.<span class="title function_ invoke__">init</span>(&#123;</span><br><span class="line">           MAX : <span class="number">10</span>, //限制上传个数</span><br><span class="line">           MH : <span class="number">2200</span>, //像素限制高度</span><br><span class="line">           MW : <span class="number">2000</span>, //像素限制宽度</span><br><span class="line">           callback : function(arr)&#123;</span><br><span class="line">               console.<span class="title function_ invoke__">log</span>(arr)</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>imgFileupload.js:</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line">~(<span class="function"><span class="keyword">function</span>(<span class="params">win</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> htmls = <span class="string">&#x27;&lt;input type=&quot;file&quot; name=&quot;&quot; id=&quot;&quot; class=&quot;imgFiles&quot; style=&quot;display: none&quot; accept=&quot;image/gif,image/jpeg,image/jpg,image/png,image/svg&quot; multiple&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;&lt;div class=&quot;header&quot;&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;span class=&quot;imgTitle&quot;&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;        点击添加&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;/span&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;span class=&quot;imgClick&quot;&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;/span&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;span class=&quot;imgcontent&quot;&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;        请上传&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;/span&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;&lt;/div&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;&lt;div class=&quot;imgAll&quot;&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;ul&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;    &lt;/ul&gt;&#x27;</span>+</span><br><span class="line">				<span class="string">&#x27;&lt;/div&gt;&#x27;</span>;</span><br><span class="line">	<span class="keyword">var</span> ImgUploadeFiles = <span class="function"><span class="keyword">function</span>(<span class="params">obj,fn</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> _this = this;</span><br><span class="line">		this.bom = document.<span class="title function_ invoke__">querySelector</span>(obj);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(<span class="function"><span class="keyword">fn</span>) <span class="title">fn</span>.<span class="title">call</span>(<span class="params">_this</span>)</span>;</span><br><span class="line">		this.<span class="title function_ invoke__">ready</span>();</span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">	ImgUploadeFiles.prototype = &#123;</span><br><span class="line">		init : <span class="function"><span class="keyword">function</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">			this.MAX = o.MAX || <span class="number">5</span>;</span><br><span class="line">			this.callback = o.callback;</span><br><span class="line">			this.MW = o.MW || <span class="number">10000</span>;</span><br><span class="line">			this.MH = o.MH || <span class="number">10000</span>;</span><br><span class="line">		&#125;,</span><br><span class="line">		ready : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> _self = this;</span><br><span class="line">			this.dom = document.<span class="title function_ invoke__">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">			this.dom.className = <span class="string">&#x27;imgFileUploade&#x27;</span>;</span><br><span class="line">			this.dom.innerHTML = htmls;</span><br><span class="line">			this.bom.<span class="title function_ invoke__">appendChild</span>(this.dom);</span><br><span class="line">			this.files = this.bom.<span class="title function_ invoke__">querySelector</span>(<span class="string">&#x27;.imgFiles&#x27;</span>);</span><br><span class="line">			this.fileClick = this.bom.<span class="title function_ invoke__">querySelector</span>(<span class="string">&#x27;.imgClick&#x27;</span>);</span><br><span class="line">			this.<span class="title function_ invoke__">fileBtn</span>(this.fileClick,this.files);</span><br><span class="line">			this.imgcontent = this.bom.<span class="title function_ invoke__">querySelector</span>(<span class="string">&#x27;.imgcontent&#x27;</span>);</span><br><span class="line">			this.imgcontent.innerHTML = <span class="string">&#x27;限制上传 &lt;b style=&quot;color:red&quot;&gt;&#x27;</span>+this.MAX+<span class="string">&#x27;&lt;/b&gt;张 &#x27;</span>+_self.MW+<span class="string">&#x27; * &#x27;</span>+_self.MH+<span class="string">&#x27;像素的图片&#x27;</span>;</span><br><span class="line">			</span><br><span class="line">		&#125;,</span><br><span class="line">		fileBtn : <span class="function"><span class="keyword">function</span>(<span class="params">c,f</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> _self = this;</span><br><span class="line">			<span class="keyword">var</span> _imgAll = $(c).<span class="built_in">parent</span>().<span class="built_in">parent</span>().<span class="title function_ invoke__">find</span>(<span class="string">&#x27;.imgAll ul&#x27;</span>);</span><br><span class="line">			$(c).<span class="title function_ invoke__">off</span>().<span class="title function_ invoke__">on</span>(<span class="string">&#x27;click&#x27;</span>,function()&#123;</span><br><span class="line">				$(f).<span class="title function_ invoke__">click</span>();</span><br><span class="line"></span><br><span class="line">				$(f).<span class="title function_ invoke__">off</span>().<span class="title function_ invoke__">on</span>(<span class="string">&#x27;change&#x27;</span>,function()&#123;</span><br><span class="line">					<span class="keyword">var</span> _this = this;</span><br><span class="line">					_private.<span class="title function_ invoke__">startUploadImg</span>(_imgAll,_this.files,_self.MAX,_self.callback,_self.MW,_self.MH);</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> _dataArr = [];</span><br><span class="line">	<span class="keyword">var</span> _private = &#123;</span><br><span class="line">		startUploadImg : <span class="function"><span class="keyword">function</span>(<span class="params">o,files,MAX,callback,W,H</span>)</span>&#123;</span><br><span class="line">			_dataArr.length = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">var</span> _this = this;</span><br><span class="line">			<span class="keyword">var</span> fileImgArr = [];</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(files.length &gt; MAX )&#123;</span><br><span class="line">				<span class="title function_ invoke__">alert</span>(<span class="string">&#x27;不能大于&#x27;</span>+MAX+<span class="string">&#x27;张&#x27;</span>);</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;;</span><br><span class="line">			<span class="keyword">var</span> lens = $(o).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;li&#x27;</span>).length ;</span><br><span class="line">			<span class="keyword">if</span>(lens &gt;= MAX )&#123;</span><br><span class="line">				<span class="title function_ invoke__">alert</span>(<span class="string">&#x27;不能大于&#x27;</span>+MAX+<span class="string">&#x27;张&#x27;</span>);</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,file;file=files[i++];)&#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">var</span> reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line">				reader.onload = (<span class="function"><span class="keyword">function</span>(<span class="params">file</span>)</span>&#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line">						<span class="keyword">var</span> image = <span class="keyword">new</span> <span class="title class_">Image</span>();  </span><br><span class="line">						image.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">					          <span class="keyword">var</span> width = image.width;  </span><br><span class="line">					          <span class="keyword">var</span> height = image.height;  </span><br><span class="line">					            </span><br><span class="line">					        fileImgArr.<span class="title function_ invoke__">push</span>(&#123;</span><br><span class="line">								fileSrc : ev.target.result,</span><br><span class="line">								fileName : file.name,</span><br><span class="line">								fileSize : file.size,</span><br><span class="line">								height : height,</span><br><span class="line">								width : width</span><br><span class="line">							&#125;);</span><br><span class="line">					    &#125;;  </span><br><span class="line">					     image.src= ev.target.result; </span><br><span class="line"></span><br><span class="line">						</span><br><span class="line">					&#125;;</span><br><span class="line">				&#125;)(file);</span><br><span class="line">				reader.<span class="title function_ invoke__">readAsDataURL</span>(file);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//创建分时函数</span></span><br><span class="line">			<span class="keyword">var</span> imgTimeSlice = _this.<span class="title function_ invoke__">timeChunk</span>(fileImgArr,function(file)&#123;</span><br><span class="line">				<span class="keyword">if</span>(file.width &gt; W || file.height &gt; H)&#123;</span><br><span class="line">	            	<span class="title function_ invoke__">alert</span>(<span class="string">&#x27;图片不能大于&#x27;</span>+W+<span class="string">&#x27;*&#x27;</span>+H+<span class="string">&#x27;像素&#x27;</span>);</span><br><span class="line">	            	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	            &#125;</span><br><span class="line">				<span class="comment">//调用图片类</span></span><br><span class="line">				<span class="keyword">var</span> up = <span class="keyword">new</span> <span class="title class_">ImgFileupload</span>(o,file.fileName,file.fileSrc,file.fileSize,callback);</span><br><span class="line">				up.<span class="title function_ invoke__">init</span>();</span><br><span class="line">			&#125;,<span class="number">1</span>);</span><br><span class="line">			<span class="title function_ invoke__">imgTimeSlice</span>(); <span class="comment">//调用分时函数</span></span><br><span class="line">		&#125;,</span><br><span class="line">		timeChunk : <span class="function"><span class="keyword">function</span>(<span class="params">arr, fn, count</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> obj, t;</span><br><span class="line">            <span class="keyword">var</span> len = arr.length;</span><br><span class="line">            <span class="keyword">var</span> start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; Math.<span class="title function_ invoke__">min</span>(count || <span class="number">1</span>, arr.length); i++) &#123;</span><br><span class="line">                    <span class="keyword">var</span> obj = arr.<span class="title function_ invoke__">shift</span>();</span><br><span class="line">                    <span class="function"><span class="keyword">fn</span>(<span class="params">obj</span>)</span></span><br><span class="line"><span class="function">                &#125;</span></span><br><span class="line"><span class="function">            &#125;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                t = <span class="title function_ invoke__">setInterval</span>(function() &#123;</span><br><span class="line">                    <span class="keyword">if</span> (arr.length === <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="title function_ invoke__">clearInterval</span>(t);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="title function_ invoke__">start</span>();</span><br><span class="line">                &#125;,<span class="number">200</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> ImgFileupload = <span class="function"><span class="keyword">function</span>(<span class="params">b,imgName,imgSrc,imgSize,callback</span>)</span>&#123;</span><br><span class="line">		this.b = b;</span><br><span class="line">		this.imgName = imgName;</span><br><span class="line">		this.imgSize = imgSize;</span><br><span class="line">		this.imgSrc = imgSrc;</span><br><span class="line">		this.callback = callback;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> _delId = <span class="number">1</span>; <span class="comment">//删除id用于判断删除个数</span></span><br><span class="line">	ImgFileupload.prototype.init =<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		_delId++;</span><br><span class="line">		<span class="keyword">var</span> _self = this;</span><br><span class="line">		this.dom = document.<span class="title function_ invoke__">createElement</span>(<span class="string">&#x27;li&#x27;</span>);</span><br><span class="line">		this.dom.innerHTML = </span><br><span class="line">							<span class="string">&#x27;    &lt;img src=&quot;/libs/img-file-update/img/login.gif&quot; alt=&quot;&quot; data-src=&quot;&#x27;</span>+this.imgSrc +<span class="string">&#x27;&quot; class=&quot;imsg&quot;&gt;&#x27;</span>+</span><br><span class="line">							<span class="string">&#x27;    &lt;i class=&quot;delImg&quot;&gt;&#x27;</span>+</span><br><span class="line">							<span class="string">&#x27;        X&#x27;</span>+</span><br><span class="line">							<span class="string">&#x27;    &lt;/i&gt;&#x27;</span>;</span><br><span class="line">		$(this.dom).<span class="title function_ invoke__">attr</span>(&#123;<span class="string">&#x27;data-delId&#x27;</span>:_delId,<span class="string">&#x27;data-delName&#x27;</span>:this.imgName&#125;);				</span><br><span class="line">		$(this.b).<span class="title function_ invoke__">append</span>(this.dom);</span><br><span class="line">		<span class="keyword">var</span> _Img = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">		_Img.src = $(this.dom).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;img&#x27;</span>).<span class="title function_ invoke__">attr</span>(<span class="string">&#x27;data-src&#x27;</span>);</span><br><span class="line">		_Img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			$(_self.dom).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;img&#x27;</span>).<span class="title function_ invoke__">attr</span>(<span class="string">&#x27;src&#x27;</span>,_Img.src);</span><br><span class="line">		&#125;</span><br><span class="line">		_dataArr.<span class="title function_ invoke__">push</span>(&#123;<span class="string">&#x27;delId&#x27;</span> :_delId,src :  this.imgSrc&#125;);</span><br><span class="line">		_self.<span class="title function_ invoke__">callback</span>(_dataArr);</span><br><span class="line">		<span class="comment">// $(this.b).parent().parent().parent().attr(&#x27;data-dataImgs&#x27;,JSON.stringify(_dataArr));</span></span><br><span class="line">		<span class="keyword">var</span> _delAll = $(this.b).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;.delImg&#x27;</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;_delAll.length;i++)&#123;</span><br><span class="line">			$(_delAll[i]).<span class="title function_ invoke__">off</span>().<span class="title function_ invoke__">on</span>(<span class="string">&#x27;click&#x27;</span>,function()&#123;</span><br><span class="line">				$(this).<span class="built_in">parent</span>().<span class="title function_ invoke__">fadeOut</span>(<span class="string">&#x27;slow&#x27;</span>,function()&#123;</span><br><span class="line">					$(this).<span class="title function_ invoke__">remove</span>();</span><br><span class="line">				&#125;);</span><br><span class="line">				<span class="keyword">var</span> _deid = $(this).<span class="built_in">parent</span>().<span class="title function_ invoke__">attr</span>(<span class="string">&#x27;data-delId&#x27;</span>);</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> n=<span class="number">0</span>;n&lt;_dataArr.length;n++)&#123;</span><br><span class="line">					<span class="keyword">if</span>(_dataArr[n].delId == _deid)&#123;</span><br><span class="line">						_dataArr.<span class="title function_ invoke__">splice</span>(n,<span class="number">1</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				_self.<span class="title function_ invoke__">callback</span>(_dataArr)</span><br><span class="line">				<span class="comment">// $(this.b).parent().parent().parent().attr(&#x27;data-dataImgs&#x27;,JSON.stringify(_dataArr))</span></span><br><span class="line">				</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;;</span><br><span class="line">		<span class="keyword">var</span> _Imgpreview = $(this.b).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">var</span> k=<span class="number">0</span>;k&lt;_Imgpreview.length; k++)&#123;</span><br><span class="line">			$(_Imgpreview[k]).<span class="title function_ invoke__">off</span>().<span class="title function_ invoke__">on</span>(<span class="string">&#x27;click&#x27;</span>,function()&#123;</span><br><span class="line">				console.<span class="title function_ invoke__">log</span>($(this).<span class="title function_ invoke__">attr</span>(<span class="string">&#x27;src&#x27;</span>))</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	win.ImgUploadeFiles = ImgUploadeFiles;</span><br><span class="line">&#125;)(window);</span><br></pre></td></tr></table></figure>
+
+<p><code>页面渲染效果：</code><br><img src="/../img/base64-01.png" alt="pic"><br><img src="/../img/base64-02.png" alt="pic"></p>
+<p>上图能够看到，这个插件所加载的图片资源就是存储在浏览器上面的资源，也就是上面所说的base64的方式，那么后端如何来解析又怎么保存图片到本地呢？</p>
+<h4 id="后端处理-php"><a href="#后端处理-php" class="headerlink" title="后端处理 - php"></a>后端处理 - php</h4><p>前端在传输图片信息的时候就需要把这个带data:image&#x2F;jpeg;base64.&#x2F;…这个数据传递到后端，由后端来解析；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 将Base64图片转换为本地图片并保存</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $base64_image_content_list</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $path  //路径</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array|bool</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">base64_image_content</span>(<span class="params"><span class="variable">$base64_image_content_list</span>, <span class="variable">$path</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$upload_img_name</span> = [];</span><br><span class="line">        <span class="variable">$error_data</span> = [];</span><br><span class="line">        <span class="variable">$file_path</span> = <span class="string">&#x27;/data/htdocs/psi.a.hongju.cc/public&#x27;</span>.<span class="variable">$path</span>;  <span class="comment">// 拼接成绝对路径，这里必须要绝对路径</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="variable">$base64_image_content_list</span> <span class="keyword">as</span> <span class="variable">$base64_image_content</span>) &#123;</span><br><span class="line">                <span class="comment">//匹配出图片的格式</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^(data:\s*image\/(\w+);base64,)/&#x27;</span>, <span class="variable">$base64_image_content</span>, <span class="variable">$result</span>)) &#123;</span><br><span class="line">                    <span class="variable">$type</span> = <span class="variable">$result</span>[<span class="number">2</span>];</span><br><span class="line">                    <span class="variable">$new_file</span> = <span class="variable">$file_path</span> . <span class="string">&quot;/&quot;</span> . <span class="title function_ invoke__">date</span>(<span class="string">&#x27;Ymd&#x27;</span>, <span class="title function_ invoke__">time</span>()) . <span class="string">&quot;/&quot;</span>;</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="title function_ invoke__">file_exists</span>(<span class="variable">$new_file</span>)) &#123;</span><br><span class="line">                        <span class="comment">//检查是否有该文件夹，如果没有就创建，并给予最高权限</span></span><br><span class="line">                        <span class="title function_ invoke__">mkdir</span>(<span class="variable">$new_file</span>);   <span class="comment">// 规定权限。默认是 0777。</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 重新命名</span></span><br><span class="line">                    <span class="variable">$new_file</span> = <span class="variable">$new_file</span> . <span class="title function_ invoke__">time</span>().<span class="title function_ invoke__">mt_rand</span>(<span class="number">100</span>,<span class="number">999</span>). <span class="string">&quot;.<span class="subst">&#123;$type&#125;</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 写入文件夹 执行文件的写入</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$new_file</span>, <span class="title function_ invoke__">base64_decode</span>(<span class="title function_ invoke__">str_replace</span>(<span class="variable">$result</span>[<span class="number">1</span>], <span class="string">&#x27;&#x27;</span>, <span class="variable">$base64_image_content</span>)))) &#123;</span><br><span class="line">                        <span class="variable">$upload_img_name</span>[] = <span class="variable">$new_file</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="variable">$error_data</span>[] = <span class="variable">$base64_image_content</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="variable">$error_data</span>[] = <span class="variable">$base64_image_content</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$error_data</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$upload_img_name</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable">$upload_img_name</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法是批量处理的，其中的mkdir地方在创建文件夹的时候，特别注意服务器上面的文件权限问题，不然创建文件夹不成功，其次$file_path参数必须为绝对路径（我没太明白，就这么用吧）<br>我给的$path &#x3D; ‘&#x2F;upload&#x2F;abnormal’;</p>
+<p>上传后效果：<br><img src="/../img/base64-03.png" alt="pic"></p>
+<p>总结</p>
+<p>1、这种资源是存储在浏览器上面的；<br>2、利用上诉js插件可以模拟这个场景；<br>3、注意避坑的地方；</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/22/pyenv-%E5%AE%89%E8%A3%85python%E7%89%88%E6%9C%AC%E8%A2%AB%E5%A2%99%E9%97%AE%E9%A2%98/" rel="prev" title="pyenv安装python版本被墙问题">
+      <i class="fa fa-chevron-left"></i> pyenv安装python版本被墙问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/01/python3%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90model%E6%A8%A1%E5%9E%8B%E5%AD%97%E6%AE%B5/" rel="next" title="python3快速生成model模型字段">
+      python3快速生成model模型字段 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E6%98%AFphp%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">以下是php处理实战：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">插件准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E6%B8%B2%E6%9F%93"><span class="nav-number">1.2.</span> <span class="nav-text">插件渲染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%A4%84%E7%90%86-php"><span class="nav-number">1.3.</span> <span class="nav-text">后端处理 - php</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>

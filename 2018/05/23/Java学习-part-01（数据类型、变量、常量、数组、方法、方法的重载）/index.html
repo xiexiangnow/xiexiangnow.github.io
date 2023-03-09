@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="java中的数据类型java语言是一种强类型语言。通俗点说就是，在 Java 中存储的数据都是有类型的，而且必须在编译时就确定其类型。 Java 中有两类数据类型：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java学习-part.01（数据类型、变量、常量、数组、方法、方法的重载）">
+<meta property="og:url" content="http://www.xiang007.com/2018/05/23/Java%E5%AD%A6%E4%B9%A0-part-01%EF%BC%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E5%B8%B8%E9%87%8F%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E6%96%B9%E6%B3%95%E3%80%81%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD%EF%BC%89/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="java中的数据类型java语言是一种强类型语言。通俗点说就是，在 Java 中存储的数据都是有类型的，而且必须在编译时就确定其类型。 Java 中有两类数据类型：">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/java-01.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/java-02.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/java-03.jpg">
+<meta property="article:published_time" content="2018-05-23T03:13:42.000Z">
+<meta property="article:modified_time" content="2023-03-09T01:59:11.161Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/java-01.jpg">
+
+<link rel="canonical" href="http://www.xiang007.com/2018/05/23/Java%E5%AD%A6%E4%B9%A0-part-01%EF%BC%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E5%B8%B8%E9%87%8F%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E6%96%B9%E6%B3%95%E3%80%81%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Java学习-part.01（数据类型、变量、常量、数组、方法、方法的重载） | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/23/Java%E5%AD%A6%E4%B9%A0-part-01%EF%BC%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E5%B8%B8%E9%87%8F%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E6%96%B9%E6%B3%95%E3%80%81%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java学习-part.01（数据类型、变量、常量、数组、方法、方法的重载）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-23 11:13:42" itemprop="dateCreated datePublished" datetime="2018-05-23T11:13:42+08:00">2018-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="java中的数据类型"><a href="#java中的数据类型" class="headerlink" title="java中的数据类型"></a>java中的数据类型</h4><p>java语言是一种强类型语言。通俗点说就是，在 Java 中存储的数据都是有类型的，而且必须在编译时就确定其类型。 Java 中有两类数据类型：<br><img src="/../img/java-01.jpg" alt="java"></p>
+<span id="more"></span>
+
+<p>在 Java 的领域里，基本数据类型变量存的是数据本身，而引用类型变量存的是保存数据的空间地址。说白了，基本数据类型变量里存储的是直接放在抽屉里的东西，而引用数据类型变量里存储的是这个抽屉的钥匙，钥匙和抽屉一一对应。<br>常用的基本数据类型有：<br><img src="/../img/java-02.jpg" alt="java"></p>
+<p>注意：String是一种常见的引用数据类型，用来表示字符串。在程序开发中，很多操作都要使用字符串来完成，例如系统中的用户名、密码、电子邮箱等。float类型在赋值的时候后天添加字母f，float height &#x3D; 175.2f。</p>
+<h4 id="java变量的定义"><a href="#java变量的定义" class="headerlink" title="java变量的定义"></a>java变量的定义</h4><ul>
+<li>1、变量名由多单词组成时，第一个单词的首字母小写，其后单词的首字母大写，俗称骆驼式命名法（也称驼峰命名法），如 myAge</li>
+<li>2、变量命名时，尽量简短且能清楚的表达变量的作用，做到见名知意。如：定义变量名 stuName 保存“学生姓名”信息</li>
+<li>PS： Java 变量名的长度没有限制，但 Java 语言是区分大小写的，所以 price 和 Price 是两个完全不同的变量哦！<br>语法：变量类型 变量名 &#x3D; 值;<br>eg：String name &#x3D; “xiexiang”;</li>
+</ul>
+<h4 id="java常量的应用"><a href="#java常量的应用" class="headerlink" title="java常量的应用"></a>java常量的应用</h4><p>所谓常量，我们可以理解为是一种特殊的变量，它的值被设定后，在程序运行过程中不允许改变。</p>
+<p>语法： final 常量类型 常量名 &#x3D; 值； &#x2F;&#x2F;常量一般为大写字符</p>
+<p>关键词：final;</p>
+<p>eg：final String LOVE &#x3D; “forever”;</p>
+<h4 id="java中的数组"><a href="#java中的数组" class="headerlink" title="java中的数组"></a>java中的数组</h4><p>语法：数据类型[] 数组名； 或者 数据类型 数组名[];</p>
+<p>数组的几种定义方式：</p>
+<ul>
+<li><p>double height[] &#x3D; {175.2,168.4,232.4};</p>
+</li>
+<li><p>int[] scores &#x3D; {12,33,45,132};</p>
+</li>
+<li><p>int[] scores &#x3D; new int[5]; &#x2F;&#x2F;定义一个数组的长度为5 还有种方式在是特定场合用的：</p>
+<p>再赋值：</p>
+<p>scores[0] &#x3D; 89;<br>scores[1] &#x3D; 79;<br>…</p>
+</li>
+</ul>
+<h4 id="java中数组的遍历"><a href="#java中数组的遍历" class="headerlink" title="java中数组的遍历"></a>java中数组的遍历</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一维数组</span></span><br><span class="line">     String[] arrs = &#123;<span class="string">&quot;rerew&quot;</span>,<span class="string">&quot;ww4eqw&quot;</span>,<span class="string">&quot;222&quot;</span>&#125;;</span><br><span class="line">     <span class="comment">//for的方式</span></span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arrs.length;i++) &#123;</span><br><span class="line">         System.out.<span class="title function_ invoke__">println</span>(arrs[i]);</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="comment">//foreach方式</span></span><br><span class="line">     <span class="keyword">for</span>(String arr:arrs) &#123;</span><br><span class="line">         System.out.<span class="title function_ invoke__">println</span>(arr);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//二维数组遍历</span></span><br><span class="line">String[][] names = &#123;&#123;<span class="string">&quot;xiexiang&quot;</span>,<span class="string">&quot;xiangqian&quot;</span>&#125;,&#123;<span class="string">&quot;make&quot;</span>,<span class="string">&quot;diea&quot;</span>,<span class="string">&quot;hello&quot;</span>,<span class="string">&quot;23423&quot;</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用for进行二重循环</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;names.length;i++) &#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;names[i].length;j++) &#123;</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(names[i][j]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="java中的方法"><a href="#java中的方法" class="headerlink" title="java中的方法"></a>java中的方法</h4><p>语法： 访问修饰符 返回值类型 方法名（参数列表）{ 方法体 }</p>
+<p>其中：</p>
+<ul>
+<li>1、访问修饰符：方法允许被访问的权限范围， 可以是 public、protected、private 甚至可以省略 ，其中 public 表示该方法可以被其他任何代码调用。</li>
+<li>2、返回值类型：方法返回值的类型，如果方法不返回任何值，则返回值类型指定为 void ；如果方法具有返回值，则需要指定返回值的类型，并且在方法体中使用 return 语句返回值。</li>
+<li>3、方法名：定义的方法的名字，必须使用合法的标识符。</li>
+<li>4、参数列表：传递给方法的参数列表，参数可以有多个，多个参数间以逗号隔开，每个参数由参数类型和参数名组成，以空格隔开。</li>
+</ul>
+<p>根据方法是否带参、是否带返回值，可将方法分为四类：</p>
+<ul>
+<li>Ø 无参无返回值方法</li>
+<li>Ø 无参带返回值方法</li>
+<li>Ø 带参无返回值方法</li>
+<li>Ø 带参带返回值方法</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//定义了一个方法名为 print 的方法，实现输出信息功能</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">print</span>() &#123;</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span>(String[] args)&#123;</span><br><span class="line">        <span class="comment">//在 main 方法中调用 print 方法</span></span><br><span class="line">        HelloWorld test=<span class="keyword">new</span> <span class="title class_">HelloWorld</span>();</span><br><span class="line">        test.<span class="keyword">print</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="java中方法的重载"><a href="#java中方法的重载" class="headerlink" title="java中方法的重载"></a>java中方法的重载</h4><p>定义：如果同一个类中包含了两个或两个以上方法名相同、方法参数的个数、顺序或类型不同的方法，则称为方法的重载，也可称该方法被重载了。<br><img src="/../img/java-03.jpg" alt="java"></p>
+<p>当调用被重载的方法时， Java 会根据参数的个数和类型来判断应该调用哪个重载方法，参数完全匹配的方法将被执行。</p>
+<p>&amp;判断方法重载的依据：</p>
+<ul>
+<li>1、 必须是在同一个类中</li>
+<li>2、 方法名相同</li>
+<li>3、 方法参数的个数、顺序或类型不同</li>
+<li>4、 与方法的修饰符或返回值没有关系</li>
+</ul>
+<h4 id="章节练习题"><a href="#章节练习题" class="headerlink" title="章节练习题"></a>章节练习题</h4><p>需求：输入3个班级各4个学生的成绩，并在每个班级之后输出每个班级的成绩之和和平均成绩。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package imooc;</span><br><span class="line">import java.util.Scanner;   <span class="comment">//调用java的输入包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">stu</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span>(String[] args) &#123;</span><br><span class="line">		<span class="keyword">int</span> classNum = <span class="number">3</span>; <span class="comment">//班级数量</span></span><br><span class="line">		<span class="keyword">int</span> stuNum   = <span class="number">4</span>; <span class="comment">//每个班级学生数量</span></span><br><span class="line">		<span class="keyword">double</span> sum = <span class="number">0</span>;   <span class="comment">//每个班级学生成绩之和</span></span><br><span class="line">		<span class="keyword">double</span> avg = <span class="number">0</span>;   <span class="comment">//每个班级的平均成绩</span></span><br><span class="line">		Scanner input = <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);   <span class="comment">//创建scanner对象</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=classNum;i++) &#123;</span><br><span class="line">			sum = <span class="number">0</span>;</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;*****请输入第&quot;</span>+i+<span class="string">&quot;个班级的成绩情况*****&quot;</span>);</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=stuNum;j++) &#123;</span><br><span class="line">				System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;请输入第&quot;</span>+j+<span class="string">&quot;个学生的成绩：&quot;</span>);</span><br><span class="line">				<span class="keyword">double</span> score = input.<span class="title function_ invoke__">nextDouble</span>();  <span class="comment">// 获取输入成绩</span></span><br><span class="line">				sum+=score;</span><br><span class="line">			&#125;</span><br><span class="line">			avg = sum/stuNum;</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;第个班的总成绩之和为：&quot;</span>+sum+<span class="string">&quot;;平均成绩为：&quot;</span>+avg);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/18/%E6%88%90%E5%8A%9F%E5%AE%9E%E6%96%BDDevOps%E7%9A%84%E4%B8%83%E4%B8%AA%E6%9C%89%E5%8A%9B%E5%B7%A5%E5%85%B7/" rel="prev" title="成功实施DevOps的七个有力工具">
+      <i class="fa fa-chevron-left"></i> 成功实施DevOps的七个有力工具
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/23/Java%E5%AD%A6%E4%B9%A0-part-02%EF%BC%88%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E3%80%81static%EF%BC%89/" rel="next" title="Java学习-part.02（面向对象、构造方法、static）">
+      Java学习-part.02（面向对象、构造方法、static） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">java中的数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">java变量的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%B8%B8%E9%87%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">java常量的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">java中的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">java中数组的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">java中的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E4%B8%AD%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD"><span class="nav-number">7.</span> <span class="nav-text">java中方法的重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%A0%E8%8A%82%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">章节练习题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>

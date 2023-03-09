@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Java异常处理语法语法格式： 1234567891011121314151617try&amp;#123;    &#x2F;&#x2F;代码块    ....        &#x2F;&#x2F;主动抛出异常    throw new MismatchException(&quot;这里是异常信息&quot;);&amp;#125;catch(MismatchException e)&amp;#123;    &#x2F;&#x2F;除非try里面执行代码发生了异常，否则这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java学习-part.05（异常、字符串、字符串处理及转换、包装类、时间处理、Math类操作）">
+<meta property="og:url" content="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="Java异常处理语法语法格式： 1234567891011121314151617try&amp;#123;    &#x2F;&#x2F;代码块    ....        &#x2F;&#x2F;主动抛出异常    throw new MismatchException(&quot;这里是异常信息&quot;);&amp;#125;catch(MismatchException e)&amp;#123;    &#x2F;&#x2F;除非try里面执行代码发生了异常，否则这">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/string-f.png">
+<meta property="article:published_time" content="2018-05-25T06:41:48.000Z">
+<meta property="article:modified_time" content="2023-03-09T01:59:11.155Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/string-f.png">
+
+<link rel="canonical" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Java学习-part.05（异常、字符串、字符串处理及转换、包装类、时间处理、Math类操作） | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java学习-part.05（异常、字符串、字符串处理及转换、包装类、时间处理、Math类操作）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-25 14:41:48" itemprop="dateCreated datePublished" datetime="2018-05-25T14:41:48+08:00">2018-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Java异常处理"><a href="#Java异常处理" class="headerlink" title="Java异常处理"></a>Java异常处理</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>语法格式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//代码块</span></span><br><span class="line">    ....</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//主动抛出异常</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MismatchException</span>(<span class="string">&quot;这里是异常信息&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(MismatchException e)&#123;</span><br><span class="line">    <span class="comment">//除非try里面执行代码发生了异常，否则这里的代码不会执行 </span></span><br><span class="line">    <span class="comment">//出现异常的处理</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(<span class="built_in">Exception</span> e)&#123;</span><br><span class="line">    <span class="comment">//除非try里面执行代码发生了异常，否则这里的代码不会执行 </span></span><br><span class="line">    <span class="comment">//出现异常的处理</span></span><br><span class="line">    e.<span class="title function_ invoke__">printStackTrace</span>();</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">//最终将执行的代码</span></span><br><span class="line">    <span class="comment">//***不管什么情况都会执行，包括try catch 里面用了return ,可以理解为只要执行了try或者catch，就一定会执行 finally </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>代码中可以有多个catch来捕获不同类型的Exception，从上至下必须是子到父的关系，也就是说越明显的异常最先捕获，最后的异常才有Exception来捕获；finally里面的代码是程序最后执行的地方。</p>
+<p>高升对finally的解译: *</p>
+<blockquote>
+<p>finally的作用是上面的try代码块出现异常了，会中转执行跳转的catch块，这个时候如果有其他逻辑不管是否异常都要继续执行，就写到finally里面</p>
+</blockquote>
+<h4 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h4><p>在很多的情况下java内部定义的异常可能不满足目前场景，需要我们自己去定义一个异常类来处理，自定义的异常类必须是继承父类或者Exception的。</p>
+<p>DrunkException.java</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.exceptiontest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DrunkException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span>  <span class="title function_ invoke__">DrunkException</span>(String message) &#123;</span><br><span class="line">		<span class="title function_ invoke__">super</span>(message);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">DrunkException</span>() &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h4><p>在业务场景当中，我们可能会对某个服务进行处理，服务里面的异常和外部对服务的异常处理应该这样处理：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.exceptiontest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTryCacth</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span> (String[] args) throws DrunkException &#123; <span class="comment">//自定义的异常必须要先声明</span></span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		MyTryCacth mc = <span class="keyword">new</span> <span class="title class_">MyTryCacth</span>();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">		    <span class="comment">//调用服务方的时候需要try-catch</span></span><br><span class="line">			mc.<span class="title function_ invoke__">test</span>();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> e) &#123;</span><br><span class="line">			e.<span class="title function_ invoke__">printStackTrace</span>(); <span class="comment">//打印出异常情况</span></span><br><span class="line">		&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">			System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;来点骚东西&quot;</span>); <span class="comment">//这里是最后的执行</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_ invoke__">test</span>() throws DrunkException &#123;  <span class="comment">//自定义的异常必须要先声明</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">DrunkException</span>(<span class="string">&quot;我喝大了！&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> e) &#123;</span><br><span class="line">		    <span class="comment">//这里看业务需要，这里是包装成了RuntimeException()</span></span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">RuntimeException</span>(e);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="前车之鉴"><a href="#前车之鉴" class="headerlink" title="前车之鉴"></a>前车之鉴</h4><ul>
+<li>处理运行时异常时，采用逻辑去合理规避同时辅助try-catch处理</li>
+<li>在多重catch块后面，可以加一个catch(Exception) 来处理可能会被遗漏的异常</li>
+<li>对于不确定的代码，也可以加上try-catch，处理潜在的异常</li>
+<li>尽量去处理异常，切忌只是简单的调用printStackTrace()去打印输出 （例如可以回滚）</li>
+<li>具体如何处理异常，要根据不同的业务需求和异常类型去决定</li>
+<li>尽量添加finally语块去释放占用的资源</li>
+</ul>
+<h3 id="Java中的字符串"><a href="#Java中的字符串" class="headerlink" title="Java中的字符串"></a>Java中的字符串</h3><h4 id="概述与语法"><a href="#概述与语法" class="headerlink" title="概述与语法"></a>概述与语法</h4><p>在Java中字符串属于引用类型，字符串被作为String类型的对象处理，String类位于java.lang包中。</p>
+<p>创建String对象：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;xiexiang&quot;</span>;</span><br><span class="line"></span><br><span class="line">String s2 = <span class="keyword">new</span> <span class="title class_">String</span>();</span><br><span class="line"></span><br><span class="line">String s3 = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;xiexiang&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串的不变性"><a href="#字符串的不变性" class="headerlink" title="字符串的不变性"></a>字符串的不变性</h4><p>String 对象创建后则不能被修改，是不可变的，所谓的修改其实是创建了新的对象，所指向的内存空间不同。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">String name1 = <span class="string">&quot;xiexiang&quot;</span>;</span><br><span class="line"></span><br><span class="line">String name2 = <span class="string">&quot;xiexiang&quot;</span>;</span><br><span class="line"></span><br><span class="line">String name3 = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;xiexiang&quot;</span>);</span><br><span class="line"></span><br><span class="line">String name4 = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;xiexiang&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//多次出现的字符常量，java编译程序只会创建一个，所以返回true</span></span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(name1 == name2);</span><br><span class="line"><span class="comment">//name1和name3是不同的对象，所以返回false</span></span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(name1 == name3);</span><br><span class="line"><span class="comment">//name3和name4是不同的对象，返回false</span></span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(name3 == name4);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>每次 new 一个字符串就是产生一个新的对象，即便两个字符串的内容相同，使用 ”&#x3D;&#x3D;” 比较时也为 ”false” ,如果只需比较内容是否相同，应使用 ”equals()” 方法, System.out.println(name3.equals(name4));</p>
+<p>字符串处理的常用方法<br><img src="/../img/string-f.png" alt="java"></p>
+<h4 id="“-x3D-x3D-”-和-equals-的区别"><a href="#“-x3D-x3D-”-和-equals-的区别" class="headerlink" title="“&#x3D;&#x3D;” 和 equals() 的区别"></a>“&#x3D;&#x3D;” 和 equals() 的区别</h4><ul>
+<li>&#x3D;&#x3D;: 判断两个字符串在内存中首地址是否相同，即判断是否是同一个字符串对象</li>
+<li>equals(): 比较存储在两个字符串对象中的内容是否一致</li>
+</ul>
+<h4 id="Java中的StringBuilder类及常用方法"><a href="#Java中的StringBuilder类及常用方法" class="headerlink" title="Java中的StringBuilder类及常用方法"></a>Java中的StringBuilder类及常用方法</h4><p>概述：String是一个不可变的类，而StringBuilder是一个可变类。</p>
+<p>StringBuilder对象用来储存字符串，并对其做了追加和插入的操作，这些操作只是修改了str对象的值，而没有创建新的对象，这就是StringBuilder和String最大的区别。</p>
+<p>StringBuilder常用方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>StringBuilder append(参数)</td>
+<td>追加内容到当前的StringBuilder对象的末尾</td>
+</tr>
+<tr>
+<td>StringBuilder insert(位置，参数)</td>
+<td>将内容插入到StringBuilder对象的指定位置</td>
+</tr>
+<tr>
+<td>String toString()</td>
+<td>将StringBuilder对象转换为String对象</td>
+</tr>
+<tr>
+<td>int length()</td>
+<td>获取字符串的长度</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.<span class="keyword">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringBuilderTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span>(String[] args) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		StringBuilder str = <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">		str.<span class="title function_ invoke__">append</span>(<span class="string">&quot; xiaochuhan&quot;</span>);</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(str);</span><br><span class="line">		</span><br><span class="line">		str.<span class="title function_ invoke__">insert</span>(<span class="number">5</span>, <span class="string">&quot;daye&quot;</span>);</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(str);</span><br><span class="line">		</span><br><span class="line">		str.<span class="title function_ invoke__">toString</span>();</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(str);</span><br><span class="line">		</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(str.<span class="title function_ invoke__">length</span>());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">hello xiaochuhan</span><br><span class="line">hellodaye xiaochuhan</span><br><span class="line">hellodaye xiaochuhan</span><br><span class="line"><span class="number">20</span></span><br><span class="line">  <span class="comment">//都会在原值上进行修改，不会创建新的对象</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Java中的包装类"><a href="#Java中的包装类" class="headerlink" title="Java中的包装类"></a>Java中的包装类</h3><p>概述：比如int、float、double、boolean、char等都属于基本数据类型是不具备对象的特性的，也不能条用方法、功能简单；为了让基本数据类型也具有对象的特性，java为每个基本数据类型都提供了一个包装类，这样就可以像操作对象那样操作基本数据类型。</p>
+<table>
+<thead>
+<tr>
+<th align="left">基本类型</th>
+<th align="left">对应的包装类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">byte</td>
+<td align="left">Byte</td>
+</tr>
+<tr>
+<td align="left">short</td>
+<td align="left">Short</td>
+</tr>
+<tr>
+<td align="left">int</td>
+<td align="left">Integer</td>
+</tr>
+<tr>
+<td align="left">long</td>
+<td align="left">Long</td>
+</tr>
+<tr>
+<td align="left">float</td>
+<td align="left">Float</td>
+</tr>
+<tr>
+<td align="left">double</td>
+<td align="left">Double</td>
+</tr>
+<tr>
+<td align="left">char</td>
+<td align="left">Character</td>
+</tr>
+<tr>
+<td align="left">boolean</td>
+<td align="left">Boolean</td>
+</tr>
+</tbody></table>
+<p>语法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> age = <span class="number">19</span>;   <span class="comment">//定义一个int基本数据类型</span></span><br><span class="line"><span class="keyword">float</span> age1 = <span class="keyword">new</span> <span class="title class_">Integer</span>(age).<span class="title function_ invoke__">floatValue</span>();   <span class="comment">//转为为float类型</span></span><br></pre></td></tr></table></figure>
+
+<p>我们以Integer为例看下包装类里面的常用方法：</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">说明</th>
+<th align="left">返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">byteValue()</td>
+<td align="left">将该Integer转为byte类型</td>
+<td align="left">byte</td>
+</tr>
+<tr>
+<td align="left">doubleValue()</td>
+<td align="left">转为double类型</td>
+<td align="left">double</td>
+</tr>
+<tr>
+<td align="left">floatValue()</td>
+<td align="left">转为float类型</td>
+<td align="left">float</td>
+</tr>
+<tr>
+<td align="left">intValue()</td>
+<td align="left">转为int类型</td>
+<td align="left">int</td>
+</tr>
+<tr>
+<td align="left">longValue()</td>
+<td align="left">转为long类型</td>
+<td align="left">long</td>
+</tr>
+<tr>
+<td align="left">parseInt(String s)</td>
+<td align="left">将字符串转换为int类型</td>
+<td align="left">static int</td>
+</tr>
+<tr>
+<td align="left">toString()</td>
+<td align="left">转为字符串类型</td>
+<td align="left">String</td>
+</tr>
+<tr>
+<td align="left">valueOf(String s)</td>
+<td align="left">将字符串传唤为Integer类型</td>
+<td align="left">static Integer</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> age = <span class="number">18</span>;</span><br><span class="line">Integer itr = <span class="keyword">new</span> <span class="title class_">Integer</span>(age);</span><br><span class="line">String age1 = itr.<span class="title function_ invoke__">toString</span>();</span><br><span class="line"><span class="keyword">float</span> age2 = itr.<span class="title function_ invoke__">floatValue</span>();</span><br><span class="line"><span class="keyword">double</span> age3 = itr.<span class="title function_ invoke__">doubleValue</span>();</span><br><span class="line">long age4 = itr.<span class="title function_ invoke__">longValue</span>();</span><br><span class="line"></span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(age1);</span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(age2);</span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(age3);</span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(age4);</span><br><span class="line">		</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">18.0</span></span><br><span class="line"><span class="number">18.0</span></span><br><span class="line"><span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="基本数据类型与包装类的转换-（装箱与拆箱）"><a href="#基本数据类型与包装类的转换-（装箱与拆箱）" class="headerlink" title="基本数据类型与包装类的转换 （装箱与拆箱）"></a>基本数据类型与包装类的转换 （装箱与拆箱）</h3><p>在JDK1.5引入自动装箱和拆箱的机制后，包装类和基本类型之间的转换就轻松了。</p>
+<p>装箱：把基本类型转换成包装类，使其具有对象的性质，又可分为手动装箱和自动装箱；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> age = <span class="number">18</span>;    <span class="comment">//定义一个int的基本类型</span></span><br><span class="line">Integer ag = <span class="keyword">new</span> <span class="title class_">Integer</span>(age);  <span class="comment">//手动装箱</span></span><br><span class="line">Integer ag = age;       <span class="comment">//自动装箱</span></span><br></pre></td></tr></table></figure>
+
+<p>拆箱：和装箱相反，把包装类对象转换成基本类型的值，又可分为手动拆箱和自动拆箱；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer j = <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">90</span>); <span class="comment">//定义一个Integer包装类</span></span><br><span class="line"><span class="keyword">int</span> m = j.<span class="title function_ invoke__">intValue</span>();  <span class="comment">//手动拆箱为int类型</span></span><br><span class="line"><span class="keyword">int</span> n = j;             <span class="comment">//自动拆箱为int类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基本数据类型与字符串之间的转换"><a href="#基本数据类型与字符串之间的转换" class="headerlink" title="基本数据类型与字符串之间的转换"></a>基本数据类型与字符串之间的转换</h3><h4 id="基本类型转字符串"><a href="#基本类型转字符串" class="headerlink" title="基本类型转字符串"></a>基本类型转字符串</h4><p>基本类型转换为字符串有三种方法：</p>
+<p>1、使用基本类型的包装类的toString()方法；</p>
+<p>2、使用String类的 valueOf()方法；</p>
+<p>3、用一个空字符串加上基本类型，得到的就是基本类型数据对应的字符串；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将基本类型转换成字符串</span></span><br><span class="line"><span class="keyword">int</span> age = <span class="number">18</span>;</span><br><span class="line">String age1 = Integer.<span class="title function_ invoke__">toString</span>(age); <span class="comment">//方法一</span></span><br><span class="line">String age2 = String.<span class="title function_ invoke__">valueOf</span>(age);   <span class="comment">//方法二</span></span><br><span class="line">String age3 = age + <span class="string">&quot;&quot;</span>;              <span class="comment">//方法三</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">float</span> t =<span class="number">10</span>f;</span><br><span class="line">String t1 = Float.<span class="title function_ invoke__">toString</span>(t);</span><br><span class="line">String t2 = String.<span class="title function_ invoke__">valueOf</span>(t);</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串转基本类型"><a href="#字符串转基本类型" class="headerlink" title="字符串转基本类型"></a>字符串转基本类型</h4><p>字符串转基本类型有两种方法：</p>
+<p>1、调用包装类的parseXxx静态方法；</p>
+<p>2、调用包装类的 valueOf()方法转换成基本类型</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将字符串转换成基本类型</span></span><br><span class="line">String str= <span class="string">&quot;33&quot;</span>;</span><br><span class="line"><span class="keyword">int</span> str1 = Integer.<span class="title function_ invoke__">parseInt</span>(str);   <span class="comment">//方法一  转int</span></span><br><span class="line"><span class="keyword">int</span> str2 = Integer.<span class="title function_ invoke__">valueOf</span>(str);    <span class="comment">//方法二  转int</span></span><br><span class="line"></span><br><span class="line">flaot str3 = Float.<span class="title function_ invoke__">parseFloat</span>(str); </span><br><span class="line"><span class="keyword">float</span> str4 = Float.<span class="title function_ invoke__">valueOf</span>(str); </span><br><span class="line"></span><br><span class="line">** <span class="title function_ invoke__">valueOf</span>()方法会自动判断转换的类型</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Date和SimpleDateFormat类表示时间"><a href="#使用Date和SimpleDateFormat类表示时间" class="headerlink" title="使用Date和SimpleDateFormat类表示时间"></a>使用Date和SimpleDateFormat类表示时间</h3><p>开发中我们可以用import java.util.Date这个类获取当前的时间。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Date time = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">system.out.<span class="title function_ invoke__">println</span>(time);</span><br><span class="line"></span><br><span class="line">执行输出：</span><br><span class="line">Fri Jun <span class="number">29</span> <span class="number">16</span>:<span class="number">39</span>:<span class="number">54</span> CST <span class="number">2018</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方式并不是我们想要的结果，这个时候就需要用到import java.text.SimpleDateFormat这个类来对日期时间进行格式化。</p>
+<p>1、使用format()方法将日期转换为指定格式的文本</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Date time = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">SimpleDateFormat sdf = <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-mm-dd HH:mm:ss&quot;</span>);</span><br><span class="line">String nowTime = sdf.<span class="title function_ invoke__">format</span>(time);</span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(nowTime);</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">2018</span>-<span class="number">43</span>-<span class="number">29</span> <span class="number">16</span>:<span class="number">43</span>:<span class="number">51</span></span><br></pre></td></tr></table></figure>
+
+<p>2、使用parse()方法将文本转换为日期</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String date = <span class="string">&quot;4018年06月18日 12:34:45&quot;</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    SimpleDateFormat ss = <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy年mm月dd日 HH:mm:ss&quot;</span>);</span><br><span class="line">    Date timeNow  = ss.<span class="title function_ invoke__">parse</span>(date);</span><br><span class="line">    System.out.<span class="title function_ invoke__">println</span>(timeNow);</span><br><span class="line">&#125;<span class="keyword">catch</span>(ParseException e)&#123;</span><br><span class="line">    e.<span class="title function_ invoke__">printStackTrace</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">Thu Jan <span class="number">18</span> <span class="number">12</span>:<span class="number">34</span>:<span class="number">45</span> CST <span class="number">4018</span></span><br></pre></td></tr></table></figure>
+
+<p>代码中的”yyyy年MM月dd日 HH:mm:ss”指定了字符串的日期格式，调用parse()方法将文本转换为日期。</p>
+<p>需要注意：</p>
+<ul>
+<li>1、调用SimpleDateFormat对象的parse()方法时可能会出现转换异常，即parseException，因此需要进行异常处理。</li>
+<li>2、使用Date类时需要导入java.util.Date包，使用SimpleDateFormat时需要导入 java.text.SimpleDateFormat 包</li>
+</ul>
+<h3 id="Calendar-类的应用"><a href="#Calendar-类的应用" class="headerlink" title="Calendar 类的应用"></a>Calendar 类的应用</h3><p>java.util.Calendar类是一个抽象类，可以通过调用getInstance()静态方法获取一个Calendar对象，此对象已由当前日期时间初始化，即默认为当前时间，如 Calendar c &#x3D; Calendar.getInstance();</p>
+<p>如何获取年月日时分秒？</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Calendar c = Calendar.<span class="title function_ invoke__">getInstance</span>();</span><br><span class="line"><span class="keyword">int</span> year = c.<span class="title function_ invoke__">get</span>(Calendar.YEAR);</span><br><span class="line"><span class="keyword">int</span> month = c.<span class="title function_ invoke__">get</span>(Calendar.MONTH);</span><br><span class="line"><span class="keyword">int</span> day = c.<span class="title function_ invoke__">get</span>(Calendar.DAY_OF_MONTH);</span><br><span class="line"><span class="keyword">int</span> hour = c.<span class="title function_ invoke__">get</span>(Calendar.HOUR_OF_DAY);</span><br><span class="line"><span class="keyword">int</span> min =  c.<span class="title function_ invoke__">get</span>(Calendar.MINUTE);</span><br><span class="line"><span class="keyword">int</span> second =  c.<span class="title function_ invoke__">get</span>(Calendar.SECOND);</span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;当前时间为：&quot;</span> + year +<span class="string">&quot;-&quot;</span>+month+<span class="string">&quot;-&quot;</span>+day+<span class="string">&quot; &quot;</span>+ hour+<span class="string">&quot;:&quot;</span>+min+<span class="string">&quot;:&quot;</span>+second);</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">当前时间为：<span class="number">2018</span>-<span class="number">5</span>-<span class="number">29</span> <span class="number">17</span>:<span class="number">21</span>:<span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>调用 Calendar 类的 getInstance() 方法获取一个实例，然后通过调用 get() 方法获取日期时间信息，参数为需要获得的字段的值， Calendar.YEAR 等为 Calendar 类中定义的静态常量。</p>
+<p>Calendar类提供了getTime()方法，用来获取Date对象，完成Calendar和Date的转换，还可以通过getTimeInMillis()方法，获取此Calendar的时间值，以毫秒为单位。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建Calendar对象</span></span><br><span class="line">Calendar c = Calendar.<span class="title function_ invoke__">getInstance</span>();</span><br><span class="line"><span class="comment">// 将Calendar对象转换为Date对象</span></span><br><span class="line">Date date = c.<span class="title function_ invoke__">getTime</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建SimpleDateFormat对象，指定目标格式</span></span><br><span class="line">SimpleDateFormat sdf = <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将日期转换为指定格式的字符串</span></span><br><span class="line">String now = sdf.<span class="title function_ invoke__">format</span>(date);</span><br><span class="line"></span><br><span class="line">System.out.<span class="title function_ invoke__">println</span>(<span class="string">&quot;当前时间：&quot;</span> + now);</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">当前时间：<span class="number">2018</span>-<span class="number">06</span>-<span class="number">29</span> <span class="number">17</span>:<span class="number">44</span>:<span class="number">41</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Math类操作数据"><a href="#Math类操作数据" class="headerlink" title="Math类操作数据"></a>Math类操作数据</h3><p>Math类位于java.lang包中，包含用于执行基本数学运算的方法，Math类的所有的方法都是静态方法，所以使用该类中的方法时，可以直接使用类名.方法名。</p>
+<p>常用的方法：</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">说明</th>
+<th align="left">返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">round</td>
+<td align="left">返回四舍五入后的整数</td>
+<td align="left">long</td>
+</tr>
+<tr>
+<td align="left">floor</td>
+<td align="left">返回小于参数的最大整数</td>
+<td align="left">double</td>
+</tr>
+<tr>
+<td align="left">ceil</td>
+<td align="left">返回大于参数的最小整数</td>
+<td align="left">double</td>
+</tr>
+<tr>
+<td align="left">random</td>
+<td align="left">返回[0，1）之前的随机数浮点数</td>
+<td align="left">double</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.<span class="keyword">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MathTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">static</span> <span class="keyword">void</span> <span class="title function_ invoke__">main</span>(String[] args) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		MathTest test = <span class="keyword">new</span> <span class="title class_">MathTest</span>();</span><br><span class="line">		test.<span class="title function_ invoke__">MathRandomTest</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_ invoke__">MathRandomTest</span>() &#123;</span><br><span class="line">		<span class="keyword">int</span> nums[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line">		<span class="keyword">float</span> douStr = <span class="number">45.66</span>f;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++) &#123;</span><br><span class="line">			nums[i] = (<span class="keyword">int</span>)(Math.<span class="title function_ invoke__">random</span>() * <span class="number">100</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> num:nums) &#123;</span><br><span class="line">			System.out.<span class="keyword">print</span>(num+<span class="string">&quot;-&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(Math.<span class="title function_ invoke__">ceil</span>(douStr));</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(Math.<span class="title function_ invoke__">floor</span>(douStr));</span><br><span class="line">		System.out.<span class="title function_ invoke__">println</span>(Math.<span class="title function_ invoke__">round</span>(douStr));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">  <span class="number">44</span>-<span class="number">98</span>-<span class="number">49</span>-<span class="number">49</span>-<span class="number">94</span>-<span class="number">13</span>-<span class="number">64</span>-<span class="number">86</span>-<span class="number">72</span>-<span class="number">50</span>-</span><br><span class="line">  <span class="number">46.0</span></span><br><span class="line">  <span class="number">45.0</span></span><br><span class="line">  <span class="number">46</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-04%EF%BC%88%E7%BB%A7%E6%89%BF%E3%80%81%E9%87%8D%E5%86%99%E3%80%81super%E3%80%81%E5%A4%9A%E6%80%81%E3%80%81%E5%A4%9A%E6%80%81%E7%9A%84%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E3%80%81%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%EF%BC%89/" rel="prev" title="Java学习-part.04（继承、重写、super、多态、多态的引用类型转换、抽象类、接口）">
+      <i class="fa fa-chevron-left"></i> Java学习-part.04（继承、重写、super、多态、多态的引用类型转换、抽象类、接口）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-06%EF%BC%88%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6collection-ArrayList%E3%80%81HashSet%EF%BC%89/" rel="next" title="Java学习-part.06（集合框架collection-ArrayList、HashSet）">
+      Java学习-part.06（集合框架collection-ArrayList、HashSet） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Java异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="nav-number">1.2.</span> <span class="nav-text">自定义异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E9%93%BE"><span class="nav-number">1.3.</span> <span class="nav-text">异常链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%BD%A6%E4%B9%8B%E9%89%B4"><span class="nav-number">1.4.</span> <span class="nav-text">前车之鉴</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.</span> <span class="nav-text">Java中的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0%E4%B8%8E%E8%AF%AD%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">概述与语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">字符串的不变性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%9C-x3D-x3D-%E2%80%9D-%E5%92%8C-equals-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.3.</span> <span class="nav-text">“&#x3D;&#x3D;” 和 equals() 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E4%B8%AD%E7%9A%84StringBuilder%E7%B1%BB%E5%8F%8A%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">Java中的StringBuilder类及常用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E4%B8%AD%E7%9A%84%E5%8C%85%E8%A3%85%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">Java中的包装类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%8C%85%E8%A3%85%E7%B1%BB%E7%9A%84%E8%BD%AC%E6%8D%A2-%EF%BC%88%E8%A3%85%E7%AE%B1%E4%B8%8E%E6%8B%86%E7%AE%B1%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">基本数据类型与包装类的转换 （装箱与拆箱）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.</span> <span class="nav-text">基本数据类型与字符串之间的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.1.</span> <span class="nav-text">基本类型转字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.2.</span> <span class="nav-text">字符串转基本类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Date%E5%92%8CSimpleDateFormat%E7%B1%BB%E8%A1%A8%E7%A4%BA%E6%97%B6%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">使用Date和SimpleDateFormat类表示时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Calendar-%E7%B1%BB%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">Calendar 类的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Math%E7%B1%BB%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE"><span class="nav-number">8.</span> <span class="nav-text">Math类操作数据</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>

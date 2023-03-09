@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="如今，每个软件企业都在谈论DevOps，他们希望从DevOps中获得好处。DevOps本身不是开发工具，而是开发文化的一次革新，为了能够成功地实施DevOps，需要借助一些工具。Pavan Belagatti列出了7个强有力的工具可以帮助企业成功地实施DevOps。  DockerDocker是容器市场的领头羊。随着越来越多的软件企业采用了微服务架构，容器化也成为一个大趋势。在接下来的几年，Do">
+<meta property="og:type" content="article">
+<meta property="og:title" content="成功实施DevOps的七个有力工具">
+<meta property="og:url" content="http://www.xiang007.com/2018/05/18/%E6%88%90%E5%8A%9F%E5%AE%9E%E6%96%BDDevOps%E7%9A%84%E4%B8%83%E4%B8%AA%E6%9C%89%E5%8A%9B%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="如今，每个软件企业都在谈论DevOps，他们希望从DevOps中获得好处。DevOps本身不是开发工具，而是开发文化的一次革新，为了能够成功地实施DevOps，需要借助一些工具。Pavan Belagatti列出了7个强有力的工具可以帮助企业成功地实施DevOps。  DockerDocker是容器市场的领头羊。随着越来越多的软件企业采用了微服务架构，容器化也成为一个大趋势。在接下来的几年，Do">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-05-18T08:46:48.000Z">
+<meta property="article:modified_time" content="2023-03-09T01:59:11.235Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="devops">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.xiang007.com/2018/05/18/%E6%88%90%E5%8A%9F%E5%AE%9E%E6%96%BDDevOps%E7%9A%84%E4%B8%83%E4%B8%AA%E6%9C%89%E5%8A%9B%E5%B7%A5%E5%85%B7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>成功实施DevOps的七个有力工具 | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/18/%E6%88%90%E5%8A%9F%E5%AE%9E%E6%96%BDDevOps%E7%9A%84%E4%B8%83%E4%B8%AA%E6%9C%89%E5%8A%9B%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          成功实施DevOps的七个有力工具
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-18 16:46:48" itemprop="dateCreated datePublished" datetime="2018-05-18T16:46:48+08:00">2018-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>如今，每个软件企业都在谈论DevOps，他们希望从DevOps中获得好处。DevOps本身不是开发工具，而是开发文化的一次革新，为了能够成功地实施DevOps，需要借助一些工具。Pavan Belagatti列出了7个强有力的工具可以帮助企业成功地实施DevOps。</p>
+</blockquote>
+<h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>Docker是容器市场的领头羊。随着越来越多的软件企业采用了微服务架构，容器化也成为一个大趋势。在接下来的几年，Docker会变得越来越流行。我们已经在生产环境使用Docker部署了很多服务。Docker简化了配置管理，提升了可操控性，并让横向扩展变得简单。Docker还能让容器在不同的位置自由地移动。</p>
+<span id="more"></span>
+<h4 id="Git（GitHub）"><a href="#Git（GitHub）" class="headerlink" title="Git（GitHub）"></a>Git（GitHub）</h4><p>Git是一个免费的开源分布式版本控制系统，不管是小型应用还是大型应，它都能应付自如。Git创建于10年前，因为当时的Linux社区需要这么一个可以支持分布式系统的SCM（Source Control Management）软件。这个平台有助于开发者们在上面进行协作。它的那些主要特性，比如代码仓库、代码拉取等等，对开发人员来说很有吸引力。与GitHub的集成十分容易，几乎任何系统都可以连接到GitHub上，没有什么特殊限制。GitHub还可以作为一个网络社交平台，你可以在上面放置你的个人信息和项目相关的数据。GitHub优于其它SCM工具的地方在于，它支持本地分支、过度区域和多工作流。</p>
+<h4 id="AWS"><a href="#AWS" class="headerlink" title="AWS"></a>AWS</h4><p>AWS为企业组织提供了灵活的服务，帮助企业高效地交付软件产品。相比敏捷，DevOps能够更快地交付产品，为了做到这一点，AWS为各个公司提供了强大的云计算服务。这些服务包括计算、存储、网络、数据库、数据分析、应用服务、部署、管理、移动、开发者工具以及IoT工具。</p>
+<h4 id="JIRA"><a href="#JIRA" class="headerlink" title="JIRA"></a>JIRA</h4><p>JIRA是来自Altassian公司的一款很受欢迎的敏捷开发工具，它提供了众多功能，比如缺陷跟踪、问题跟踪，并在某种程度上为企业提供了项目管理功能。它还支持Scrum、看板、敏捷报告、组合计划、插件、移动应用，并提供了一组健壮的API。</p>
+<h4 id="Ansible"><a href="#Ansible" class="headerlink" title="Ansible"></a>Ansible</h4><p>可以使用Ansible为DevOps打下牢固的根基。Ansible是一个简单但却十分强大的配置管理服务器，它帮助团队横向扩展IT自动化规模，管理复杂的部署，并提高生产力。它为团队乃至整个企业带来自动化。很多成功的公司都在使用Ansible来促进IT自动化，而且一旦用了Ansible就不会再考虑其它解决方案了。企业之所以喜欢Ansible，是因为它提供了一种完全不可变的服务器架构。不可变的服务器架构可以保证在添加、销毁或替换服务器时不会对服务造成任何影响。</p>
+<h4 id="Slack"><a href="#Slack" class="headerlink" title="Slack"></a>Slack</h4><p>Slack是一个集成工具，任何想实践敏捷和DevOps的组织都可以使用它。它容易监控，还支持通知机制，是一个简单且强大的工具。Slack通过创建通信通道来自动化执行常见的任务，并用它来分发实时信息，缩短团队间的反馈延迟，加快团队的行动，提升团队的生产力。</p>
+<h4 id="Shippable"><a href="#Shippable" class="headerlink" title="Shippable"></a>Shippable</h4><p>Shippable可以帮助软件企业加快创新进程。它是一个流水线式的持续部署平台，一般被作为托管服务或企业服务器来帮助软件企业走向现代化。它让编码、打包、部署、运行Docker容器变得更容易。Shippable通过它的CI和CD平台来支持自动化。它在不破坏安全性的前提下使用顺畅的部署来自动化执行那些重复的、机械化的任务。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/devops/" rel="tag"># devops</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/14/%E6%B3%B8%E6%B2%BD%E6%B9%96-%E5%A5%B3%E5%84%BF%E5%9B%BD%E4%B9%8B%E8%A1%8C/" rel="prev" title="泸沽湖-女儿国之行">
+      <i class="fa fa-chevron-left"></i> 泸沽湖-女儿国之行
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/05/23/Java%E5%AD%A6%E4%B9%A0-part-01%EF%BC%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%81%E5%8F%98%E9%87%8F%E3%80%81%E5%B8%B8%E9%87%8F%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E6%96%B9%E6%B3%95%E3%80%81%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%BD%BD%EF%BC%89/" rel="next" title="Java学习-part.01（数据类型、变量、常量、数组、方法、方法的重载）">
+      Java学习-part.01（数据类型、变量、常量、数组、方法、方法的重载） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker"><span class="nav-number">1.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%EF%BC%88GitHub%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Git（GitHub）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AWS"><span class="nav-number">3.</span> <span class="nav-text">AWS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JIRA"><span class="nav-number">4.</span> <span class="nav-text">JIRA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ansible"><span class="nav-number">5.</span> <span class="nav-text">Ansible</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Slack"><span class="nav-number">6.</span> <span class="nav-text">Slack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shippable"><span class="nav-number">7.</span> <span class="nav-text">Shippable</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">171k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+</body>
+</html>
