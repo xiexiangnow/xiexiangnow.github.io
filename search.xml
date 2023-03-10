@@ -2802,4 +2802,13 @@
         <tag>devops</tag>
       </tags>
   </entry>
+  <entry>
+    <title>测试文章</title>
+    <url>/2023/03/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<p>这里是测试文章，马上会删除！！！</p>
+]]></content>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
 </search>
