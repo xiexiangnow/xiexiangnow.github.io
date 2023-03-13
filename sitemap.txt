@@ -71,9 +71,9 @@ http://www.xiang007.com/tags/jquery/
 http://www.xiang007.com/tags/javascript/
 http://www.xiang007.com/tags/linux/
 http://www.xiang007.com/tags/python/
-http://www.xiang007.com/tags/php/
-http://www.xiang007.com/tags/nodejs/
 http://www.xiang007.com/tags/mac/
+http://www.xiang007.com/tags/nodejs/
+http://www.xiang007.com/tags/php/
 http://www.xiang007.com/tags/vue/
 http://www.xiang007.com/tags/mysql/
 http://www.xiang007.com/tags/devops/
@@ -88,9 +88,9 @@ http://www.xiang007.com/categories/jquery/
 http://www.xiang007.com/categories/javascript/
 http://www.xiang007.com/categories/linux/
 http://www.xiang007.com/categories/python/
-http://www.xiang007.com/categories/php/
-http://www.xiang007.com/categories/nodejs/
 http://www.xiang007.com/categories/mac/
+http://www.xiang007.com/categories/nodejs/
+http://www.xiang007.com/categories/php/
 http://www.xiang007.com/categories/vue/
 http://www.xiang007.com/categories/mysql/
 http://www.xiang007.com/categories/devops/
