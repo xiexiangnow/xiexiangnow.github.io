@@ -2802,4 +2802,23 @@
         <tag>php</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ajax轮询，定时去请求服务器数据</title>
+    <url>/2023/03/21/ajax%E8%BD%AE%E8%AF%A2%EF%BC%8C%E5%AE%9A%E6%97%B6%E5%8E%BB%E8%AF%B7%E6%B1%82%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>Notify.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取通知消息</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getNotifyCount</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$msg</span> = <span class="title function_ invoke__">db</span>(<span class="string">&#x27;message_logs&#x27;</span>)-&gt;<span class="title function_ invoke__">where</span>(<span class="string">&#x27;isscan&#x27;</span>,<span class="number">0</span>)-&gt;<span class="title function_ invoke__">count</span>();</span><br><span class="line">        <span class="title class_">RestfulTools</span>::<span class="title function_ invoke__">restData</span>(<span class="variable">$msg</span>); <span class="comment">//这里是封装好的json_encode方法</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><p>notify.js</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;span <span class="class"><span class="keyword">class</span>=&quot;<span class="title">am</span>-<span class="title">icon</span>-<span class="title">envelope</span>-<span class="title">o</span>&quot;&gt;&lt;/<span class="title">span</span>&gt; 消息 &lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">am</span>-<span class="title">badge</span> <span class="title">am</span>-<span class="title">badge</span>-<span class="title">warning</span>&quot; <span class="title">id</span>=&quot;<span class="title">msgCount</span>&quot;&gt; </span></span><br><span class="line"><span class="class"></span>&#123;<span class="variable">$msgCount</span>&#125;  <span class="comment">//这是是通过tp的 assign方法分配过来的变量，作为初始值</span></span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> getting = &#123;</span><br><span class="line">        url:<span class="string">&quot;&#123;:url(&#x27;Notify/getNotifyCount&#x27;)&#125;&quot;</span>,</span><br><span class="line">        dataType:<span class="string">&#x27;json&#x27;</span>,</span><br><span class="line">        success:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">            console.<span class="title function_ invoke__">log</span>(res);</span><br><span class="line">            <span class="keyword">var</span> msgCount = res.result;</span><br><span class="line">            $(<span class="string">&quot;#msgCount&quot;</span>).<span class="title function_ invoke__">html</span>(msgCount); <span class="comment">//用js的 html方法去改变id为msgCount的值</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Ajax定时访问服务端,这里是3分钟请求一次。</span></span><br><span class="line">    window.<span class="title function_ invoke__">setInterval</span>(function()&#123;</span><br><span class="line">        $.<span class="title function_ invoke__">ajax</span>(getting)</span><br><span class="line">    &#125;,<span class="number">180000</span>);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
 </search>
