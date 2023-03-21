@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="内容概述php使用rabbitMQ做消息队列，这是一种常见的异步的工作方式，在很多的工作场景都能遇到，在阅读该文章之前，需要提前了解rabbitMQ的工作原理以及下面的几种工作模式，这样更有助于阅读这篇文章，以下代码是通过自行封装对amqplib的各种模式的使用，便于记忆，在此记录。 composer安装扩展12composer安装composer require  PHP-amqplib&#x2F;PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php结合php-ampqlib做rabbitMQ队列">
+<meta property="og:url" content="http://www.xiang007.com/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="内容概述php使用rabbitMQ做消息队列，这是一种常见的异步的工作方式，在很多的工作场景都能遇到，在阅读该文章之前，需要提前了解rabbitMQ的工作原理以及下面的几种工作模式，这样更有助于阅读这篇文章，以下代码是通过自行封装对amqplib的各种模式的使用，便于记忆，在此记录。 composer安装扩展12composer安装composer require  PHP-amqplib&#x2F;PHP">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-03-21T06:16:06.000Z">
+<meta property="article:modified_time" content="2023-03-21T06:29:37.752Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.xiang007.com/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>php结合php-ampqlib做rabbitMQ队列 | 翔奕时代</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php结合php-ampqlib做rabbitMQ队列
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-21 14:16:06 / 修改时间：14:29:37" itemprop="dateCreated datePublished" datetime="2023-03-21T14:16:06+08:00">2023-03-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="内容概述"><a href="#内容概述" class="headerlink" title="内容概述"></a>内容概述</h3><p>php使用rabbitMQ做消息队列，这是一种常见的异步的工作方式，在很多的工作场景都能遇到，在阅读该文章之前，需要提前了解rabbitMQ的工作原理以及下面的几种工作模式，这样更有助于阅读这篇文章，以下代码是通过自行封装对amqplib的各种模式的使用，便于记忆，在此记录。</p>
+<h3 id="composer安装扩展"><a href="#composer安装扩展" class="headerlink" title="composer安装扩展"></a>composer安装扩展</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">composer安装</span><br><span class="line">composer <span class="keyword">require</span>  PHP-amqplib/PHP-amqplib</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h3><h4 id="1、加入队列"><a href="#1、加入队列" class="headerlink" title="1、加入队列"></a>1、加入队列</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//RabbitMQ使用</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test4</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="variable">$client</span> = <span class="title class_">Producer</span>::<span class="title function_ invoke__">getInstance</span>();</span><br><span class="line">       <span class="variable">$res</span> = <span class="variable">$client</span>-&gt;<span class="title function_ invoke__">publishMsg</span>(<span class="string">&#x27;exchange_name&#x27;</span>,[<span class="string">&#x27;queue_name&#x27;</span>],<span class="string">&#x27;111111&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">       <span class="title function_ invoke__">dump</span>(<span class="variable">$res</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-生产者类库"><a href="#2-生产者类库" class="headerlink" title="2.生产者类库"></a>2.生产者类库</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>PHP</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">services</span>\<span class="title class_">rabbitmq</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPAmqpLib</span>\<span class="title">Connection</span>\<span class="title">AMQPStreamConnection</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPAmqpLib</span>\<span class="title">Exception</span>\<span class="title">AMQPIOException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPAmqpLib</span>\<span class="title">Exchange</span>\<span class="title">AMQPExchangeType</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPAmqpLib</span>\<span class="title">Message</span>\<span class="title">AMQPMessage</span>;</span><br><span class="line"><span class="comment">/**生产者类</span></span><br><span class="line"><span class="comment"> * Class Producer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@package</span> services\rabbitmq</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$host</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$port</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$user</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$pwd</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$vhost</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$client</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$instance</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$host</span>,<span class="variable">$port</span>,<span class="variable">$user</span>,<span class="variable">$pwd</span>,<span class="variable">$vhost</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$host</span>) || <span class="keyword">empty</span>(<span class="variable">$port</span>) || <span class="keyword">empty</span>(<span class="variable">$user</span>) || <span class="keyword">empty</span>(<span class="variable">$pwd</span>) || <span class="keyword">empty</span>(<span class="variable">$vhost</span>))&#123;</span><br><span class="line">            <span class="variable">$info</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;config&#x27;</span>)[<span class="string">&#x27;RabbitMQ&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;host = <span class="variable">$info</span>[<span class="string">&#x27;address&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;port = <span class="variable">$info</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;user = <span class="variable">$info</span>[<span class="string">&#x27;user&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;pwd = <span class="variable">$info</span>[<span class="string">&#x27;pwd&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;vhost = <span class="variable">$info</span>[<span class="string">&#x27;vhost&#x27;</span>];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;host = <span class="variable">$host</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;port = <span class="variable">$port</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;user = <span class="variable">$user</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;pwd = <span class="variable">$pwd</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;vhost = <span class="variable">$vhost</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$client</span> = <span class="keyword">new</span> <span class="title class_">AMQPStreamConnection</span>(<span class="variable language_">$this</span>-&gt;host, <span class="variable language_">$this</span>-&gt;port, <span class="variable language_">$this</span>-&gt;user, <span class="variable language_">$this</span>-&gt;pwd, <span class="variable language_">$this</span>-&gt;vhost);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 获取实例 </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $host</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $port</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $pwd</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $vhost</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Producer</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span>(<span class="params"><span class="variable">$host</span> = <span class="string">&#x27;&#x27;</span>,<span class="variable">$port</span> = <span class="string">&#x27;&#x27;</span>,<span class="variable">$user</span> = <span class="string">&#x27;&#x27;</span>,<span class="variable">$pwd</span> = <span class="string">&#x27;&#x27;</span>,<span class="variable">$vhost</span> = <span class="string">&#x27;&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!(<span class="built_in">self</span>::<span class="variable">$instance</span> <span class="keyword">instanceof</span> <span class="built_in">self</span>)) &#123;</span><br><span class="line">            <span class="built_in">self</span>::<span class="variable">$instance</span> = <span class="keyword">new</span> <span class="built_in">self</span>(<span class="variable">$host</span>,<span class="variable">$port</span>,<span class="variable">$user</span>,<span class="variable">$pwd</span>,<span class="variable">$vhost</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$instance</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">publishMsg</span>(<span class="params"><span class="variable">$exchange</span>,<span class="variable">$QueueArr</span>,<span class="variable">$msg</span>,<span class="variable">$message_id</span>,<span class="variable">$route_key</span> = <span class="string">&#x27;&#x27;</span>,<span class="variable">$expiration</span> = <span class="number">3600</span> * <span class="number">90</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$channel</span> = <span class="built_in">self</span>::<span class="variable">$client</span>-&gt;<span class="title function_ invoke__">channel</span>();</span><br><span class="line">        <span class="comment">/**交换机声明</span></span><br><span class="line"><span class="comment">         * $exchange 交换机名称</span></span><br><span class="line"><span class="comment">         * AMQPExchangeType::DIRECT 路由模式</span></span><br><span class="line"><span class="comment">         * passive: false</span></span><br><span class="line"><span class="comment">         * durable: true  持久化  交换器将在服务器重启后继续存在</span></span><br><span class="line"><span class="comment">         * auto_delete: false  一旦通道关闭，交换器将不会被删除</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">exchange_declare</span>(<span class="variable">$exchange</span>, <span class="title class_">AMQPExchangeType</span>::<span class="variable constant_">DIRECT</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, [], <span class="literal">null</span>);</span><br><span class="line">        <span class="comment">//绑定多个对列</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$QueueArr</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>)&#123;</span><br><span class="line">            <span class="comment">/**声明队列（设置队列的时间必须设置一次，如要修改需要删除这个队列）new AMQPTable([&#x27;x-message-ttl&#x27;=&gt;10000])</span></span><br><span class="line"><span class="comment">             * $value  队列名称</span></span><br><span class="line"><span class="comment">             * passive false</span></span><br><span class="line"><span class="comment">             * 持久durable true 队列将在服务器重启后继续存在</span></span><br><span class="line"><span class="comment">             * 互斥exclusive false  队列可以通过其他渠道访问</span></span><br><span class="line"><span class="comment">             * auto_delete false 通道关闭后，队列不会被删除</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">queue_declare</span>(<span class="variable">$value</span>,<span class="literal">false</span>,<span class="literal">true</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">false</span>);</span><br><span class="line">            <span class="comment">//队列和交换机绑定</span></span><br><span class="line">            <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">queue_bind</span>(<span class="variable">$value</span>, <span class="variable">$exchange</span>,<span class="variable">$route_key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//发送消息</span></span><br><span class="line">        <span class="variable">$message</span> = <span class="keyword">new</span> <span class="title class_">AMQPMessage</span>(<span class="variable">$msg</span>,<span class="keyword">array</span>(<span class="string">&#x27;content_type&#x27;</span> =&gt; <span class="string">&#x27;text/plain&#x27;</span>, <span class="string">&#x27;delivery_mode&#x27;</span> =&gt; <span class="title class_">AMQPMessage</span>::<span class="variable constant_">DELIVERY_MODE_PERSISTENT</span>,<span class="string">&#x27;expiration&#x27;</span>=&gt;<span class="variable">$expiration</span> * <span class="number">1000</span>,<span class="string">&#x27;message_id&#x27;</span>=&gt;<span class="variable">$message_id</span>));</span><br><span class="line">        <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">basic_publish</span>(<span class="variable">$message</span>,<span class="variable">$exchange</span>,<span class="variable">$route_key</span>);</span><br><span class="line">        <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$client</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-消费者类库"><a href="#3-消费者类库" class="headerlink" title="3.消费者类库"></a>3.消费者类库</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>PHP</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">services</span>\<span class="title class_">rabbitmq</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPAmqpLib</span>\<span class="title">Connection</span>\<span class="title">AMQPStreamConnection</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$host</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$port</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$user</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$pwd</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$vhost</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$client</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$channel</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$info</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;config&#x27;</span>)[<span class="string">&#x27;RabbitMQ&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;host = <span class="variable">$info</span>[<span class="string">&#x27;address&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;port = <span class="variable">$info</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;user = <span class="variable">$info</span>[<span class="string">&#x27;user&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;pwd = <span class="variable">$info</span>[<span class="string">&#x27;pwd&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;vhost = <span class="variable">$info</span>[<span class="string">&#x27;vhost&#x27;</span>];</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;client = <span class="keyword">new</span> <span class="title class_">AMQPStreamConnection</span>(<span class="variable language_">$this</span>-&gt;host, <span class="variable language_">$this</span>-&gt;port, <span class="variable language_">$this</span>-&gt;user, <span class="variable language_">$this</span>-&gt;pwd, <span class="variable language_">$this</span>-&gt;vhost);</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;channel = <span class="variable language_">$this</span>-&gt;client-&gt;<span class="title function_ invoke__">channel</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * queue: queue_name    // 被消费的队列名称</span></span><br><span class="line"><span class="comment">         * consumer_tag: consumer_tag // 消费者客户端身份标识，用于区分多个客户端</span></span><br><span class="line"><span class="comment">         * no_local: false      // 这个功能属于AMQP的标准，但是RabbitMQ并没有做实现</span></span><br><span class="line"><span class="comment">         * no_ack: true         // 收到消息后，是否不需要回复确认即被认为被消费</span></span><br><span class="line"><span class="comment">         * exclusive: false     // 是否排他，即这个队列只能由一个消费者消费。适用于任务不允许进行并发处理的情况下</span></span><br><span class="line"><span class="comment">         * Nowait: false        // 不返回执行结果，但是如果排他开启的话，则必须需要等待结果的，如果两个一起开就会报错</span></span><br><span class="line"><span class="comment">         * callback: $callback  // 回调逻辑处理函数</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;channel-&gt;<span class="title function_ invoke__">basic_consume</span>(<span class="string">&#x27;queue_name&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>,[<span class="variable">$this</span>,<span class="string">&#x27;process_message&#x27;</span>]);</span><br><span class="line">        <span class="title function_ invoke__">register_shutdown_function</span>([<span class="variable">$this</span>, <span class="string">&#x27;shutdown&#x27;</span>], <span class="variable">$this</span>-&gt;channel, <span class="variable">$this</span>-&gt;client);</span><br><span class="line">        <span class="keyword">while</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$this</span>-&gt;channel-&gt;callbacks)) &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;channel-&gt;<span class="title function_ invoke__">wait</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">shutdown</span>(<span class="params"><span class="variable">$channel</span>, <span class="variable">$connection</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$channel</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">        <span class="variable">$connection</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">        <span class="title function_ invoke__">save_log</span>(<span class="string">&#x27;close&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">process_message</span>(<span class="params"><span class="variable">$message</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span>  <span class="variable">$message</span>-&gt;body.<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="comment">//手动发送ack</span></span><br><span class="line">        <span class="variable">$message</span>-&gt;delivery_info[<span class="string">&#x27;channel&#x27;</span>]-&gt;<span class="title function_ invoke__">basic_ack</span>(<span class="variable">$message</span>-&gt;delivery_info[<span class="string">&#x27;delivery_tag&#x27;</span>]);</span><br><span class="line">        <span class="comment">// Send a message with the string &quot;quit&quot; to cancel the consumer.</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$message</span>-&gt;body === <span class="string">&#x27;quit&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable">$message</span>-&gt;delivery_info[<span class="string">&#x27;channel&#x27;</span>]-&gt;<span class="title function_ invoke__">basic_cancel</span>(<span class="variable">$message</span>-&gt;delivery_info[<span class="string">&#x27;consumer_tag&#x27;</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、PHP中-register-shutdown-function-函数的基础介绍与用法详解"><a href="#4、PHP中-register-shutdown-function-函数的基础介绍与用法详解" class="headerlink" title="4、PHP中 register_shutdown_function 函数的基础介绍与用法详解"></a>4、PHP中 register_shutdown_function 函数的基础介绍与用法详解</h4><p>参考链接：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/129213.htm">https://www.jb51.net/article/129213.htm</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/img/wx.png" alt="谢翔 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/zfb.png" alt="谢翔 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/21/PHP%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%95%8F%E6%84%9F%E8%AF%8D%E8%BF%87%E6%BB%A4%E6%96%B9%E6%B3%95/" rel="prev" title="PHP实现的敏感词过滤方法">
+      <i class="fa fa-chevron-left"></i> PHP实现的敏感词过滤方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">内容概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#composer%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95"><span class="nav-number">2.</span> <span class="nav-text">composer安装扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">代码展示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%8A%A0%E5%85%A5%E9%98%9F%E5%88%97"><span class="nav-number">3.1.</span> <span class="nav-text">1、加入队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%94%9F%E4%BA%A7%E8%80%85%E7%B1%BB%E5%BA%93"><span class="nav-number">3.2.</span> <span class="nav-text">2.生产者类库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%B6%88%E8%B4%B9%E8%80%85%E7%B1%BB%E5%BA%93"><span class="nav-number">3.3.</span> <span class="nav-text">3.消费者类库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81PHP%E4%B8%AD-register-shutdown-function-%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D%E4%B8%8E%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.4.</span> <span class="nav-text">4、PHP中 register_shutdown_function 函数的基础介绍与用法详解</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/head_img.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/%22" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;&quot;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">178k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:42</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/nietzche.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
