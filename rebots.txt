@@ -15,4 +15,4 @@ Disallow: /fancybox/
 
 # 记得替换成你的域名
 Sitemap: https://xiang007.com/sitemap.xml
-Sitemap: https://xiang007.com/baidusitemap.xml主动推送
+Sitemap: https://xiang007.com/baidusitemap.xml
