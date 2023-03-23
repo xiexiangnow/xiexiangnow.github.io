@@ -2868,6 +2868,7 @@
     <content><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>用redis作 消息队列，php连接redis，用brpop函数消费队列时，60秒连接会自动断开，报错：read error on connection</p>
 <p><img src="/../img/redis-23-01.png" alt="redis"></p>
 <h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>查看了下php.ini文件里面有个参数default_socket_timeout &#x3D; 60，就是这个配置导致redis过60秒会自动断开。<br>这个配置是什么意思？default_socket_timeout是socket流的超时参数，即socket流从建立到传输再到关闭整个过程必须要在这个参数设置的时间以内完成，如果不能完成，那么PHP将自动结束这个socket并返回一个警告。</p>
+<span id="more"></span>
 <p>由于php得redis扩展是基于php 的socket方式实现，因此该参数值同样会起作用。在redis里面brpop会建立一个socket流，如果这个socket流建立之后超过特定的时间都没有返回则会自动结束该socket流。</p>
 <h3 id="解决方案1"><a href="#解决方案1" class="headerlink" title="解决方案1"></a>解决方案1</h3><p>动态修改 php.ini , 在连接redis处把 default_socket_timeout 这个参数设置成-1 不超时即可。</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;default_socket_timeout&#x27;</span>, -<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
