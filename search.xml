@@ -2882,4 +2882,20 @@
         <tag>redis,php</tag>
       </tags>
   </entry>
+  <entry>
+    <title>docker容器内部无法连网</title>
+    <url>/2023/03/24/docker%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E7%BD%91/</url>
+    <content><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>docker创建的容器内部无法访问网络</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在容器内部执行</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;nameserver 114.114.114.114&quot;</span> &gt;&gt; /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.xiang007.com/2023/03/24/docker%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E7%BD%91/</loc>
+    <lastmod>2023-03-24</lastmod>
+  </url>
+  <url>
     <loc>http://www.xiang007.com/2023/03/23/redis-%E8%BF%9E%E6%8E%A5%E6%8A%A5%E9%94%99read-error-on-connection%E8%A7%A3%E5%86%B3/</loc>
     <lastmod>2023-03-23</lastmod>
   </url>
