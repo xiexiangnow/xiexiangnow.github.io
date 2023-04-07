@@ -2986,6 +2986,8 @@
 <h3 id="URL参数X-Bogus"><a href="#URL参数X-Bogus" class="headerlink" title="URL参数X-Bogus"></a>URL参数X-Bogus</h3><p>X-Bogus你可以理解为是一个根据视频ID及user-agent通过JS生成的用户信息参数，它可以用于校验，详细的一篇分析可以参考Freebuf上的《【JS 逆向百例】某音 X-Bogus 逆向分析，JSVMP 纯算法还原》</p>
 <p>X-Bogus简单的理解就是通过js算法生成的一个秘钥，抖音通过这个秘钥能得到身份验证</p>
 <p>文章后面会详细介绍X-Bogus的获取</p>
+<span id="more"></span>
+
 <p>去抖音获取视频的完整链接为：</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">https:<span class="comment">//www.douyin.com/aweme/v1/web/aweme/detail/?aweme_id=7190049956269444386&amp;aid=1128&amp;version_name=23.5.0&amp;device_platform=android&amp;os_version=2333&amp;X-Bogus=DFSzswSLfwUANnEftaw7nt9WcBJN</span></span><br></pre></td></tr></table></figure>
 
