@@ -209,6 +209,143 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/04/07/%E6%8A%96%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90%E9%99%84%E4%BB%A3%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/07/%E6%8A%96%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90%E9%99%84%E4%BB%A3%E7%A0%81/" class="post-title-link" itemprop="url">抖音视频去水印接口分析附代码</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-07 14:27:03 / 修改时间：15:06:02" itemprop="dateCreated datePublished" datetime="2023-04-07T14:27:03+08:00">2023-04-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文通过php代码通过抖音链接去获取抖音无水印视频，也可以批量获取下载抖音视频，禁止转载</p>
+</blockquote>
+<h3 id="请求过程分析"><a href="#请求过程分析" class="headerlink" title="请求过程分析"></a>请求过程分析</h3><p>我们还是先获取一个抖音链接</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//v.douyin.com/S2pF3G8/</span></span><br></pre></td></tr></table></figure>
+
+<p>通过访问重定向</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.douyin.com/video/7190042191169883427</span></span><br></pre></td></tr></table></figure>
+
+<p>然后提取到其中的视频ID</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7190042191169883427</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="URL参数X-Bogus"><a href="#URL参数X-Bogus" class="headerlink" title="URL参数X-Bogus"></a>URL参数X-Bogus</h3><p>X-Bogus你可以理解为是一个根据视频ID及user-agent通过JS生成的用户信息参数，它可以用于校验，详细的一篇分析可以参考Freebuf上的《【JS 逆向百例】某音 X-Bogus 逆向分析，JSVMP 纯算法还原》</p>
+<p>X-Bogus简单的理解就是通过js算法生成的一个秘钥，抖音通过这个秘钥能得到身份验证</p>
+<p>文章后面会详细介绍X-Bogus的获取</p>
+<p>去抖音获取视频的完整链接为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.douyin.com/aweme/v1/web/aweme/detail/?aweme_id=7190049956269444386&amp;aid=1128&amp;version_name=23.5.0&amp;device_platform=android&amp;os_version=2333&amp;X-Bogus=DFSzswSLfwUANnEftaw7nt9WcBJN</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Cookie参数"><a href="#Cookie参数" class="headerlink" title="Cookie参数"></a>Cookie参数</h3><p>完整的Cookie需要包含以下内容</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msToken=uTa38b9QFHB6JtEDzH9S4np17qxpG6OrROHQ8at2cBpoKfUb0UWmTkjCSpf72EcUrJgWTIoN6UgAv5BTXtCbOAhJcIRKyZIT7TMYapeOSpf;odin_tt=<span class="number">324</span>fb4ea4a89c0c05827e18a1ed9cf9bf8a17f7705fcc793fec935b637867e2a5a9b8168c885554d029919117a18ba69; ttwid=<span class="number">1</span>%<span class="number">7</span>CWBuxH_bhbuTENNtACXoesI5QHV2Dt9-vkMGVHSRRbgY%<span class="number">7</span>C1677118712%<span class="number">7</span>C1d87ba1ea2cdf05d80204aea2e1036451dae638e7765b8a4d59d87fa05dd39ff; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWNsaWVudC1jc3IiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLVxyXG5NSUlCRFRDQnRRSUJBREFuTVFzd0NRWURWUVFHRXdKRFRqRVlNQllHQTFVRUF3d1BZbVJmZEdsamEyVjBYMmQxXHJcbllYSmtNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVKUDZzbjNLRlFBNUROSEcyK2F4bXAwNG5cclxud1hBSTZDU1IyZW1sVUE5QTZ4aGQzbVlPUlI4NVRLZ2tXd1FJSmp3Nyszdnc0Z2NNRG5iOTRoS3MvSjFJc3FBc1xyXG5NQ29HQ1NxR1NJYjNEUUVKRGpFZE1Cc3dHUVlEVlIwUkJCSXdFSUlPZDNkM0xtUnZkWGxwYmk1amIyMHdDZ1lJXHJcbktvWkl6ajBFQXdJRFJ3QXdSQUlnVmJkWTI0c0RYS0c0S2h3WlBmOHpxVDRBU0ROamNUb2FFRi9MQnd2QS8xSUNcclxuSURiVmZCUk1PQVB5cWJkcytld1QwSDZqdDg1czZZTVNVZEo5Z2dmOWlmeTBcclxuLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tXHJcbiJ9</span><br></pre></td></tr></table></figure>
+
+<p>准确来说就是四个参数</p>
+<ul>
+<li>msToken</li>
+<li>odin_tt</li>
+<li>ttwid</li>
+<li>bd_ticket_guard_client_data</li>
+</ul>
+<h4 id="msToken"><a href="#msToken" class="headerlink" title="msToken"></a>msToken</h4><p>Cookie中需要包含msToken，该参数其实就是一个107位的随机数，由大小写英文字母、数字组成<br>php实现方式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$msToken</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">str_shuffle</span>(<span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>), <span class="number">0</span>, <span class="number">107</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="odin-tt"><a href="#odin-tt" class="headerlink" title="odin_tt"></a>odin_tt</h4><p>原则上这个字段是通过请求获得的，我们这里直接写死</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">odin_tt=<span class="number">324</span>fb4ea4a89c0c05827e18a1ed9cf9bf8a17f7705fcc793fec935b637867e2a5a9b8168c885554d029919117a18ba69; ttwid=<span class="number">1</span>%<span class="number">7</span>CWBuxH_bhbuTENNtACXoesI5QHV2Dt9-vkMGVHSRRbgY%<span class="number">7</span>C1677118712%<span class="number">7</span>C1d87ba1ea2cdf05d80204aea2e1036451dae638e7765b8a4d59d87fa05dd39ff; </span><br></pre></td></tr></table></figure>
+
+<h4 id="ttwid"><a href="#ttwid" class="headerlink" title="ttwid"></a>ttwid</h4><p>ttwid直接写死就好</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ttwid=<span class="number">1</span>%<span class="number">7</span>C7ZLJzwjjEw7NLeADTpVd-<span class="number">3</span>eId-ZEIg0jpCEzTV9p_2A%<span class="number">7</span>C1677681848%<span class="number">7</span>C4ff4f97328ddc18b6d46c259bc26a05d2e654b50e3f21b27b8f9e9e8f9fcec82; Path=/; Domain=bytedance.com; Max-Age=<span class="number">31536000</span>; HttpOnly; Secure</span><br></pre></td></tr></table></figure>
+
+<h4 id="bd-ticket-guard-client-data"><a href="#bd-ticket-guard-client-data" class="headerlink" title="bd_ticket_guard_client_data"></a>bd_ticket_guard_client_data</h4><p>bd_ticket_guard_client_data直接写死就行了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWNsaWVudC1jc3IiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLVxyXG5NSUlCRFRDQnRRSUJBREFuTVFzd0NRWURWUVFHRXdKRFRqRVlNQllHQTFVRUF3d1BZbVJmZEdsamEyVjBYMmQxXHJcbllYSmtNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVKUDZzbjNLRlFBNUROSEcyK2F4bXAwNG5cclxud1hBSTZDU1IyZW1sVUE5QTZ4aGQzbVlPUlI4NVRLZ2tXd1FJSmp3Nyszdnc0Z2NNRG5iOTRoS3MvSjFJc3FBc1xyXG5NQ29HQ1NxR1NJYjNEUUVKRGpFZE1Cc3dHUVlEVlIwUkJCSXdFSUlPZDNkM0xtUnZkWGxwYmk1amIyMHdDZ1lJXHJcbktvWkl6ajBFQXdJRFJ3QXdSQUlnVmJkWTI0c0RYS0c0S2h3WlBmOHpxVDRBU0ROamNUb2FFRi9MQnd2QS8xSUNcclxuSURiVmZCUk1PQVB5cWJkcytld1QwSDZqdDg1czZZTVNVZEo5Z2dmOWlmeTBcclxuLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tXHJcbiJ9</span><br></pre></td></tr></table></figure>
+
+<h4 id="请求头其他参数"><a href="#请求头其他参数" class="headerlink" title="请求头其他参数"></a>请求头其他参数</h4><p>除了Cookie之外，其他的你还可以携带以下内容</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User-Agent : Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">109.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Referer : https:<span class="comment">//www.douyin.com/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="最终完整请求"><a href="#最终完整请求" class="headerlink" title="最终完整请求"></a>最终完整请求</h3><p>为了方便复现，我把curl命令也复制下来，方便各位改写自己的代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl --location --request GET <span class="string">&#x27;https://www.douyin.com/aweme/v1/web/aweme/detail/?aweme_id=7190042191169883427&amp;aid=1128&amp;version_name=23.5.0&amp;device_platform=android&amp;os_version=2333&amp;X-Bogus=DFSzswSLEjvANnEftawF309WcBjK&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Referer: https://www.douyin.com/&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Cookie: msToken=uTa38b9QFHB6JtEDzH9S4np17qxpG6OrROHQ8at2cBpoKfUb0UWmTkjCSpf72EcUrJgWTIoN6UgAv5BTXtCbOAhJcIRKyZIT7TMYapeOSpf;odin_tt=324fb4ea4a89c0c05827e18a1ed9cf9bf8a17f7705fcc793fec935b637867e2a5a9b8168c885554d029919117a18ba69; ttwid=1%7CWBuxH_bhbuTENNtACXoesI5QHV2Dt9-vkMGVHSRRbgY%7C1677118712%7C1d87ba1ea2cdf05d80204aea2e1036451dae638e7765b8a4d59d87fa05dd39ff; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWNsaWVudC1jc3IiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLVxyXG5NSUlCRFRDQnRRSUJBREFuTVFzd0NRWURWUVFHRXdKRFRqRVlNQllHQTFVRUF3d1BZbVJmZEdsamEyVjBYMmQxXHJcbllYSmtNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVKUDZzbjNLRlFBNUROSEcyK2F4bXAwNG5cclxud1hBSTZDU1IyZW1sVUE5QTZ4aGQzbVlPUlI4NVRLZ2tXd1FJSmp3Nyszdnc0Z2NNRG5iOTRoS3MvSjFJc3FBc1xyXG5NQ29HQ1NxR1NJYjNEUUVKRGpFZE1Cc3dHUVlEVlIwUkJCSXdFSUlPZDNkM0xtUnZkWGxwYmk1amIyMHdDZ1lJXHJcbktvWkl6ajBFQXdJRFJ3QXdSQUlnVmJkWTI0c0RYS0c0S2h3WlBmOHpxVDRBU0ROamNUb2FFRi9MQnd2QS8xSUNcclxuSURiVmZCUk1PQVB5cWJkcytld1QwSDZqdDg1czZZTVNVZEo5Z2dmOWlmeTBcclxuLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tXHJcbiJ9&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Accept: */*&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Host: www.douyin.com&#x27;</span> \</span><br><span class="line">--header <span class="string">&#x27;Connection: keep-alive&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：通过这个完整的请求就能拿到抖音的视频链接地址，上面的完整请求里面，最重要的就是url后面携带的参数<strong>X-Bogus</strong>，有这个参数才能拿到视频地址。</p>
+<h3 id="X-Bogus的获取"><a href="#X-Bogus的获取" class="headerlink" title="X-Bogus的获取"></a>X-Bogus的获取</h3><p>原理：X-Bogus参数的原理其实是通过python去执行js文件，得到这个参数，js里面具体是一个逻辑很复杂的一套算法在里面，通过这套算法就能拿到这个参数；<br>python执行文件和js文件请移步到这里下载：<a target="_blank" rel="noopener" href="https://github.com/xiexiangnow/X-Bogus">https://github.com/xiexiangnow/X-Bogus</a></p>
+<p>本文的案例是通过php去执行python脚本，再通过python脚本去执行js文件得到X-Bogus参数，<strong>python环境请使用2.7版本，python文件和js文件放在同一目录下</strong>。<br>python文件请使用如下案例：<br><strong>x-bogus.py</strong>:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># calc.py</span></span><br><span class="line">import sys</span><br><span class="line">import execjs</span><br><span class="line">import json</span><br><span class="line">import os</span><br><span class="line"><span class="keyword">from</span> urlparse import urlparse</span><br><span class="line"></span><br><span class="line">def <span class="title function_ invoke__">add</span>(url, user_agent):</span><br><span class="line">    query = <span class="title function_ invoke__">urlparse</span>(url).query</span><br><span class="line">    bogusJsPath = os.path.<span class="title function_ invoke__">abspath</span>(os.path.<span class="title function_ invoke__">dirname</span>( os.path.<span class="title function_ invoke__">abspath</span>(__file__)) + os.path.sep + <span class="string">&quot;X-Bogus.js&quot;</span>)</span><br><span class="line">    xbogus = execjs.<span class="title function_ invoke__">compile</span>(<span class="title function_ invoke__">open</span>(bogusJsPath, <span class="string">&#x27;r&#x27;</span>).<span class="title function_ invoke__">read</span>()).<span class="title function_ invoke__">call</span>(<span class="string">&#x27;sign&#x27;</span>, query, user_agent)</span><br><span class="line">    new_url = url + <span class="string">&quot;&amp;X-Bogus=&quot;</span> + xbogus</span><br><span class="line">    <span class="keyword">return</span> new_url</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        payload = sys.argv[<span class="number">1</span>]</span><br><span class="line">        params = json.<span class="title function_ invoke__">loads</span>(payload)</span><br><span class="line">        result = <span class="title function_ invoke__">add</span>(params[<span class="string">&#x27;url&#x27;</span>], params[<span class="string">&#x27;user_agent&#x27;</span>])</span><br><span class="line">        <span class="keyword">print</span>(result)</span><br><span class="line">    except <span class="string">&#x27;&#x27;</span>, e:</span><br><span class="line">        <span class="keyword">print</span>(e)</span><br></pre></td></tr></table></figure>
+
+<p><strong>x-bogus.js</strong>到这里去下载：<a target="_blank" rel="noopener" href="https://github.com/xiexiangnow/X-Bogus">https://github.com/xiexiangnow/X-Bogus</a></p>
+<p>注意：python脚本执行完成，会返回一个全新的且带有X-Bogus参数的一个链接地址。</p>
+<h3 id="php源码"><a href="#php源码" class="headerlink" title="php源码"></a>php源码</h3><p>请注意代码里面的注释位置，通过php去执行python脚本，python脚本去执行js脚本，在python脚本里面拼接好带有X-Bogus参数的链接地址并返回，再由php通过这个全新的链接去请求得到视频下载地址，并且已去除水印。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@notes</span>  下载抖音视频</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> $url   // 原始抖音视频链接地址</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> array|false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">parseDouyinVideoLink</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 获取重定向链接真实地址</span></span><br><span class="line">    <span class="variable">$headers</span> = <span class="title function_ invoke__">get_headers</span>(<span class="variable">$url</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="variable">$redirect_url</span> = <span class="variable">$headers</span>[<span class="string">&#x27;Location&#x27;</span>] ?? <span class="variable">$url</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$redirect_url</span>) &#123;</span><br><span class="line">        <span class="variable">$url</span> = <span class="variable">$redirect_url</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取视频id</span></span><br><span class="line">    <span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/(\d+)/&#x27;</span>, <span class="variable">$url</span>, <span class="variable">$matches</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$matches</span>)) &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;errorMsg = <span class="string">&#x27;视频id获取失败&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$matches</span>[<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 调用 Python 程序</span></span><br><span class="line">    <span class="variable">$output</span> = [];</span><br><span class="line">    <span class="variable">$params</span> = [</span><br><span class="line">        <span class="string">&#x27;url&#x27;</span> =&gt; <span class="string">&#x27;https://www.douyin.com/aweme/v1/web/aweme/detail/?aweme_id=&#x27;</span> . <span class="variable">$num</span> . <span class="string">&#x27;&amp;aid=1128&amp;version_name=23.5.0&amp;device_platform=android&amp;os_version=2333&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;user_agent&#x27;</span> =&gt; <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36&#x27;</span></span><br><span class="line">    ];</span><br><span class="line">    <span class="comment">// 拼接python执行文件地址</span></span><br><span class="line">    <span class="variable">$pyExe</span> = <span class="title function_ invoke__">app_path</span>() . <span class="string">&#x27;bin&#x27;</span> . DIRECTORY_SEPARATOR . <span class="string">&#x27;x-bogus.py&#x27;</span>;</span><br><span class="line">    <span class="variable">$payload</span> = <span class="title function_ invoke__">json_encode</span>(<span class="variable">$params</span>);</span><br><span class="line">    <span class="comment">// 执行python文件,在url上拼接x-bogus参数</span></span><br><span class="line">    <span class="variable">$cmd</span> = <span class="string">&quot;python <span class="subst">&#123;$pyExe&#125;</span> &quot;</span> . <span class="title function_ invoke__">escapeshellarg</span>(<span class="variable">$payload</span>);   <span class="comment">// escapeshellarg:把字符串转码为可以在 shell 命令里使用的参数</span></span><br><span class="line">    <span class="comment">// 执行python文件获取执行结果</span></span><br><span class="line">    <span class="title function_ invoke__">exec</span>(<span class="variable">$cmd</span>, <span class="variable">$output</span>, <span class="variable">$returnVar</span>);</span><br><span class="line">    <span class="comment">// 输出计算结果php think collection --type downloaddouyinvideo --url https://v.douyin.com/AAYyxQh/</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$returnVar</span> != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;errorMsg = <span class="string">&#x27;计算X-Bogus出错！&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//echo &#x27;最新url：&#x27; . $output[0] . &quot;\n&quot;;   // 为最终带x-bogus的参数的url地址</span></span><br><span class="line">    <span class="variable">$realVideoLink</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_parseDouyinVideoLink</span>(<span class="variable">$output</span>[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$realVideoLink</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取抖音视频资源，解析数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> $url // $url为带x-bogus的url地址</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> array|false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_parseDouyinVideoLink</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$msToken</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">str_shuffle</span>(<span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>), <span class="number">0</span>, <span class="number">107</span>);</span><br><span class="line">    <span class="variable">$curlHandle</span> = <span class="title function_ invoke__">curl_init</span>();</span><br><span class="line">    <span class="title function_ invoke__">curl_setopt_array</span>(<span class="variable">$curlHandle</span>, [</span><br><span class="line">        CURLOPT_URL =&gt; <span class="variable">$url</span>,</span><br><span class="line">        CURLOPT_RETURNTRANSFER =&gt; <span class="literal">true</span>,</span><br><span class="line">        CURLOPT_ENCODING =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        CURLOPT_MAXREDIRS =&gt; <span class="number">10</span>,</span><br><span class="line">        CURLOPT_TIMEOUT =&gt; <span class="number">0</span>,</span><br><span class="line">        CURLOPT_FOLLOWLOCATION =&gt; <span class="literal">true</span>,</span><br><span class="line">        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,</span><br><span class="line">        CURLOPT_SSL_VERIFYPEER =&gt; <span class="literal">false</span>,</span><br><span class="line">        CURLOPT_CUSTOMREQUEST =&gt; <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">        CURLOPT_HTTPHEADER =&gt; [</span><br><span class="line">            <span class="string">&#x27;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Referer: https://www.douyin.com/&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Cookie: msToken=&#x27;</span> . <span class="variable">$msToken</span> . <span class="string">&#x27;;odin_tt=324fb4ea4a89c0c05827e18a1ed9cf9bf8a17f7705fcc793fec935b637867e2a5a9b8168c885554d029919117a18ba69; ttwid=1%7CWBuxH_bhbuTENNtACXoesI5QHV2Dt9-vkMGVHSRRbgY%7C1677118712%7C1d87ba1ea2cdf05d80204aea2e1036451dae638e7765b8a4d59d87fa05dd39ff; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWNsaWVudC1jc3IiOiItLS0tLUJFR0lOIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLVxyXG5NSUlCRFRDQnRRSUJBREFuTVFzd0NRWURWUVFHRXdKRFRqRVlNQllHQTFVRUF3d1BZbVJmZEdsamEyVjBYMmQxXHJcbllYSmtNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVKUDZzbjNLRlFBNUROSEcyK2F4bXAwNG5cclxud1hBSTZDU1IyZW1sVUE5QTZ4aGQzbVlPUlI4NVRLZ2tXd1FJSmp3Nyszdnc0Z2NNRG5iOTRoS3MvSjFJc3FBc1xyXG5NQ29HQ1NxR1NJYjNEUUVKRGpFZE1Cc3dHUVlEVlIwUkJCSXdFSUlPZDNkM0xtUnZkWGxwYmk1amIyMHdDZ1lJXHJcbktvWkl6ajBFQXdJRFJ3QXdSQUlnVmJkWTI0c0RYS0c0S2h3WlBmOHpxVDRBU0ROamNUb2FFRi9MQnd2QS8xSUNcclxuSURiVmZCUk1PQVB5cWJkcytld1QwSDZqdDg1czZZTVNVZEo5Z2dmOWlmeTBcclxuLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tXHJcbiJ9&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept: */*&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Host: www.douyin.com&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Connection: keep-alive&#x27;</span></span><br><span class="line">        ],</span><br><span class="line">    ]);</span><br><span class="line">    <span class="variable">$response</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$curlHandle</span>);</span><br><span class="line">    <span class="comment">//返回结果</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$response</span>) &#123;</span><br><span class="line">        <span class="variable">$error</span> = <span class="title function_ invoke__">curl_errno</span>(<span class="variable">$curlHandle</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$url</span>.PHP_EOL;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;errorMsg = <span class="string">&#x27;网络错误:&#x27;</span> . <span class="variable">$error</span>;</span><br><span class="line">        <span class="title function_ invoke__">curl_close</span>(<span class="variable">$curlHandle</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_ invoke__">curl_close</span>(<span class="variable">$curlHandle</span>);</span><br><span class="line">    <span class="comment">// 再次发送请求，获得视频最终结果参数</span></span><br><span class="line">    <span class="variable">$arr</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$response</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">json_last_error</span>() != JSON_ERROR_NONE) &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;errorMsg = <span class="string">&#x27;json解析错误&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$arr</span>[<span class="string">&#x27;status_code&#x27;</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 重新组装需要的视频参数</span></span><br><span class="line">            <span class="variable">$data</span> = [</span><br><span class="line">                <span class="string">&#x27;code&#x27;</span>     =&gt; <span class="number">200</span>,</span><br><span class="line">                <span class="string">&#x27;msg&#x27;</span>      =&gt; <span class="string">&#x27;解析成功&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;author&#x27;</span>   =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;author&#x27;</span>][<span class="string">&#x27;nickname&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;uid&#x27;</span>      =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;author&#x27;</span>][<span class="string">&#x27;unique_id&#x27;</span>],</span><br><span class="line">                <span class="comment">//&#x27;avatar&#x27; =&gt; $arr[&#x27;aweme_detail&#x27;][&#x27;music&#x27;][&#x27;avatar_large&#x27;][&#x27;url_list&#x27;][0],</span></span><br><span class="line">                <span class="string">&#x27;like&#x27;</span>     =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;statistics&#x27;</span>][<span class="string">&#x27;digg_count&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;time&#x27;</span>     =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&quot;create_time&quot;</span>],</span><br><span class="line">                <span class="string">&#x27;title&#x27;</span>    =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;desc&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;cover&#x27;</span>    =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;video&#x27;</span>][<span class="string">&#x27;origin_cover&#x27;</span>][<span class="string">&#x27;url_list&#x27;</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">&#x27;url&#x27;</span>      =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;video&#x27;</span>][<span class="string">&#x27;play_addr&#x27;</span>][<span class="string">&#x27;url_list&#x27;</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">&#x27;musicurl&#x27;</span> =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;music&#x27;</span>][<span class="string">&#x27;play_url&#x27;</span>][<span class="string">&#x27;url_list&#x27;</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">&#x27;music&#x27;</span>    =&gt; [</span><br><span class="line">                    <span class="string">&#x27;author&#x27;</span> =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;music&#x27;</span>][<span class="string">&#x27;author&#x27;</span>],</span><br><span class="line">                    <span class="string">&#x27;avatar&#x27;</span> =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;music&#x27;</span>][<span class="string">&#x27;cover_large&#x27;</span>][<span class="string">&#x27;url_list&#x27;</span>][<span class="number">0</span>],</span><br><span class="line">                    <span class="string">&#x27;url&#x27;</span>    =&gt; <span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>][<span class="string">&#x27;music&#x27;</span>][<span class="string">&#x27;play_url&#x27;</span>][<span class="string">&#x27;url_list&#x27;</span>][<span class="number">0</span>],</span><br><span class="line">                ]</span><br><span class="line">            ];</span><br><span class="line">            <span class="keyword">return</span> <span class="variable">$data</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$exception</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">is_null</span>(<span class="variable">$arr</span>[<span class="string">&#x27;aweme_detail&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$arr</span>[<span class="string">&#x27;filter_detail&#x27;</span>][<span class="string">&#x27;detail_msg&#x27;</span>])) &#123;</span><br><span class="line">                <span class="variable">$errorMsg</span> = <span class="variable">$arr</span>[<span class="string">&#x27;filter_detail&#x27;</span>][<span class="string">&#x27;detail_msg&#x27;</span>];</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;errorReason = <span class="variable">$arr</span>[<span class="string">&#x27;filter_detail&#x27;</span>][<span class="string">&#x27;filter_reason&#x27;</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$errorMsg</span> = <span class="variable">$exception</span>-&gt;<span class="title function_ invoke__">getMessage</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;errorMsg = <span class="variable">$errorMsg</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;errorMsg = <span class="string">&#x27;抖音数据返回错误&#x27;</span> . <span class="variable">$arr</span>[<span class="string">&#x27;status_code&#x27;</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码解析了部分重要的视频参数，请自由获取，url为视频链接地址，<strong>特别特别注意</strong>：视频链接地址是有时效的，我在做这个需求的时候是将视频下载下来后上传到了阿里云的OSS，再从OSS拿到的视频最新链接，你也可以上传到你所在的资源库里面，再获取视频链接地址。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/04/04/supervisor%E7%9A%84%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1037,101 +1174,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2022/06/14/ElasticSearch%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/14/ElasticSearch%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">ElasticSearch基本操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-14 16:51:39" itemprop="dateCreated datePublished" datetime="2022-06-14T16:51:39+08:00">2022-06-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 17:18:30" itemprop="dateModified" datetime="2023-03-09T17:18:30+08:00">2023-03-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>7.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="安装篇"><a href="#安装篇" class="headerlink" title="安装篇"></a>安装篇</h2><h3 id="下载与配置"><a href="#下载与配置" class="headerlink" title="下载与配置"></a>下载与配置</h3><p>官网下载地址：<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/">https://www.elastic.co/cn/downloads/</a></p>
-<p>找到自己系统对应的版本，本文以Linux系统为例，只阐述单机版安装</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加新用户</span></span><br><span class="line">useradd els </span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个soft目录，存放下载的软件</span></span><br><span class="line">mkdir /soft </span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入，然后通过xftp工具，将刚刚下载的文件拖动到该目录下</span></span><br><span class="line">cd /soft</span><br><span class="line">wget https:<span class="comment">//artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-linux-x86_64.tar.gz </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压缩</span></span><br><span class="line">tar -zxvf elasticsearch-<span class="number">7.9</span>.<span class="number">1</span>-linux-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#重命名</span></span><br><span class="line">mv elasticsearch-<span class="number">7.9</span>.<span class="number">1</span>/ elsearch</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/14/ElasticSearch%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1202,7 +1244,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1270,12 +1312,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">200k</span>
+    <span title="站点总字数">212k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:02</span>
+    <span title="站点阅读时长">3:13</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
