@@ -3063,4 +3063,24 @@
         <tag>javascript</tag>
       </tags>
   </entry>
+  <entry>
+    <title>x-admin刷新后清除左侧菜单选中</title>
+    <url>/2023/04/20/x-admin%E5%88%B7%E6%96%B0%E5%90%8E%E6%B8%85%E9%99%A4%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E9%80%89%E4%B8%AD/</url>
+    <content><![CDATA[<p>在用x-admin前端模板的时候，发现了一个问题，对于左侧的菜单栏，如果点击之后（即菜单页为展开）再退出了系统，重新登录后，发现菜单栏和退出时是一样的</p>
+<p>而我们的要求是在刷新或者重新登录后，需要清除左侧菜单的选中效果</p>
+<h3 id="清除选中"><a href="#清除选中" class="headerlink" title="清除选中"></a>清除选中</h3><p>我们只需要在页面加载的地方加如下js代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//清除缓存</span></span><br><span class="line">sessionStorage.<span class="title function_ invoke__">clear</span>();</span><br><span class="line">localStorage.<span class="title function_ invoke__">clear</span>();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="手动添加选中"><a href="#手动添加选中" class="headerlink" title="手动添加选中"></a>手动添加选中</h3><p>但是现在又有问题了，清除完缓存之后，就发现任何的标签页都没有被选中，真的好丑，解决这个问题很简单，只要在x-admin模板中找到相应的菜单栏，找到初始管理相对应的a标签</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;li&gt;</span><br><span class="line">   &lt;a onclick=<span class="string">&quot;xadmin.add_tab(&#x27;首页&#x27;,&#x27;/admin/wel&#x27;)&quot;</span> <span class="class"><span class="keyword">class</span>=&quot;<span class="title">active</span>&quot;&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">i</span> <span class="title">class</span>=&quot;<span class="title">iconfont</span> <span class="title">left</span>-<span class="title">nav</span>-<span class="title">li</span>&quot; <span class="title">lay</span>-<span class="title">tips</span>=&quot;首页&quot;&gt;&amp;#<span class="title">xe6b8</span>;&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">cite</span>&gt;首页&lt;/<span class="title">cite</span>&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">i</span> <span class="title">class</span>=&quot;<span class="title">iconfont</span> <span class="title">nav_right</span>&quot;&gt;&amp;#<span class="title">xe697</span>;&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
 </search>

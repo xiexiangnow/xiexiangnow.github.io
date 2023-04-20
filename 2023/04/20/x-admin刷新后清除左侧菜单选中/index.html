@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="每一步做到极致  下一步美好自然呈现">
-<meta property="og:type" content="website">
-<meta property="og:title" content="翔奕时代">
-<meta property="og:url" content="http://www.xiang007.com/categories/php/page/3/index.html">
+  <meta name="description" content="在用x-admin前端模板的时候，发现了一个问题，对于左侧的菜单栏，如果点击之后（即菜单页为展开）再退出了系统，重新登录后，发现菜单栏和退出时是一样的 而我们的要求是在刷新或者重新登录后，需要清除左侧菜单的选中效果 清除选中我们只需要在页面加载的地方加如下js代码： 123&#x2F;&#x2F;清除缓存sessionStorage.clear();localStorage.clear();   手动添加选中但是现在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x-admin刷新后清除左侧菜单选中">
+<meta property="og:url" content="http://www.xiang007.com/2023/04/20/x-admin%E5%88%B7%E6%96%B0%E5%90%8E%E6%B8%85%E9%99%A4%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E9%80%89%E4%B8%AD/index.html">
 <meta property="og:site_name" content="翔奕时代">
-<meta property="og:description" content="每一步做到极致  下一步美好自然呈现">
+<meta property="og:description" content="在用x-admin前端模板的时候，发现了一个问题，对于左侧的菜单栏，如果点击之后（即菜单页为展开）再退出了系统，重新登录后，发现菜单栏和退出时是一样的 而我们的要求是在刷新或者重新登录后，需要清除左侧菜单的选中效果 清除选中我们只需要在页面加载的地方加如下js代码： 123&#x2F;&#x2F;清除缓存sessionStorage.clear();localStorage.clear();   手动添加选中但是现在">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-04-20T07:01:55.000Z">
+<meta property="article:modified_time" content="2023-04-20T07:05:18.911Z">
 <meta property="article:author" content="谢翔">
-<meta property="article:tag" content="翔奕时代,谢翔,博客,技术博客,前端博客,后端博客,php,java,Php,Java,html5,JavaScript,Docker,mac,golang工程师,php工程师,java工程师,每一步做到极致,下一步美好自然呈现">
+<meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.xiang007.com/categories/php/page/3/">
+<link rel="canonical" href="http://www.xiang007.com/2023/04/20/x-admin%E5%88%B7%E6%96%B0%E5%90%8E%E6%B8%85%E9%99%A4%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E9%80%89%E4%B8%AD/">
 
 
 <script id="page-configurations">
@@ -39,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-Hans'
   };
 </script>
 
-  <title>分类: php | 翔奕时代</title>
+  <title>x-admin刷新后清除左侧菜单选中 | 翔奕时代</title>
   
 
 
@@ -212,55 +214,137 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">php
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/04/20/x-admin%E5%88%B7%E6%96%B0%E5%90%8E%E6%B8%85%E9%99%A4%E5%B7%A6%E4%BE%A7%E8%8F%9C%E5%8D%95%E9%80%89%E4%B8%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          x-admin刷新后清除左侧菜单选中
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-20 15:01:55 / 修改时间：15:05:18" itemprop="dateCreated datePublished" datetime="2023-04-20T15:01:55+08:00">2023-04-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>602</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2017</span>
-    </div>
+        <p>在用x-admin前端模板的时候，发现了一个问题，对于左侧的菜单栏，如果点击之后（即菜单页为展开）再退出了系统，重新登录后，发现菜单栏和退出时是一样的</p>
+<p>而我们的要求是在刷新或者重新登录后，需要清除左侧菜单的选中效果</p>
+<h3 id="清除选中"><a href="#清除选中" class="headerlink" title="清除选中"></a>清除选中</h3><p>我们只需要在页面加载的地方加如下js代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//清除缓存</span></span><br><span class="line">sessionStorage.<span class="title function_ invoke__">clear</span>();</span><br><span class="line">localStorage.<span class="title function_ invoke__">clear</span>();</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2017-01-23T15:28:26+08:00"
-              content="2017-01-23">
-          01-23
-        </time>
-      </div>
+<h3 id="手动添加选中"><a href="#手动添加选中" class="headerlink" title="手动添加选中"></a>手动添加选中</h3><p>但是现在又有问题了，清除完缓存之后，就发现任何的标签页都没有被选中，真的好丑，解决这个问题很简单，只要在x-admin模板中找到相应的菜单栏，找到初始管理相对应的a标签</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;</span><br><span class="line">   &lt;a onclick=<span class="string">&quot;xadmin.add_tab(&#x27;首页&#x27;,&#x27;/admin/wel&#x27;)&quot;</span> <span class="class"><span class="keyword">class</span>=&quot;<span class="title">active</span>&quot;&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">i</span> <span class="title">class</span>=&quot;<span class="title">iconfont</span> <span class="title">left</span>-<span class="title">nav</span>-<span class="title">li</span>&quot; <span class="title">lay</span>-<span class="title">tips</span>=&quot;首页&quot;&gt;&amp;#<span class="title">xe6b8</span>;&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">cite</span>&gt;首页&lt;/<span class="title">cite</span>&gt;</span></span><br><span class="line"><span class="class">     &lt;<span class="title">i</span> <span class="title">class</span>=&quot;<span class="title">iconfont</span> <span class="title">nav_right</span>&quot;&gt;&amp;#<span class="title">xe697</span>;&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class">   &lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2017/01/23/PHP%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" itemprop="url">
-            <span itemprop="name">PHP编程基础语法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
 
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/img/wx.png" alt="谢翔 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/zfb.png" alt="谢翔 支付宝">
+        <p>支付宝</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/20/x-admin%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E6%B8%85%E9%99%A4tab/" rel="prev" title="x-admin页面刷新清除tab">
+      <i class="fa fa-chevron-left"></i> x-admin页面刷新清除tab
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/categories/php/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/categories/php/">1</a><a class="page-number" href="/categories/php/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  
+  
 
 
 
@@ -312,6 +396,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E9%80%89%E4%B8%AD"><span class="nav-number">1.</span> <span class="nav-text">清除选中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E9%80%89%E4%B8%AD"><span class="nav-number">2.</span> <span class="nav-text">手动添加选中</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
