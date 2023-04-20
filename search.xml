@@ -3043,7 +3043,7 @@
     <title>x-admin页面刷新清除tab</title>
     <url>/2023/04/20/x-admin%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E6%B8%85%E9%99%A4tab/</url>
     <content><![CDATA[<blockquote>
-<p>x-admin的原生是没有页面刷新（外层）清除tab的，而且是刷新后会停留在最后一个tab上，体现不是很好，这里做下更改</p>
+<p>x-admin的原生是没有页面刷新（外层）清除tab的，而且是刷新后会停留在最后一个tab上，体验不是很好，这里做下更改</p>
 </blockquote>
 <p>因为tab部分的代码全部是由js生成的，需要在body上添加一个事件（onbeforeunload）去触发</p>
 <h3 id="onbeforeunload"><a href="#onbeforeunload" class="headerlink" title="onbeforeunload"></a>onbeforeunload</h3><p>在即将离开当前页面(刷新或关闭)时执行 JavaScript :</p>
