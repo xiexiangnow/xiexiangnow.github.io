@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="JWT由三个部分组成：header.payload.signature header部分：1234&amp;#123;  &quot;alg&quot;: &quot;HS256&quot;,  &quot;typ&quot;: &quot;JWT&quot;&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP实现JWT处理逻辑">
+<meta property="og:url" content="http://www.xiang007.com/2023/08/15/PHP%E5%AE%9E%E7%8E%B0JWT%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="JWT由三个部分组成：header.payload.signature header部分：1234&amp;#123;  &quot;alg&quot;: &quot;HS256&quot;,  &quot;typ&quot;: &quot;JWT&quot;&amp;#125;">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/jwt.jpeg">
+<meta property="article:published_time" content="2023-08-15T01:46:19.000Z">
+<meta property="article:modified_time" content="2023-08-15T01:56:37.043Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/jwt.jpeg">
+
+<link rel="canonical" href="http://www.xiang007.com/2023/08/15/PHP%E5%AE%9E%E7%8E%B0JWT%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>PHP实现JWT处理逻辑 | 翔奕时代</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cb95f8bfa78cc1ef30f30b29db5cf386";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/08/15/PHP%E5%AE%9E%E7%8E%B0JWT%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP实现JWT处理逻辑
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-15 09:46:19 / 修改时间：09:56:37" itemprop="dateCreated datePublished" datetime="2023-08-15T09:46:19+08:00">2023-08-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>JWT由三个部分组成：header.payload.signature<br><img src="/../img/jwt.jpeg" alt="php"></p>
+<h4 id="header部分："><a href="#header部分：" class="headerlink" title="header部分："></a>header部分：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;HS256&quot;</span>,</span><br><span class="line">  <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>对应base64UrlEncode编码为：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</p>
+<p>说明：该字段为json格式。alg字段指定了生成signature的算法，默认值为 HS256，typ默认值为JWT</p>
+<h4 id="payload部分："><a href="#payload部分：" class="headerlink" title="payload部分："></a>payload部分：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;1234567890&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;John Doe&quot;</span>,</span><br><span class="line">  <span class="string">&quot;iat&quot;</span>: <span class="number">1516239022</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应base64UrlEncode编码为：eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</p>
+<p>说明：该字段为json格式，表明用户身份的数据，可以自己自定义字段，很灵活。sub 面向的用户，name 姓名 ,iat 签发时间。例如可自定义示例如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;iss&quot;</span>: <span class="string">&quot;admin&quot;</span>,            <span class="comment">//该JWT的签发者</span></span><br><span class="line">    <span class="string">&quot;iat&quot;</span>: <span class="number">1535967430</span>,         <span class="comment">//签发时间</span></span><br><span class="line">    <span class="string">&quot;exp&quot;</span>: <span class="number">1535974630</span>,         <span class="comment">//过期时间</span></span><br><span class="line">    <span class="string">&quot;nbf&quot;</span>: <span class="number">1535967430</span>,         <span class="comment">//该时间之前不接收处理该Token</span></span><br><span class="line">    <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;www.admin.com&quot;</span>,    <span class="comment">//面向的用户</span></span><br><span class="line">    <span class="string">&quot;jti&quot;</span>: <span class="string">&quot;9f10e796726e332cec401c569969e13e&quot;</span>   <span class="comment">//该Token唯一标识</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="signature部分："><a href="#signature部分：" class="headerlink" title="signature部分："></a>signature部分：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">HMACSHA256</span>(</span><br><span class="line">  <span class="title function_ invoke__">base64UrlEncode</span>(header) + <span class="string">&quot;.&quot;</span> +</span><br><span class="line">  <span class="title function_ invoke__">base64UrlEncode</span>(payload),</span><br><span class="line">  <span class="number">123456</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>对应的签名为：keH6T3x1z7mmhKL1T3r9sQdAxxdzB6siemGMr_6ZOwU</p>
+<p>最终得到的JWT的Token为(header.payload.signature)：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.keH6T3x1z7mmhKL1T3r9sQdAxxdzB6siemGMr_6ZOwU</p>
+<p>说明：对header和payload进行base64UrlEncode编码后进行拼接。通过key（这里是123456）进行HS256算法签名。</p>
+<h4 id="JWT使用流程"><a href="#JWT使用流程" class="headerlink" title="JWT使用流程"></a>JWT使用流程</h4><ul>
+<li>初次登录：用户初次登录，输入用户名密码 <br/></li>
+<li>密码验证：服务器从数据库取出用户名和密码进行验证 <br/></li>
+<li>生成JWT：服务器端验证通过，根据从数据库返回的信息，以及预设规则，生成JWT <br/></li>
+<li>返还JWT：服务器的HTTP RESPONSE中将JWT返还 <br/></li>
+<li>带JWT的请求：以后客户端发起请求，HTTP REQUEST <br/></li>
+<li>HEADER中的Authorizatio字段都要有值，为JWT <br/></li>
+<li>服务器验证JWT <br/></li>
+</ul>
+<h4 id="JWT-php依赖的引入"><a href="#JWT-php依赖的引入" class="headerlink" title="JWT-php依赖的引入"></a>JWT-php依赖的引入</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer <span class="keyword">require</span> firebase/php-jwt</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法封装"><a href="#方法封装" class="headerlink" title="方法封装"></a>方法封装</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">app</span>\<span class="title class_">common</span>\<span class="title class_">service</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">DomainException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Firebase</span>\<span class="title">JWT</span>\<span class="title">ExpiredException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Firebase</span>\<span class="title">JWT</span>\<span class="title">JWT</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Firebase</span>\<span class="title">JWT</span>\<span class="title">Key</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Firebase</span>\<span class="title">JWT</span>\<span class="title">SignatureInvalidException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">InvalidArgumentException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">UnexpectedValueException</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JWTService</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">PRIVATE_KEY</span> = <span class="string">&quot;KOWl3yJFuB5K3QG9Vae6wCiCgenirgWC&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - jwt生成token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $payload     // payload</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $expire_time // 过期时间戳</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $key         // 自身秘钥</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $alg         // 算法签名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">jwt_encode</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">array</span>  <span class="variable">$payload</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">int</span>    <span class="variable">$expire_time</span> = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">string</span> <span class="variable">$key</span> = <span class="built_in">self</span>::<span class="variable constant_">PRIVATE_KEY</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">string</span> <span class="variable">$alg</span> = <span class="string">&quot;HS256&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">    </span>): <span class="title">string</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$expire_time</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable">$payload</span>[<span class="string">&#x27;exp&#x27;</span>] = <span class="variable">$expire_time</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> JWT::<span class="title function_ invoke__">encode</span>(<span class="variable">$payload</span>, <span class="variable">$key</span>, <span class="variable">$alg</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - JWT  解析token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $token   // token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $key     // 自身秘钥</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $alg     // 算法签名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">jwt_decode</span>(<span class="params"><span class="variable">$token</span>, <span class="keyword">string</span> <span class="variable">$key</span> = <span class="built_in">self</span>::<span class="variable constant_">PRIVATE_KEY</span>, <span class="keyword">string</span> <span class="variable">$alg</span> = <span class="string">&quot;HS256&quot;</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable">$decoded_arr</span> = JWT::<span class="title function_ invoke__">decode</span>(<span class="variable">$token</span>, <span class="keyword">new</span> <span class="title class_">Key</span>(<span class="variable">$key</span>, <span class="variable">$alg</span>));</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">true</span>, <span class="string">&quot;处理成功&quot;</span>, <span class="variable">$decoded_arr</span>];</span><br><span class="line">        <span class="comment">// 参数无效异常</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">InvalidArgumentException</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;参数错误:&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        <span class="comment">// 算法不支持or提供的秘钥无效 等异常</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">DomainException</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;算法错误:&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        <span class="comment">// 签名异常</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (SignatureInvalidException <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;签名错误:&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        <span class="comment">// 过期异常捕获</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ExpiredException <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;签名已过期:&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">UnexpectedValueException</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;异常:&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$payload</span> = [</span><br><span class="line">    <span class="string">&#x27;user_name&#x27;</span> =&gt; <span class="string">&quot;xiexiang&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;password&#x27;</span>  =&gt; <span class="string">&quot;123456&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;sex&#x27;</span>       =&gt; <span class="number">1</span>,</span><br><span class="line">    <span class="string">&#x27;age&#x27;</span>       =&gt; <span class="number">2</span>,</span><br><span class="line">    <span class="string">&#x27;exp&#x27;</span>       =&gt; <span class="number">1692063675</span>   <span class="comment">// 设置过期时间戳</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="variable">$token</span> = (<span class="keyword">new</span> <span class="title class_">JWTService</span>())-&gt;<span class="title function_ invoke__">jwt_encode</span>(<span class="variable">$payload</span>);</span><br><span class="line">[<span class="variable">$status</span>, <span class="variable">$msg</span>, <span class="variable">$data</span>] = (<span class="keyword">new</span> <span class="title class_">JWTService</span>())-&gt;<span class="title function_ invoke__">jwt_decode</span>(<span class="variable">$token</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$status</span>, <span class="variable">$msg</span>, (<span class="keyword">array</span>)<span class="variable">$data</span>);<span class="keyword">die</span>;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/img/wx.png" alt="谢翔 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/zfb.png" alt="谢翔 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/28/slim4%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1/" rel="prev" title="slim4获取所有路由">
+      <i class="fa fa-chevron-left"></i> slim4获取所有路由
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#header%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">header部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#payload%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">payload部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#signature%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">signature部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JWT%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">JWT使用流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JWT-php%E4%BE%9D%E8%B5%96%E7%9A%84%E5%BC%95%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">JWT-php依赖的引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%B0%81%E8%A3%85"><span class="nav-number">6.</span> <span class="nav-text">方法封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">使用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/head_img.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ezgx.site/" title="https:&#x2F;&#x2F;ezgx.site&#x2F;" rel="noopener" target="_blank">Aegcbx的博客</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">221k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:21</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/nietzche.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
