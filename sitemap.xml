@@ -732,13 +732,6 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/java/</loc>
-    <lastmod>2023-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://www.xiang007.com/tags/elasticsearch/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -746,7 +739,7 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/javascript/</loc>
+    <loc>http://www.xiang007.com/tags/java/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -760,6 +753,13 @@
   </url>
   
   <url>
+    <loc>http://www.xiang007.com/tags/javascript/</loc>
+    <lastmod>2023-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://www.xiang007.com/tags/linux/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -767,14 +767,14 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/python/</loc>
+    <loc>http://www.xiang007.com/tags/mac/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/mac/</loc>
+    <loc>http://www.xiang007.com/tags/python/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -816,14 +816,14 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/devops/</loc>
+    <loc>http://www.xiang007.com/tags/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/tags/%E5%85%B6%E4%BB%96/</loc>
+    <loc>http://www.xiang007.com/tags/devops/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -860,13 +860,6 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/java/</loc>
-    <lastmod>2023-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://www.xiang007.com/categories/elasticsearch/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -874,7 +867,7 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/javascript/</loc>
+    <loc>http://www.xiang007.com/categories/java/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -888,6 +881,13 @@
   </url>
   
   <url>
+    <loc>http://www.xiang007.com/categories/javascript/</loc>
+    <lastmod>2023-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://www.xiang007.com/categories/linux/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -895,14 +895,14 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/python/</loc>
+    <loc>http://www.xiang007.com/categories/mac/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/mac/</loc>
+    <loc>http://www.xiang007.com/categories/python/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -944,14 +944,14 @@
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/devops/</loc>
+    <loc>http://www.xiang007.com/categories/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.xiang007.com/categories/%E5%85%B6%E4%BB%96/</loc>
+    <loc>http://www.xiang007.com/categories/devops/</loc>
     <lastmod>2023-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
