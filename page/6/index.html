@@ -219,6 +219,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/" class="post-title-link" itemprop="url">Java学习-part.05（异常、字符串、字符串处理及转换、包装类、时间处理、Math类操作）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-25 14:41:48" itemprop="dateCreated datePublished" datetime="2018-05-25T14:41:48+08:00">2018-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Java异常处理"><a href="#Java异常处理" class="headerlink" title="Java异常处理"></a>Java异常处理</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>语法格式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//代码块</span></span><br><span class="line">    ....</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//主动抛出异常</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MismatchException</span>(<span class="string">&quot;这里是异常信息&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(MismatchException e)&#123;</span><br><span class="line">    <span class="comment">//除非try里面执行代码发生了异常，否则这里的代码不会执行 </span></span><br><span class="line">    <span class="comment">//出现异常的处理</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(<span class="built_in">Exception</span> e)&#123;</span><br><span class="line">    <span class="comment">//除非try里面执行代码发生了异常，否则这里的代码不会执行 </span></span><br><span class="line">    <span class="comment">//出现异常的处理</span></span><br><span class="line">    e.<span class="title function_ invoke__">printStackTrace</span>();</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">//最终将执行的代码</span></span><br><span class="line">    <span class="comment">//***不管什么情况都会执行，包括try catch 里面用了return ,可以理解为只要执行了try或者catch，就一定会执行 finally </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-05%EF%BC%88%E5%BC%82%E5%B8%B8%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%8F%8A%E8%BD%AC%E6%8D%A2%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E3%80%81%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E3%80%81Math%E7%B1%BB%E6%93%8D%E4%BD%9C%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/05/25/Java%E5%AD%A6%E4%B9%A0-part-04%EF%BC%88%E7%BB%A7%E6%89%BF%E3%80%81%E9%87%8D%E5%86%99%E3%80%81super%E3%80%81%E5%A4%9A%E6%80%81%E3%80%81%E5%A4%9A%E6%80%81%E7%9A%84%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E3%80%81%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1089,102 +1183,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">Jquery Ajax实例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-06 10:52:43" itemprop="dateCreated datePublished" datetime="2018-04-06T10:52:43+08:00">2018-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>Jquery在异步提交方面封装的很好，直接用AJAX非常麻烦，Jquery大大简化了我们的操作，不用考虑浏览器的诧异了。<br>推荐一篇不错的jQuery Ajax 实例文章，忘记了可以去看看，地址为：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yeer/archive/2009/07/23/1529460.html">http://www.cnblogs.com/yeer/archive/2009/07/23/1529460.html</a> 和 <a target="_blank" rel="noopener" href="http://www.w3school.com.cn/jquery/">http://www.w3school.com.cn/jquery/</a></p>
-</blockquote>
-<p>我们常用的一些$.post、$.get只是一些简单的、便捷的使用方法，如果要处理复杂的逻辑，还是需要用到jQuery.ajax()。因为jQuery.ajax()有它自身的处理机制，对于数据类型、cache、请求方式、返回处理等有详细的处理方式。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/04/06/Jquery-Ajax%E5%AE%9E%E4%BE%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1255,7 +1253,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">70</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1326,12 +1324,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">221k</span>
+    <span title="站点总字数">222k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:21</span>
+    <span title="站点阅读时长">3:22</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
