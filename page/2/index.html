@@ -219,6 +219,98 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/04/20/x-admin%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E6%B8%85%E9%99%A4tab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/20/x-admin%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E6%B8%85%E9%99%A4tab/" class="post-title-link" itemprop="url">x-admin页面刷新清除tab</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-20 11:40:54 / 修改时间：11:49:17" itemprop="dateCreated datePublished" datetime="2023-04-20T11:40:54+08:00">2023-04-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>565</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>x-admin的原生是没有页面刷新（外层）清除tab的，而且是刷新后会停留在最后一个tab上，体验不是很好，这里做下更改</p>
+</blockquote>
+<p>因为tab部分的代码全部是由js生成的，需要在body上添加一个事件（onbeforeunload）去触发</p>
+<h3 id="onbeforeunload"><a href="#onbeforeunload" class="headerlink" title="onbeforeunload"></a>onbeforeunload</h3><p>在即将离开当前页面(刷新或关闭)时执行 JavaScript :</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body onbeforeunload=<span class="string">&quot;return myFunction()&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将<body onbeforeunload="return myFunction()"> 放在外层iframe里面</p>
+<h3 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body <span class="class"><span class="keyword">class</span>=&quot;<span class="title">index</span>&quot; <span class="title">onbeforeunload</span>=&quot;<span class="title">close_tabs</span>()&quot;&gt; &lt;!--在即将离开当前页面(刷新或关闭)时执行 <span class="title">JavaScript</span> :--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">close_tabs</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   $(<span class="string">&#x27;.layui-tab-title li[lay-id]&#x27;</span>).<span class="title function_ invoke__">find</span>(<span class="string">&#x27;.layui-tab-close&#x27;</span>).<span class="title function_ invoke__">click</span>();</span><br><span class="line">   $(<span class="string">&#x27;#tab_right&#x27;</span>).<span class="title function_ invoke__">hide</span>();</span><br><span class="line">   $(<span class="string">&#x27;#tab_show&#x27;</span>).<span class="title function_ invoke__">hide</span>();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>搞定！也可以在退出、切换账号的时候触发这个关闭所有tab</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/04/07/%E6%8A%96%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90%E9%99%84%E4%BB%A3%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1051,103 +1143,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2022/09/08/PHP%E5%B8%B8%E8%A7%81%E5%85%AD%E5%A4%A7%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E4%B8%BE%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/08/PHP%E5%B8%B8%E8%A7%81%E5%85%AD%E5%A4%A7%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E4%B8%BE%E4%BE%8B/" class="post-title-link" itemprop="url">PHP常见六大设计模式及举例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-08 17:03:54" itemprop="dateCreated datePublished" datetime="2022-09-08T17:03:54+08:00">2022-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 17:18:30" itemprop="dateModified" datetime="2023-03-09T17:18:30+08:00">2023-03-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>5.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>设计模式在php开发中用途还是非常多，能够使用设计模式并准确选择设计模式将事半功倍的提高开发效率，而且也能提高代码可读性和提升代码解耦度，非常方便以后我们在迭代功能的时候的扩展与重构，不至于看到自己以前写的代码无所适从。</p>
-</blockquote>
-<h3 id="1、单例模式"><a href="#1、单例模式" class="headerlink" title="1、单例模式"></a>1、单例模式</h3><p>单例模式：即一个类只被实例化一次，当其他人对其再次实例化时，返回第一次实例化的对象，可以避免大量的new<br>操作，减少资源的消耗，典型应用于数据库类的实例化。<br>特点：三私一公 （私有静态属性instance,私有构造方法,私有克隆方法,公有化静态方法getInstance）</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="comment">//私有静态属性</span></span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$instance</span>;</span><br><span class="line">  <span class="comment">//私有构造方法，禁止使用new创建对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">  <span class="comment">//该实例的出口</span></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$instance</span>)) &#123;</span><br><span class="line">          <span class="built_in">self</span>::<span class="variable">$instance</span> = <span class="keyword">new</span> <span class="built_in">self</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$instance</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//将克隆方法设为私有，禁止克隆对象</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__clone</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;这是用单例模式创建对象实例 &lt;br&gt;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">operation</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;这里可以添加其他方法和操作 &lt;br&gt;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $shiyanlou = new Singleton();</span></span><br><span class="line"><span class="variable">$shiyanlou</span> = <span class="title class_">Singleton</span>::<span class="title function_ invoke__">getInstance</span>();</span><br><span class="line"><span class="variable">$shiyanlou</span>-&gt;<span class="title function_ invoke__">say</span>();</span><br><span class="line"><span class="variable">$shiyanlou</span>-&gt;<span class="title function_ invoke__">operation</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$newShiyanlou</span> = <span class="title class_">Singleton</span>::<span class="title function_ invoke__">getInstance</span>();</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$shiyanlou</span> === <span class="variable">$newShiyanlou</span>);</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/08/PHP%E5%B8%B8%E8%A7%81%E5%85%AD%E5%A4%A7%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E4%B8%BE%E4%BE%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1218,18 +1213,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1289,12 +1284,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">245k</span>
+    <span title="站点总字数">247k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:43</span>
+    <span title="站点阅读时长">3:44</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
