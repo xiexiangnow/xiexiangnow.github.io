@@ -219,6 +219,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/02/02/PHP%E7%BB%99%E6%BA%90%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/02/PHP%E7%BB%99%E6%BA%90%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">PHP给源代码加密的几种方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-02-02 16:22:04" itemprop="dateCreated datePublished" datetime="2018-02-02T16:22:04+08:00">2018-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 09:59:11" itemprop="dateModified" datetime="2023-03-09T09:59:11+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>9.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>虽说分享是传统的美德，但我们有时候辛辛苦苦写一些程序只是为了卖点小钱，挣点辛苦费，也防止有些没有道德的人倒卖，所以我们不得不对我们的程序进行加密，以下我们来介绍一下如何通过PHP的自定义函数来加密我们的PHP源代码.</p>
+</blockquote>
+<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">encode_file_contents</span>(<span class="params"><span class="variable">$filename</span></span>) </span>&#123;  </span><br><span class="line">     <span class="variable">$type</span>=<span class="title function_ invoke__">strtolower</span>(<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">strrchr</span>(<span class="variable">$filename</span>,<span class="string">&#x27;.&#x27;</span>),<span class="number">1</span>));  </span><br><span class="line">     <span class="keyword">if</span> (<span class="string">&#x27;php&#x27;</span> == <span class="variable">$type</span> &amp;&amp; <span class="title function_ invoke__">is_file</span>(<span class="variable">$filename</span>) &amp;&amp; <span class="title function_ invoke__">is_writable</span>(<span class="variable">$filename</span>)) &#123; <span class="comment">// 如果是PHP文件 并且可写 则进行压缩编码  </span></span><br><span class="line">         <span class="variable">$contents</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$filename</span>); <span class="comment">// 判断文件是否已经被编码处理  </span></span><br><span class="line">         <span class="variable">$contents</span> = <span class="title function_ invoke__">php_strip_whitespace</span>(<span class="variable">$filename</span>);   </span><br><span class="line"> </span><br><span class="line">         <span class="comment">// 去除PHP头部和尾部标识  </span></span><br><span class="line">         <span class="variable">$headerPos</span> = <span class="title function_ invoke__">strpos</span>(<span class="variable">$contents</span>,<span class="string">&#x27;&lt;?php&#x27;</span>);  </span><br><span class="line">         <span class="variable">$footerPos</span> = <span class="title function_ invoke__">strrpos</span>(<span class="variable">$contents</span>,<span class="string">&#x27;?&gt;&#x27;</span>);  </span><br><span class="line">         <span class="variable">$contents</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$contents</span>, <span class="variable">$headerPos</span> + <span class="number">5</span>, <span class="variable">$footerPos</span> - <span class="variable">$headerPos</span>);  </span><br><span class="line">         <span class="variable">$encode</span> = <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">gzdeflate</span>(<span class="variable">$contents</span>)); <span class="comment">// 开始编码  </span></span><br><span class="line">         <span class="variable">$encode</span> = <span class="string">&#x27;&lt;?php&#x27;</span>.<span class="string">&quot;\n eval(gzinflate(base64_decode(&quot;</span>.<span class="string">&quot;&#x27;&quot;</span>.<span class="variable">$encode</span>.<span class="string">&quot;&#x27;&quot;</span>.<span class="string">&quot;)));\n\n?&gt;&quot;</span>;   </span><br><span class="line"> </span><br><span class="line">         <span class="keyword">return</span> <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$filename</span>, <span class="variable">$encode</span>);  </span><br><span class="line">     &#125;  </span><br><span class="line">     <span class="keyword">return</span> <span class="literal">false</span>;  </span><br><span class="line"> &#125;   </span><br><span class="line"> </span><br><span class="line"> <span class="comment">//调用函数  </span></span><br><span class="line"> <span class="variable">$filename</span> = <span class="string">&#x27;dam.php&#x27;</span>;  </span><br><span class="line"> <span class="title function_ invoke__">encode_file_contents</span>(<span class="variable">$filename</span>);  </span><br><span class="line"> <span class="keyword">echo</span> <span class="string">&quot;OK,加密完成！&quot;</span> </span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/02/PHP%E7%BB%99%E6%BA%90%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2018/01/31/Docker%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -788,7 +884,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -850,7 +946,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -859,12 +955,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">247k</span>
+    <span title="站点总字数">248k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:44</span>
+    <span title="站点阅读时长">3:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

@@ -219,6 +219,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">php base64形式图片处理，保存到文件以及插件介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-19 15:45:00" itemprop="dateCreated datePublished" datetime="2021-05-19T15:45:00+08:00">2021-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-09 16:16:56" itemprop="dateModified" datetime="2023-03-09T16:16:56+08:00">2023-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>网页上有些图片的src或者css背景图片都是后面跟了一大串字符串，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAQMAAADaX </span><br><span class="line"><span class="number">5</span>RTAAAAA3NCSVQICAjb4U/gAAAABlBMVEX<span class="comment">///+ZmZmOUEqyAAAAAnRSTlMA/1uR </span></span><br><span class="line">IrUAAAAJcEhZcwAACusAAArrAYKLDVoAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDk </span><br><span class="line">vMjAvMTIGkKG+AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26L </span><br><span class="line">yyjAAAAB1JREFUCJljONjA8LiBoZyBwY6BQQZMAtlAkYMNAF1fBs/zPvcnAAAAA </span><br><span class="line">ElFTkSuQmCC ....</span><br></pre></td></tr></table></figure>
+
+<p>Data URI scheme是在RFC2397中定义的，目的是将一些小的数据，直接嵌入到网页中，从而不用再从外部文件载入。比如上面那串字符，其实是一张小图片，将这些字符复制黏贴到火狐的地址栏中并转到，就能看到它了，一张1X36的白灰png图片。</p>
+<p>在上面的Data URI中，data表示取得数据的协定名称，image&#x2F;png 是数据类型名称，base64 是数据的编码方法，逗号后面就是这个image&#x2F;png文件base64编码后的数据。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/05/19/php-base64%E5%BD%A2%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%EF%BC%8C%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2021/04/22/pyenv-%E5%AE%89%E8%A3%85python%E7%89%88%E6%9C%AC%E8%A2%AB%E5%A2%99%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1073,99 +1170,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2020/03/17/2020%E6%98%A5%E8%8A%82%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/17/2020%E6%98%A5%E8%8A%82%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" class="post-title-link" itemprop="url">2020春节的那些事</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-17 14:58:29" itemprop="dateCreated datePublished" datetime="2020-03-17T14:58:29+08:00">2020-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 16:16:56" itemprop="dateModified" datetime="2023-03-09T16:16:56+08:00">2023-03-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>2.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="年会"><a href="#年会" class="headerlink" title="年会"></a>年会</h3><p>从事编程行业也已经有好多年，可能这家公司还是第一次有家庭的感觉的，今年的年会是第一次参加，因为一次大排档大胆的放声歌唱被大伙儿拍成了视频发到全员公司群里后被推荐为今年年会代表本部门参加，排练时间算是比较的仓促，在短短两周的时间大伙儿齐心协力完成初步的彩排，直到1月18日的中午，表演团队都还是熟练细节，生怕出现一点点的差错，节目被安排在最后一个，听说我们数字化中心每年的节目都很精彩，公司的安排人员也希望我们能成为本次年会的压轴节目，当然还算如愿，本在台下紧张得发抖的我上台的几分钟内就心情就平静下来，我记得站上舞台开唱几句歌词的时候，后排几乎所有的人全部都站了起来，欢呼声、呐喊声仿佛我都已经听不清楚伴奏的声音，更多的还是观众的欢呼给了我信心，让本紧张的心情平稳了很多。节目的后半段是我们部门新来的一个同事排练的擒敌拳的表演，他进入编程行业之前是在中国维和部队非洲服役的，听起来都很吊，自小都有军队情节的团队同事们都很赞同他提出的方案，当然在舞台上表现出来的东西，是在一个互联网公司很少看到的，现在回看当时的表演视频，还是觉得蛮激动的。节目的评审分为两部分，一部分是评委给分，一部分是观众投票，我们的节目是评委评分第一名，观众评分第二名，后来最终成绩是第二名，名次是次要，主要觉得本次年会不管是节目的准备到彩排，还是最后的表演，大家都全身心的投入去做这个事情，不管结果好与不好，至少都是大家尽力后的结果，还是觉得圆满、欣慰。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/17/2020%E6%98%A5%E8%8A%82%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1236,7 +1240,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1298,7 +1302,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1307,12 +1311,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">247k</span>
+    <span title="站点总字数">248k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:44</span>
+    <span title="站点阅读时长">3:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
