@@ -3335,6 +3335,8 @@
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>人脸识别库有很多，但DeepFace、Face_Recognition绝对是最具代表性的两个库，其中Face_Recognition库更是被称为这个星球上最好的人脸识别库。</p>
 <p>但是Face_Recognition官方却明确声明，只针对<strong>Mac</strong>和<strong>Linux</strong>做适配，对windows系统不做适配，官方的原话为：<strong>windows或许能正常工作</strong>。</p>
 <p>这让很多windows用户焦头烂额了，因为可能连库本身的安装都存在问题，本文既是针对这个情况为大家介绍一个在windows下极简安装Face_Recognition库的方法。</p>
+<span id="more"></span>
+
 <h2 id="face-recognition简介"><a href="#face-recognition简介" class="headerlink" title="face_recognition简介"></a>face_recognition简介</h2><p>face_recognition项目的人脸识别是基于业内领先的C++开源库 dlib中的深度学习模型，用Labeled Faces in the Wild人脸数据集进行测试，有高达99.38%的准确率。但对小孩和亚洲人脸的识别准确率尚待提升。</p>
 <p>face_recognition是基于业内领先的C++开源库dlib中的深度学习模型，用Labeled Faces in the Wild人脸数据集进行测试，有高达99.38%的准确率。因此，安装face_recognition前需要安装<strong>dlib</strong>库。</p>
 <h2 id="face-recognition安装"><a href="#face-recognition安装" class="headerlink" title="face_recognition安装"></a>face_recognition安装</h2><p>由于face_recognition库是以来dlib库而开发，所以必须要安装dlib库，只有dlib库正常安装，face_recognition才能正常安装。face_recognition安装的难点也正是dlib库的安装，因为就是该库未提供windows下的适配。</p>
@@ -3353,6 +3355,25 @@
 <p>cmake: <a href="https://cmake.org/download/">https://cmake.org/download/</a></p>
 <p>boost: <a href="https://www.boost.org/users/download/">https://www.boost.org/users/download/</a></p>
 <p>至此，face_recognition就安装成功了！</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python3.9 Pyinstaller 打包Face_Recognition程序</title>
+    <url>/2024/05/22/Python3-9-Pyinstaller-%E6%89%93%E5%8C%85Face-Recognition%E7%A8%8B%E5%BA%8F/</url>
+    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>直接使用pyinstaller -F find.py 进行打包，之后运行exe会报错，报错内容为：RuntimeError: Unable to open C:\Users\pc\AppData\Local\Temp_MEI70802\face_recognition_models\models\shape_predictor_68_face_landmarks. dat<br><img src="/../img/20240522-01.png" alt="pic"></p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>这个错误的意思是无法找到face_recognition的模型文件，那么我们需要去face_recognition找到对应的模型文件的真实地址，此时需要修改spec文件</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- mode: python -*-</span></span><br><span class="line"></span><br><span class="line">block_cipher = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">face_models = [</span><br><span class="line">(<span class="string">&#x27;.\\face_recognition_models\\models\\dlib_face_recognition_resnet_model_v1.dat&#x27;</span>, <span class="string">&#x27;./face_recognition_models/models&#x27;</span>),</span><br><span class="line">(<span class="string">&#x27;.\\face_recognition_models\\models\\mmod_human_face_detector.dat&#x27;</span>, <span class="string">&#x27;./face_recognition_models/models&#x27;</span>),</span><br><span class="line">(<span class="string">&#x27;.\\face_recognition_models\\models\\shape_predictor_5_face_landmarks.dat&#x27;</span>, <span class="string">&#x27;./face_recognition_models/models&#x27;</span>),</span><br><span class="line">(<span class="string">&#x27;.\\face_recognition_models\\models\\shape_predictor_68_face_landmarks.dat&#x27;</span>, <span class="string">&#x27;./face_recognition_models/models&#x27;</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以上四个模型文件需要找到本机的真实地址后，再放入到对应位置，比如此时我的windows下的模型文件地址为：</span></span><br><span class="line"><span class="comment"># C:\\Users\\pc\\AppData\\Local\\Programs\\Python\\Python39\\Lib\\site-packages\\face_recognition_models\\models\\dlib_face_recognition_resnet_model_v1.dat</span></span><br><span class="line"><span class="comment"># 将上面的地址分别放入到四个模型文件对应的地址中，此时在打包exe时，就可以正常运行了</span></span><br><span class="line"></span><br><span class="line">a = Analysis([<span class="string">&#x27;find.py&#x27;</span>],   <span class="comment"># 自己的python文件名 </span></span><br><span class="line">             pathex=[<span class="string">&#x27;C:\\Users\\pc\\Desktop\\test&#x27;</span>], <span class="comment"># python文件路径</span></span><br><span class="line">             binaries=face_models,</span><br><span class="line">             datas=[],</span><br><span class="line">             hiddenimports=[],</span><br><span class="line">             hookspath=[],</span><br><span class="line">             runtime_hooks=[],</span><br><span class="line">             excludes=[],</span><br><span class="line">             win_no_prefer_redirects=<span class="literal">False</span>,</span><br><span class="line">             win_private_assemblies=<span class="literal">False</span>,</span><br><span class="line">             cipher=block_cipher)</span><br><span class="line"></span><br><span class="line">pyz = PYZ(a.pure, a.zipped_data,</span><br><span class="line">             cipher=block_cipher)</span><br><span class="line">exe = EXE(pyz,</span><br><span class="line">          a.scripts,</span><br><span class="line">          a.binaries,</span><br><span class="line">          a.zipfiles,</span><br><span class="line">          a.datas,</span><br><span class="line">          name=<span class="string">&#x27;find&#x27;</span>,     <span class="comment"># 文件名，不带后缀</span></span><br><span class="line">          debug=<span class="literal">False</span>,</span><br><span class="line">          strip=<span class="literal">False</span>,</span><br><span class="line">          upx=<span class="literal">True</span>,</span><br><span class="line">          runtime_tmpdir=<span class="literal">None</span>,</span><br><span class="line">          console=<span class="literal">True</span> )</span><br></pre></td></tr></table></figure>
+
+
+<p>修改好spec文件后，继续执行 <strong>pyinstaller find.spec</strong> 命令重新尝试打包。</p>
 ]]></content>
       <categories>
         <category>python</category>
