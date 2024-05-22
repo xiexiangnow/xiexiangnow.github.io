@@ -3326,4 +3326,39 @@
         <tag>生活</tag>
       </tags>
   </entry>
+  <entry>
+    <title>windows10下安装face_recognition</title>
+    <url>/2024/05/22/windows10%E4%B8%8B%E5%AE%89%E8%A3%85face-recognition/</url>
+    <content><![CDATA[<blockquote>
+<p>这里主要讲解windows下face_recognition的安装，因为face_recognition不能完美的适配windows，如果在Mac、Linux平台就能完美的是适配，这里整理了windows下按照face_recognition遇到的问题及解决方案。</p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>人脸识别库有很多，但DeepFace、Face_Recognition绝对是最具代表性的两个库，其中Face_Recognition库更是被称为这个星球上最好的人脸识别库。</p>
+<p>但是Face_Recognition官方却明确声明，只针对<strong>Mac</strong>和<strong>Linux</strong>做适配，对windows系统不做适配，官方的原话为：<strong>windows或许能正常工作</strong>。</p>
+<p>这让很多windows用户焦头烂额了，因为可能连库本身的安装都存在问题，本文既是针对这个情况为大家介绍一个在windows下极简安装Face_Recognition库的方法。</p>
+<h2 id="face-recognition简介"><a href="#face-recognition简介" class="headerlink" title="face_recognition简介"></a>face_recognition简介</h2><p>face_recognition项目的人脸识别是基于业内领先的C++开源库 dlib中的深度学习模型，用Labeled Faces in the Wild人脸数据集进行测试，有高达99.38%的准确率。但对小孩和亚洲人脸的识别准确率尚待提升。</p>
+<p>face_recognition是基于业内领先的C++开源库dlib中的深度学习模型，用Labeled Faces in the Wild人脸数据集进行测试，有高达99.38%的准确率。因此，安装face_recognition前需要安装<strong>dlib</strong>库。</p>
+<h2 id="face-recognition安装"><a href="#face-recognition安装" class="headerlink" title="face_recognition安装"></a>face_recognition安装</h2><p>由于face_recognition库是以来dlib库而开发，所以必须要安装dlib库，只有dlib库正常安装，face_recognition才能正常安装。face_recognition安装的难点也正是dlib库的安装，因为就是该库未提供windows下的适配。</p>
+<p>dlib库whl文件下载地址：<a href="https://github.com/xiexiangnow/Dlib">Dlib whl文件下载地址</a></p>
+<p>注意：该下载地址中，包含了针对64位Windows和python 3.7、3.8、3.9的三个版本文件</p>
+<h3 id="安装过程："><a href="#安装过程：" class="headerlink" title="安装过程："></a>安装过程：</h3><p>1、cmake和boost安装 </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install cmake</span><br><span class="line">pip install boost</span><br></pre></td></tr></table></figure>
+
+<p>2、Dlib安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先进入dlib-19.17.0-cp37-cp37m-win_amd64.whl文件所在目录，或者写成绝对路径</span></span><br><span class="line">pip install dlib-19.17.0-cp37-cp37m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<p>3、face_recognition安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install face_recognition</span><br></pre></td></tr></table></figure>
+
+<h3 id="cmake和boost"><a href="#cmake和boost" class="headerlink" title="cmake和boost"></a>cmake和boost</h3><p>这两个工具也可以去官网地址下载安装</p>
+<p>cmake: <a href="https://cmake.org/download/">https://cmake.org/download/</a></p>
+<p>boost: <a href="https://www.boost.org/users/download/">https://www.boost.org/users/download/</a></p>
+<p>至此，face_recognition就安装成功了！</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
