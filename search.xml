@@ -3458,11 +3458,8 @@
 <p>最后访问服务器的IP地址，端口4999即可。</p>
 <p>提醒：</p>
 <ol>
-<li>服务器上需要安装Docker，如果没有安装，可以通过yum install -y docker.io进行安装。</li>
-<li>服务器上需要安装Docker-compose，如果没有安装，可以通过yum install -y docker-compose进行安装。</li>
-<li>服务器上需要安装git，如果没有安装，可以通过yum install -y git进行安装。</li>
+<li>服务器上需要安装Docker，如果没有安装，请查看详细文档 <a href="https://zhuanlan.zhihu.com/p/699515988">https://zhuanlan.zhihu.com/p/699515988</a></li>
 <li>如果是阿里云服务器，需要进行安全组的端口映射，将4999端口开放。</li>
-<li>服务器上需要安装vim，如果没有安装，可以通过yum install -y vim进行安装。</li>
 </ol>
 ]]></content>
       <categories>
