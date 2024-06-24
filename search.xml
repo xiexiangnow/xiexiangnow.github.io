@@ -3513,7 +3513,7 @@
 
 
 <h2 id="四、安装IK分词器"><a href="#四、安装IK分词器" class="headerlink" title="四、安装IK分词器"></a>四、安装IK分词器</h2><p>IK提供了两个分词算法：ik_smart和ik_max_word，其中ik_smart为最少切分，ik_max_word为最细力度。</p>
-<p><strong>特别注意</strong>：这里需要注意安装的版本需要跟ElasticSearch版本一致。</p>
+<p><span style="color:red"><strong>特别注意</strong>：这里需要注意安装的版本需要跟ElasticSearch版本一致。</span></p>
 <p>进入到ElasticSearch容器中docker exec -it 容器ID &#x2F;bin&#x2F;bash</p>
 <p>使用wget来进行安装，执行</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.7.0/elasticsearch-analysis-ik-7.7.0.zip</span><br></pre></td></tr></table></figure>

@@ -29,7 +29,7 @@
 <meta property="og:description" content="一、安装Docker安装依赖包，执行命令 1yum install -y yum-utils device-mapper-persistent-data lvm2 此时若直接执行安装docker命令就会发现是十分慢的，这个等待过程是漫长的。配置国内的源就可以解决问题yum-config-manager –add-repo http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;docker-ce&#x2F;li">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-06-24T09:43:04.000Z">
-<meta property="article:modified_time" content="2024-06-24T10:06:27.967Z">
+<meta property="article:modified_time" content="2024-06-24T10:09:31.233Z">
 <meta property="article:author" content="谢翔">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -246,7 +246,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-06-24 17:43:04 / 修改时间：18:06:27" itemprop="dateCreated datePublished" datetime="2024-06-24T17:43:04+08:00">2024-06-24</time>
+              <time title="创建时间：2024-06-24 17:43:04 / 修改时间：18:09:31" itemprop="dateCreated datePublished" datetime="2024-06-24T17:43:04+08:00">2024-06-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -329,7 +329,7 @@
 
 
 <h2 id="四、安装IK分词器"><a href="#四、安装IK分词器" class="headerlink" title="四、安装IK分词器"></a>四、安装IK分词器</h2><p>IK提供了两个分词算法：ik_smart和ik_max_word，其中ik_smart为最少切分，ik_max_word为最细力度。</p>
-<p><strong>特别注意</strong>：这里需要注意安装的版本需要跟ElasticSearch版本一致。</p>
+<p><span style="color:red"><strong>特别注意</strong>：这里需要注意安装的版本需要跟ElasticSearch版本一致。</span></p>
 <p>进入到ElasticSearch容器中docker exec -it 容器ID &#x2F;bin&#x2F;bash</p>
 <p>使用wget来进行安装，执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.7.0/elasticsearch-analysis-ik-7.7.0.zip</span><br></pre></td></tr></table></figure>
