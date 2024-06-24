@@ -3529,6 +3529,15 @@
 
 <p>接着删除压缩包即可，此时你可以看到一个config包和几个jar包</p>
 <p>最后退出容器，重启重启容器即可。</p>
+<h4 id="检验是否成功"><a href="#检验是否成功" class="headerlink" title="检验是否成功"></a>检验是否成功</h4><p>安装完后，就可以使用 _analyze 语法验证</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">GET /_analyze</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;text&quot;</span>: <span class="string">&quot;中华人民共和国国歌&quot;</span>,</span><br><span class="line">  <span class="string">&quot;analyzer&quot;</span>: <span class="string">&quot;ik_smart&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>响应结果</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;tokens&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;token&quot;</span>: <span class="string">&quot;中华人民共和国&quot;</span>,</span><br><span class="line">      <span class="string">&quot;start_offset&quot;</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="string">&quot;end_offset&quot;</span>: <span class="number">7</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;CN_WORD&quot;</span>,</span><br><span class="line">      <span class="string">&quot;position&quot;</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;token&quot;</span>: <span class="string">&quot;国歌&quot;</span>,</span><br><span class="line">      <span class="string">&quot;start_offset&quot;</span>: <span class="number">7</span>,</span><br><span class="line">      <span class="string">&quot;end_offset&quot;</span>: <span class="number">9</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;CN_WORD&quot;</span>,</span><br><span class="line">      <span class="string">&quot;position&quot;</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>表示分词IK已生效。</p>
+<br/>
+
 <p>参考文献： <a href="https://developer.aliyun.com/article/929422#slide-4">https://developer.aliyun.com/article/929422#slide-4</a></p>
 ]]></content>
       <categories>
