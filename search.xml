@@ -3511,6 +3511,7 @@
 <p> 进入到第一步创建的ElasticSearch容器中，修改配置文件 <strong>vi config&#x2F;elasticsearch.yml</strong> 即可。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure>
 
+
 <h2 id="四、安装IK分词器"><a href="#四、安装IK分词器" class="headerlink" title="四、安装IK分词器"></a>四、安装IK分词器</h2><p>IK提供了两个分词算法：ik_smart和ik_max_word，其中ik_smart为最少切分，ik_max_word为最细力度。</p>
 <p><strong>特别注意</strong>：这里需要注意安装的版本需要跟ElasticSearch版本一致。</p>
 <p>进入到ElasticSearch容器中docker exec -it 容器ID &#x2F;bin&#x2F;bash</p>
