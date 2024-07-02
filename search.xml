@@ -3625,4 +3625,39 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux安装redis扩展</title>
+    <url>/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/</url>
+    <content><![CDATA[<p>1、下载redis 并解压到当前目录</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">wget http:<span class="comment">//pecl.php.net/get/redis-3.1.2.tgz</span></span><br><span class="line">tar -zxvf redis-<span class="number">3.1</span>.<span class="number">2</span>.tgz</span><br></pre></td></tr></table></figure>
+
+<p>2、进入解压的redis目录</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">cd redis-<span class="number">3.1</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>3、用phpize生成configure配置文件（你自己的phpize在哪里可以查找一下！）</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">whereis phpize   <span class="comment"># 先找phpize在哪  </span></span><br><span class="line"></span><br><span class="line">/usr/local/php/bin/phpize   <span class="comment"># 执行</span></span><br></pre></td></tr></table></figure>
+
+<p>4、配置</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/php/bin/php-config    <span class="comment"># php-config为php/bin下的执行文件</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>5、编译安装</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p>6、编辑php.ini</p>
+<p>首先找到php.ini的位置</p>
+<p>可通过php –ini查看位置，Loaded Configuration File:&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php.ini 为php配置地址</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">vim /usr/local/php/lib/php.ini</span><br></pre></td></tr></table></figure>
+
+<p>在php.ini中添加 <strong>extension &#x3D; redis.so</strong>;</p>
+<p>7、查看php扩展结果</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php -m</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>

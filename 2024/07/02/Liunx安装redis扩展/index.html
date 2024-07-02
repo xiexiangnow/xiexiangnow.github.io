@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Flag1、悦纳 2、你可以表达愤怒，但不可以愤怒的表达 3、你可以不成才，但必须要成人 4、说话必须要说中性词 5、故事：擦窗户需要30分钟，只有一块抹布；切菜需要30分钟，只有一把菜刀；拖地需要30分钟，但是也只有一个拖把；请问：30分钟？45分钟？60分钟？90分钟？哪个答案更好？ 别把自己认为的答案，去解决别人的需求 6、陈述性 -&gt; 程序性 这个过程需要联系7次 +- 2次程序性">
+  <meta name="description" content="1、下载redis 并解压到当前目录 12wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;redis-3.1.2.tgztar -zxvf redis-3.1.2.tgz  2、进入解压的redis目录 1cd redis-3.1.2  3、用phpize生成configure配置文件（你自己的phpize在哪里可以查找一下！） 123whereis phpize   # 先找phpiz">
 <meta property="og:type" content="article">
-<meta property="og:title" content="极简项目管理摘取">
-<meta property="og:url" content="http://www.xiang007.com/2021/02/01/%E6%9E%81%E7%AE%80%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%91%98%E5%8F%96/index.html">
+<meta property="og:title" content="Linux安装redis扩展">
+<meta property="og:url" content="http://www.xiang007.com/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/index.html">
 <meta property="og:site_name" content="翔奕时代">
-<meta property="og:description" content="Flag1、悦纳 2、你可以表达愤怒，但不可以愤怒的表达 3、你可以不成才，但必须要成人 4、说话必须要说中性词 5、故事：擦窗户需要30分钟，只有一块抹布；切菜需要30分钟，只有一把菜刀；拖地需要30分钟，但是也只有一个拖把；请问：30分钟？45分钟？60分钟？90分钟？哪个答案更好？ 别把自己认为的答案，去解决别人的需求 6、陈述性 -&gt; 程序性 这个过程需要联系7次 +- 2次程序性">
+<meta property="og:description" content="1、下载redis 并解压到当前目录 12wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;redis-3.1.2.tgztar -zxvf redis-3.1.2.tgz  2、进入解压的redis目录 1cd redis-3.1.2  3、用phpize生成configure配置文件（你自己的phpize在哪里可以查找一下！） 123whereis phpize   # 先找phpiz">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-02-01T07:36:30.000Z">
-<meta property="article:modified_time" content="2023-03-09T08:16:56.185Z">
+<meta property="article:published_time" content="2024-07-02T08:39:20.000Z">
+<meta property="article:modified_time" content="2024-07-02T08:46:37.210Z">
 <meta property="article:author" content="谢翔">
-<meta property="article:tag" content="其他">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.xiang007.com/2021/02/01/%E6%9E%81%E7%AE%80%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%91%98%E5%8F%96/">
+<link rel="canonical" href="http://www.xiang007.com/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>极简项目管理摘取 | 翔奕时代</title>
+  <title>Linux安装redis扩展 | 翔奕时代</title>
   
 
 
@@ -222,7 +222,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2021/02/01/%E6%9E%81%E7%AE%80%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%91%98%E5%8F%96/">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head_img.jpg">
@@ -235,7 +235,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          极简项目管理摘取
+          Linux安装redis扩展
         </h1>
 
         <div class="post-meta">
@@ -244,23 +244,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-02-01 15:36:30" itemprop="dateCreated datePublished" datetime="2021-02-01T15:36:30+08:00">2021-02-01</time>
+              <time title="创建时间：2024-07-02 16:39:20 / 修改时间：16:46:37" itemprop="dateCreated datePublished" datetime="2024-07-02T16:39:20+08:00">2024-07-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 16:16:56" itemprop="dateModified" datetime="2023-03-09T16:16:56+08:00">2023-03-09</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
                 </span>
             </span>
 
@@ -276,7 +270,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.5k</span>
+              <span>539</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -294,28 +288,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h3><p>1、悦纳</p>
-<p>2、你可以表达愤怒，但不可以愤怒的表达</p>
-<p>3、你可以不成才，但必须要成人</p>
-<p>4、说话必须要说中性词</p>
-<p>5、故事：擦窗户需要30分钟，只有一块抹布；切菜需要30分钟，只有一把菜刀；拖地需要30分钟，但是也只有一个拖把；<br>请问：30分钟？45分钟？60分钟？90分钟？哪个答案更好？</p>
-<p>别把自己认为的答案，去解决别人的需求</p>
-<p>6、陈述性 -&gt; 程序性 这个过程需要联系7次 +- 2次<br>程序性 -&gt; 陈述性 这个过程需要十年</p>
+        <p>1、下载redis 并解压到当前目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//pecl.php.net/get/redis-3.1.2.tgz</span></span><br><span class="line">tar -zxvf redis-<span class="number">3.1</span>.<span class="number">2</span>.tgz</span><br></pre></td></tr></table></figure>
+
+<p>2、进入解压的redis目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-<span class="number">3.1</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>3、用phpize生成configure配置文件（你自己的phpize在哪里可以查找一下！）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">whereis phpize   <span class="comment"># 先找phpize在哪  </span></span><br><span class="line"></span><br><span class="line">/usr/local/php/bin/phpize   <span class="comment"># 执行</span></span><br></pre></td></tr></table></figure>
+
+<p>4、配置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/php/bin/php-config    <span class="comment"># php-config为php/bin下的执行文件</span></span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
 
-<p>面对失败不要惧怕，需要多次尝试联系，距离成功只需要7次左右<br>问题：小孩的学习能力强还是大人的学习能力强？<br>分析：答案是大人的学习能力强；大人在学习东西的时候是一个网格状知识的结构，对于事务的学习有着系统的架构；<br>问题：那为什么小孩的记忆力那么好？<br>分析：并不是小孩的记忆力好，而且小孩容易去多次、重复的尝试与练习；</p>
-<p>7、南极探险：<br>去南极探险，两个队的策略和策划天壤之别。<br>阿蒙森团队于1912年1月25日全部返回营地。这个日子和他三年前计划的归程一天不差。后来有人请阿蒙森分享经验，他说：最重要的因素是探险的准备如何，你必须要遇见可能出现的困难，遇到了该如何处理或者如何避免，总之，按照计划执行。<br>从斯科特团队的日志来看，他们是一个比较随心所欲的团队，天气好就走得非常猛烈，但天气不好就睡在帐篷里，吃东西、诅咒恶劣的天气和坏的运气，祈祷天气转好。</p>
-<p>8、计划是用来改的；正因为计划没有变化快，才更需要做计划；<br>领导不应该直接管人管事，而应该管计划；<br>项目不应该被领导管着，而应该被计划管着；<br>员工不应该按领导的指示做事，而应该按计划的安排做事；</p>
-<p>9、人生的五次选择：<br>1）读书<br>2）上大学选择一个好的专业<br>3）选择一个公司、行业<br>4）跟谁结婚<br>5）毕业五年是应该选择赚钱，还是能力的提升<br>综上，如果全部已经有所选择，请遵循第六项选择：爱我所选！</p>
-<p>10、受过高等教育的我们：别放纵自己，有义务让社会更好！</p>
-<p>11、人生的两大悲哀：结婚了不再恋爱；工作了不再读书；</p>
-<p>12、王阳明 《传习录》</p>
-<p>13、一个“精确”的项目时间<br>上司：“小张，你那项目需要多长时间才能完成？”<br>下属：“80天左右吧，王总”<br>上司：“别跟我说左右，准确一点，究竟多少天？”<br>下属：“那就80天”<br>上司：“80天太长了，给你50天吧”<br>下属：“50天实在太短了，王总”<br>上司：“那就65天吧。别再讨价还价了，就这么定了！”<br>下属：“好吧”</p>
-<p>分析：先别看下面，是不是自己也遇到过类似的问题<br>1、王总对于下属的工作是不信任的；<br>2、下属对于项目的周期时间没有评估的依据 （项目中可以参见甘特图做类似说明）<br>14、不要做悲观主义者，要做一个积极的悲观主义者</p>
-<p>15、不识庐山真面，只缘身在此山中<br>对于任何的事情需要脱离本身或者站在“远处”看问题，20几岁遇到的困难和问题在于50岁的人看来简直都不是事<br>纵观中国5000年历史，1982年前，整个5000年历史仅仅就只有200多年的幸福年代，这里所指幸福年代是没有战争、没有饥荒，从1982年开始到2020年将近40年的时光里面都是幸福的年代，现在年轻人面对自己的工作的压力和生活的压力，这又算什么呢。<br>在纵观全球各国生活幸福指数，中国的物价是全球比较低的，排前几位；中国人民生活幸福指数比较高对比与其他国家天天战乱温饱都是问题，随时面临的是死亡，你是否想过自己生活在多的么幸福的国度</p>
-<p>16、 今天的组织需要的是由一群平凡的人，做出不平凡的事 – 彼得·德鲁克</p>
-<p>17、多看历史书籍，放宽眼界<br>（历史的文明才是真正需要年轻人传承的，而不是说几个流行词语、错意词，就是潮流，这是郭老师教诲的）</p>
+<p>5、编译安装</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
+<p>6、编辑php.ini</p>
+<p>首先找到php.ini的位置</p>
+<p>可通过php –ini查看位置，Loaded Configuration File:&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php.ini 为php配置地址</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/php/lib/php.ini</span><br></pre></td></tr></table></figure>
+
+<p>在php.ini中添加 <strong>extension &#x3D; redis.so</strong>;</p>
+<p>7、查看php扩展结果</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -344,7 +341,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%85%B6%E4%BB%96/" rel="tag"># 其他</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
           </div>
 
         
@@ -353,13 +350,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/28/hexo%E6%89%8B%E5%8A%A8%E7%99%BE%E5%BA%A6%E6%8E%A8%E9%80%81/" rel="prev" title="hexo手动百度推送">
-      <i class="fa fa-chevron-left"></i> hexo手动百度推送
+    <a href="/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/" rel="prev" title="Linux安装php7.4和nginx配置">
+      <i class="fa fa-chevron-left"></i> Linux安装php7.4和nginx配置
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/04/22/pyenv-%E5%AE%89%E8%A3%85python%E7%89%88%E6%9C%AC%E8%A2%AB%E5%A2%99%E9%97%AE%E9%A2%98/" rel="next" title="pyenv安装python版本被墙问题">
-      pyenv安装python版本被墙问题 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -418,7 +412,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flag"><span class="nav-number">1.</span> <span class="nav-text">Flag</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

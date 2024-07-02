@@ -219,6 +219,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">Linux安装redis扩展</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-02 16:39:20 / 修改时间：16:46:37" itemprop="dateCreated datePublished" datetime="2024-07-02T16:39:20+08:00">2024-07-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>539</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1、下载redis 并解压到当前目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//pecl.php.net/get/redis-3.1.2.tgz</span></span><br><span class="line">tar -zxvf redis-<span class="number">3.1</span>.<span class="number">2</span>.tgz</span><br></pre></td></tr></table></figure>
+
+<p>2、进入解压的redis目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-<span class="number">3.1</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>3、用phpize生成configure配置文件（你自己的phpize在哪里可以查找一下！）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">whereis phpize   <span class="comment"># 先找phpize在哪  </span></span><br><span class="line"></span><br><span class="line">/usr/local/php/bin/phpize   <span class="comment"># 执行</span></span><br></pre></td></tr></table></figure>
+
+<p>4、配置</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/php/bin/php-config    <span class="comment"># php-config为php/bin下的执行文件</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,96 +1137,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/11/29/Nginx%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/29/Nginx%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">Nginx配置反向代理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-11-29 17:12:06 / 修改时间：17:18:36" itemprop="dateCreated datePublished" datetime="2023-11-29T17:12:06+08:00">2023-11-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@proxy ~]<span class="comment"># vi /etc/nginx/conf.d/forward.conf</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen  <span class="number">80</span>;</span><br><span class="line">    server_name  forward.linuxds.com;</span><br><span class="line">    access_log  /<span class="keyword">var</span>/log/nginx/forward.access.log  main;</span><br><span class="line">    error_log   /<span class="keyword">var</span>/log/nginx/forward.error.log  warn;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass https:<span class="comment">//www.landiannews.com/;   #代理地址</span></span><br><span class="line">        proxy_redirect     off;</span><br><span class="line"><span class="comment">#        proxy_set_header   Host             $host;</span></span><br><span class="line">        proxy_set_header   X-Real-IP        <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header   X-Forwarded-For  <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        client_max_body_size       <span class="number">10</span>m;     <span class="comment">#允许客户端请求的最大单文件字节数</span></span><br><span class="line">        client_body_buffer_size    <span class="number">128</span>k;    <span class="comment">#缓冲区代理缓冲用户端请求的最大字节数</span></span><br><span class="line">        proxy_connect_timeout      <span class="number">300</span>;     <span class="comment">#nginx跟后端服务器连接超时时间(代理连接超时)</span></span><br><span class="line">        proxy_send_timeout         <span class="number">300</span>;     <span class="comment">#后端服务器数据回传时间(代理发送超时)</span></span><br><span class="line">        proxy_read_timeout         <span class="number">300</span>;     <span class="comment">#连接成功后，后端服务器响应时间(代理接收超时)</span></span><br><span class="line">        proxy_buffer_size          <span class="number">4</span>k;      <span class="comment">#设置代理服务器（nginx）保存用户头信息的缓冲区大小</span></span><br><span class="line">        proxy_buffers              <span class="number">4</span> <span class="number">32</span>k;   <span class="comment">#proxy_buffers缓冲区，网页平均在32k以下的话，这样设置</span></span><br><span class="line">        proxy_busy_buffers_size    <span class="number">64</span>k;     <span class="comment">#高负荷下缓冲大小（proxy_buffers*2）</span></span><br><span class="line">        proxy_temp_file_write_size <span class="number">64</span>k;     <span class="comment">#设定缓存文件夹大小，大于这个值，将从upstream服务器传</span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line">  <span class="number">1</span> [root@proxy ~]<span class="comment"># nginx -t -c /etc/nginx/nginx.conf        	#检查配置文件</span></span><br><span class="line">  <span class="number">2</span> [root@proxy ~]<span class="comment"># nginx -s reload				#重载配置文件</span></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="配置释义"><a href="#配置释义" class="headerlink" title="配置释义"></a>配置释义</h4><p>proxy_set_header X-Real-IP $remote_addr：把源IP【$remote_addr，建立HTTP连接header里面的信息】赋值给X-Real-IP，从而通过$X-Real-IP来获取源IP；<br>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for：在nginx作为代理服务器时，设置的IP列表，会把经过的机器ip，代理机器ip都记录下来，用【，】隔开。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/11/29/Nginx%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1200,7 +1207,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1276,7 +1283,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:02</span>
+    <span title="站点阅读时长">4:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
