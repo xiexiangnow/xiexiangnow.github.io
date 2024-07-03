@@ -3672,6 +3672,8 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
 
 <p>执行之后终端界面已经发生了变化<br><img src="/../img/2024070301.png"></p>
+<span id="more"></span>
+
 <p>至此oh-my-zsh已经安装完毕，为优化使用体验，可安装插件和更换主题</p>
 <h2 id="三、插件安装"><a href="#三、插件安装" class="headerlink" title="三、插件安装"></a>三、插件安装</h2><h4 id="1、-zsh-syntax-highlighting"><a href="#1、-zsh-syntax-highlighting" class="headerlink" title="1、 zsh-syntax-highlighting "></a>1、<span style="color:#098"> zsh-syntax-highlighting </span></h4><p>官网：<a href="https://github.com/zsh-users/zsh-syntax-highlighting">https://github.com/zsh-users/zsh-syntax-highlighting</a></p>
 <p>按次序执行以下命令进行安装</p>
