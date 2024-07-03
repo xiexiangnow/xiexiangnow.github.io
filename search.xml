@@ -3660,4 +3660,45 @@
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>oh-my-zsh的安装与配置</title>
+    <url>/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="一、安装zsh"><a href="#一、安装zsh" class="headerlink" title="一、安装zsh"></a>一、安装zsh</h2><p>安装 <strong>oh-my-zsh</strong> 需要首先安装 <strong>zsh</strong> </p>
+<p>使用以下命令安装zsh，若其他linux系统可以使用yum来安装，不再赘述</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span>  </span><br><span class="line"></span><br><span class="line">sudo yum install zsh</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装oh-my-zsh"><a href="#二、安装oh-my-zsh" class="headerlink" title="二、安装oh-my-zsh"></a>二、安装oh-my-zsh</h2><p>oh-my-zsh官网： <a href="https://ohmyz.sh/#install">https://ohmyz.sh/#install</a></p>
+<p>执行命令如下命令直接进行安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>执行之后终端界面已经发生了变化<br><img src="/../img/2024070301.png"></p>
+<p>至此oh-my-zsh已经安装完毕，为优化使用体验，可安装插件和更换主题</p>
+<h2 id="三、插件安装"><a href="#三、插件安装" class="headerlink" title="三、插件安装"></a>三、插件安装</h2><h4 id="1、-zsh-syntax-highlighting"><a href="#1、-zsh-syntax-highlighting" class="headerlink" title="1、 zsh-syntax-highlighting "></a>1、<span style="color:#098"> zsh-syntax-highlighting </span></h4><p>官网：<a href="https://github.com/zsh-users/zsh-syntax-highlighting">https://github.com/zsh-users/zsh-syntax-highlighting</a></p>
+<p>按次序执行以下命令进行安装</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">git <span class="keyword">clone</span> https:<span class="comment">//github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot;</span> &gt;&gt; $&#123;ZDOTDIR:-<span class="variable">$HOME</span>&#125;/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后可以使用 <strong>source ~&#x2F;.zshrc</strong> 重载配置文件启用插件</p>
+<h4 id="2、-zsh-autosuggestions"><a href="#2、-zsh-autosuggestions" class="headerlink" title="2、 zsh-autosuggestions "></a>2、<span style="color:#098"> zsh-autosuggestions </span></h4><p>官网：<a href="https://github.com/zsh-users/zsh-autosuggestions">https://github.com/zsh-users/zsh-autosuggestions</a></p>
+<p>使用以下命令进行安装</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">git <span class="keyword">clone</span> https:<span class="comment">//github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh&quot;</span> &gt;&gt; $&#123;ZDOTDIR:-<span class="variable">$HOME</span>&#125;/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后可以使用 <strong>source ~&#x2F;.zshrc</strong> 重载配置文件启用插件</p>
+<h2 id="四、主题设置"><a href="#四、主题设置" class="headerlink" title="四、主题设置"></a>四、主题设置</h2><p>使用命令编辑zsh配置文件 <strong>~&#x2F;.zshrc</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>找到 ZSH_THEME&#x3D;”” 行，后面引号中即为主题名称</p>
+<p><img src="/../img/2024070302.png"></p>
+<p>也可以使用 ZSH_THEME&#x3D;”random” 使用随机主题</p>
+<p>随机主题下可以使用 source ~&#x2F;.zshrc 重载配置文件来刷新主题</p>
+<p>选出一个合适的主题后 可以使用命令 echo $RANDOM_THEME 来输出当前的主题名称</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>

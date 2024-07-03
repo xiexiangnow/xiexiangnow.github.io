@@ -1,3 +1,4 @@
+http://www.xiang007.com/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/
 http://www.xiang007.com/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/
 http://www.xiang007.com/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/
 http://www.xiang007.com/2024/06/24/Docker%E5%AE%89%E8%A3%85ElasticSearch/
