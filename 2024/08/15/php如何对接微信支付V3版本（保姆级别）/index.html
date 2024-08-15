@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文主要记录php对接微信支付v3版本的整个过程，包含支付、退款、回调等功能，会从申请证书开始记录  证书申请 V31、入口介绍 在微信商户平台中，[账户中心]-&gt;[API安全]中可以看到这样的界面  证书的申请在商户API证书下面的管理证书">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php如何对接微信支付V3版本（保姆级别）">
+<meta property="og:url" content="http://www.xiang007.com/2024/08/15/php%E5%A6%82%E4%BD%95%E5%AF%B9%E6%8E%A5%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98V3%E7%89%88%E6%9C%AC%EF%BC%88%E4%BF%9D%E5%A7%86%E7%BA%A7%E5%88%AB%EF%BC%89/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="本文主要记录php对接微信支付v3版本的整个过程，包含支付、退款、回调等功能，会从申请证书开始记录  证书申请 V31、入口介绍 在微信商户平台中，[账户中心]-&gt;[API安全]中可以看到这样的界面  证书的申请在商户API证书下面的管理证书">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/24081501.png">
+<meta property="og:image" content="http://www.xiang007.com/img/24081505.png">
+<meta property="og:image" content="http://www.xiang007.com/img/24081502.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/24081503.png">
+<meta property="og:image" content="http://www.xiang007.com/img/24081506.png">
+<meta property="og:image" content="http://www.xiang007.com/img/24081507.png">
+<meta property="og:image" content="http://www.xiang007.com/img/2024081508.png">
+<meta property="article:published_time" content="2024-08-15T07:19:36.000Z">
+<meta property="article:modified_time" content="2024-08-15T08:14:32.115Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/24081501.png">
+
+<link rel="canonical" href="http://www.xiang007.com/2024/08/15/php%E5%A6%82%E4%BD%95%E5%AF%B9%E6%8E%A5%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98V3%E7%89%88%E6%9C%AC%EF%BC%88%E4%BF%9D%E5%A7%86%E7%BA%A7%E5%88%AB%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>php如何对接微信支付V3版本（保姆级别） | 翔奕时代</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cb95f8bfa78cc1ef30f30b29db5cf386";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/08/15/php%E5%A6%82%E4%BD%95%E5%AF%B9%E6%8E%A5%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98V3%E7%89%88%E6%9C%AC%EF%BC%88%E4%BF%9D%E5%A7%86%E7%BA%A7%E5%88%AB%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          php如何对接微信支付V3版本（保姆级别）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-08-15 15:19:36 / 修改时间：16:14:32" itemprop="dateCreated datePublished" datetime="2024-08-15T15:19:36+08:00">2024-08-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文主要记录php对接微信支付v3版本的整个过程，包含支付、退款、回调等功能，会从申请证书开始记录</p>
+</blockquote>
+<h2 id="证书申请-V3"><a href="#证书申请-V3" class="headerlink" title="证书申请 V3"></a>证书申请 V3</h2><h4 id="1、入口介绍"><a href="#1、入口介绍" class="headerlink" title="1、入口介绍"></a>1、入口介绍</h4><p> 在微信商户平台中，[账户中心]-&gt;[API安全]中可以看到这样的界面<br> <img src="/../img/24081501.png"><br> 证书的申请在商户API证书下面的管理证书</p>
+<span id="more"></span>
+<h4 id="2、证书工具下载"><a href="#2、证书工具下载" class="headerlink" title="2、证书工具下载"></a>2、证书工具下载</h4><p><img src="/../img/24081505.png"><br>目前支持windows和mac版本，下载安装到本机</p>
+<h4 id="3、修改证书保存地址"><a href="#3、修改证书保存地址" class="headerlink" title="3、修改证书保存地址"></a>3、修改证书保存地址</h4><p>运行证书工具后，修改证书保存路径<br><img src="/../img/24081502.jpg"></p>
+<h4 id="4、生成证书请求串"><a href="#4、生成证书请求串" class="headerlink" title="4、生成证书请求串"></a>4、生成证书请求串</h4><p><img src="/../img/24081503.png"></p>
+<h4 id="5、生成证书"><a href="#5、生成证书" class="headerlink" title="5、生成证书"></a>5、生成证书</h4><p>将证书请求串复制到商户平台证书管理界面粘贴进去，然后在工具上点击生成证书，会在你证书保存路径的地方生成两个文件：<strong>apiclient_cert.pem</strong>和<strong>apiclinet_key.pem</strong></p>
+<h2 id="cert-pem证书生成"><a href="#cert-pem证书生成" class="headerlink" title="cert.pem证书生成"></a>cert.pem证书生成</h2><p><strong>注意：V3版本中<span style="color:red">cert.pem</span>证书不同于apiclient_cert.pem证书，它是由命令工具生成，确切的说apiclient_cert.pem是没有用的，而cert.pem才是真正在代码对接中有用的，这里相对于v2版本有很大的区别，这里也是最容易混淆的地方。</strong></p>
+<h4 id="1、下载php依赖"><a href="#1、下载php依赖" class="headerlink" title="1、下载php依赖"></a>1、下载php依赖</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer <span class="keyword">require</span> wechatpay/wechatpay</span><br></pre></td></tr></table></figure>
+
+<p>github地址：<a target="_blank" rel="noopener" href="https://github.com/wechatpay-apiv3/wechatpay-php">https://github.com/wechatpay-apiv3/wechatpay-php</a></p>
+<h4 id="2、运行命令生成证书"><a href="#2、运行命令生成证书" class="headerlink" title="2、运行命令生成证书"></a>2、运行命令生成证书</h4><p><img src="/../img/24081506.png"></p>
+<p>找到该路径：**&#x2F;vendor&#x2F;wechatpay&#x2F;wechatpay&#x2F;bin<strong>下，有个</strong>CertificateDownloader.php**文件，可通过php去执行它能看到命令行的提示：</p>
+<p><img src="/../img/24081507.png"></p>
+<ul>
+<li>-m 商户号：这个不用说</li>
+<li>-s 商户证书序列号：在商户平台生成证书后所对应的证书序列号</li>
+<li>-f 商户的秘钥文件：通过证书工具生成的apiclient_key.pem这个文件</li>
+<li>-k APIv3: 在商户平台API安全中可以找到，本文中图一可以看到</li>
+</ul>
+<p>全部设置好后执行命令（参考）:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php CertificateDownloader.php -m 1635059363 -k NrAsJhcefMRkHKkMtNGrAtTdKtKaTTmY -f ../../../../config/merchant/apiclient_key.pem -s 7A56DCFEEE02E7F56C18E04EFF7D488A44D6AABB </span><br></pre></td></tr></table></figure>
+
+<p>成功后会得到以下结果：</p>
+<p><img src="/../img/2024081508.png"></p>
+<p>此时就得到了cert.pem的内容，自行保存证书。</p>
+<h2 id="业务对接"><a href="#业务对接" class="headerlink" title="业务对接"></a>业务对接</h2><p>以下<strong>WechatPayServiceV3.php</strong>为实例，以app支付为场景，提供如下service，里面有微信支付、退款、回调等业务逻辑，特别注意微信配置的地方，也可以参照github上提供的参考代码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">app</span>\<span class="title class_">api</span>\<span class="title class_">service</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">facade</span>\<span class="title">Log</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">WeChatPay</span>\<span class="title">Builder</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">WeChatPay</span>\<span class="title">Crypto</span>\<span class="title">Rsa</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">WeChatPay</span>\<span class="title">Formatter</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">WeChatPay</span>\<span class="title">Util</span>\<span class="title">PemUtil</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 微信支付 V3</span></span><br><span class="line"><span class="comment"> * Class WechatPayServiceV3</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WechatPayServiceV3</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> Builder::factory $resp */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$instance</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_init</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - apiV3实例初始化</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">_init</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 商户号，假定为`1000100`</span></span><br><span class="line">        <span class="variable">$merchantId</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;wechat.merchantId&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">        <span class="comment">// 从本地文件中加载「商户API私钥」，「商户API私钥」会用来生成请求的签名</span></span><br><span class="line">        <span class="variable">$merchantPrivateKeyFilePath</span> = <span class="string">&quot;file://&quot;</span>.<span class="title function_ invoke__">config_path</span>().<span class="string">&#x27;merchant/apiclient_key.pem&#x27;</span>;</span><br><span class="line">        <span class="variable">$merchantPrivateKeyInstance</span> = <span class="title class_">Rsa</span>::<span class="keyword">from</span>(<span class="variable">$merchantPrivateKeyFilePath</span>, <span class="title class_">Rsa</span>::<span class="variable constant_">KEY_TYPE_PRIVATE</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 「商户API证书」的「证书序列号」 ，从微信支付提供的「平台证书」中获取</span></span><br><span class="line">        <span class="variable">$merchantCertificateSerial</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;wechat.mchSerialNo&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从本地文件中加载「微信支付平台证书」，用来验证微信支付应答的签名</span></span><br><span class="line">        <span class="comment">// 【**】【打死要特别注意】：这里是坑，以下的cert.pem并不是工具生成的apiclient_cert.pem这个证书，而是通过/vendor/wechatpay/wechatpay/bin 下的工具生成的！</span></span><br><span class="line">        <span class="variable">$platformCertificateFilePath</span> = <span class="string">&quot;file://&quot;</span>.<span class="title function_ invoke__">config_path</span>().<span class="string">&#x27;merchant/cert.pem&#x27;</span>;</span><br><span class="line">        <span class="variable">$platformPublicKeyInstance</span> = <span class="title class_">Rsa</span>::<span class="keyword">from</span>(<span class="variable">$platformCertificateFilePath</span>, <span class="title class_">Rsa</span>::<span class="variable constant_">KEY_TYPE_PUBLIC</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从「微信支付平台证书」中获取「证书序列号」</span></span><br><span class="line">        <span class="variable">$platformCertificateSerial</span> = <span class="title class_">PemUtil</span>::<span class="title function_ invoke__">parseCertificateSerialNo</span>(<span class="variable">$platformCertificateFilePath</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构造一个 APIv3 客户端实例</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;instance = <span class="title class_">Builder</span>::<span class="title function_ invoke__">factory</span>([</span><br><span class="line">            <span class="string">&#x27;mchid&#x27;</span>      =&gt; <span class="variable">$merchantId</span>,</span><br><span class="line">            <span class="string">&#x27;serial&#x27;</span>     =&gt; <span class="variable">$merchantCertificateSerial</span>,</span><br><span class="line">            <span class="string">&#x27;privateKey&#x27;</span> =&gt; <span class="variable">$merchantPrivateKeyInstance</span>,</span><br><span class="line">            <span class="string">&#x27;certs&#x27;</span>      =&gt; [</span><br><span class="line">                <span class="variable">$platformCertificateSerial</span> =&gt; <span class="variable">$platformPublicKeyInstance</span>,</span><br><span class="line">            ],</span><br><span class="line">        ]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 生成支付签名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $prepayId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getPaySign</span>(<span class="params"><span class="variable">$prepayId</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$merchantPrivateKeyFilePath</span> = <span class="string">&quot;file://&quot;</span>.<span class="title function_ invoke__">config_path</span>().<span class="string">&#x27;merchant/apiclient_key.pem&#x27;</span>;</span><br><span class="line">        <span class="variable">$merchantPrivateKeyInstance</span> = <span class="title class_">Rsa</span>::<span class="keyword">from</span>(<span class="variable">$merchantPrivateKeyFilePath</span>);</span><br><span class="line">        <span class="variable">$params</span> = [</span><br><span class="line">            <span class="string">&#x27;appId&#x27;</span>     =&gt; <span class="title function_ invoke__">config</span>(<span class="string">&#x27;wechat.appid&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;timeStamp&#x27;</span> =&gt; (<span class="keyword">string</span>)<span class="title class_">Formatter</span>::<span class="title function_ invoke__">timestamp</span>(),</span><br><span class="line">            <span class="string">&#x27;nonceStr&#x27;</span>  =&gt; <span class="title class_">Formatter</span>::<span class="title function_ invoke__">nonce</span>(),</span><br><span class="line">            <span class="string">&#x27;prepay_id&#x27;</span> =&gt; <span class="variable">$prepayId</span>,</span><br><span class="line">        ];</span><br><span class="line">        <span class="variable">$params</span> += [<span class="string">&#x27;paySign&#x27;</span> =&gt; <span class="title class_">Rsa</span>::<span class="title function_ invoke__">sign</span>(</span><br><span class="line">            <span class="title class_">Formatter</span>::<span class="title function_ invoke__">joinedByLineFeed</span>(...<span class="title function_ invoke__">array_values</span>(<span class="variable">$params</span>)),</span><br><span class="line">            <span class="variable">$merchantPrivateKeyInstance</span></span><br><span class="line">        ), <span class="string">&#x27;signType&#x27;</span> =&gt; <span class="string">&#x27;RSA&#x27;</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$params</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 微信支付 V3</span></span><br><span class="line"><span class="comment">     * #依赖包文档： https://packagist.org/packages/wechatpay/wechatpay</span></span><br><span class="line"><span class="comment">     * #微信app支付文档：https://pay.weixin.qq.com/docs/merchant/apis/in-app-payment/direct-jsons/app-prepay.html</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $options</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $notifyURL // 回调地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> \Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">pay</span>(<span class="params"><span class="variable">$options</span>, <span class="variable">$notifyURL</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable">$appid</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;wechat.appid&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">            <span class="variable">$mchid</span> = <span class="title function_ invoke__">config</span>(<span class="string">&#x27;wechat.merchantId&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">            <span class="comment">// 同步支付</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 参数整理 请参照：https://pay.weixin.qq.com/docs/merchant/apis/in-app-payment/direct-jsons/app-prepay.html</span></span><br><span class="line">                <span class="variable">$params</span> = [</span><br><span class="line">                    <span class="string">&#x27;json&#x27;</span> =&gt; [</span><br><span class="line">                        <span class="string">&#x27;appid&#x27;</span>        =&gt; <span class="variable">$appid</span>, <span class="comment">// 微信appid</span></span><br><span class="line">                        <span class="string">&#x27;mchid&#x27;</span>        =&gt; <span class="variable">$mchid</span>, <span class="comment">// 商户号</span></span><br><span class="line">                        <span class="string">&#x27;description&#x27;</span>  =&gt; <span class="variable">$options</span>[<span class="string">&#x27;subject&#x27;</span>],     <span class="comment">//商品描述</span></span><br><span class="line">                        <span class="string">&#x27;out_trade_no&#x27;</span> =&gt; <span class="variable">$options</span>[<span class="string">&#x27;outTradeNo&#x27;</span>],  <span class="comment">// 商户系统内部订单号</span></span><br><span class="line">                        <span class="string">&#x27;notify_url&#x27;</span>   =&gt; <span class="variable">$notifyURL</span>,              <span class="comment">// 回调地址</span></span><br><span class="line">                        <span class="string">&#x27;amount&#x27;</span>       =&gt; [</span><br><span class="line">                            <span class="string">&#x27;total&#x27;</span>    =&gt; <span class="title function_ invoke__">intval</span>(<span class="variable">$options</span>[<span class="string">&#x27;totalAmount&#x27;</span>] * <span class="number">100</span>),   <span class="comment">// 订单总金额，单位为分。</span></span><br><span class="line">                            <span class="string">&#x27;currency&#x27;</span> =&gt; <span class="string">&#x27;CNY&#x27;</span>,</span><br><span class="line">                        ],</span><br><span class="line">                    ],</span><br><span class="line">                ];</span><br><span class="line">                <span class="variable">$resp</span> = <span class="variable language_">$this</span>-&gt;instance-&gt;<span class="title function_ invoke__">chain</span>(<span class="string">&#x27;v3/pay/transactions/app&#x27;</span>)-&gt;<span class="title function_ invoke__">post</span>(<span class="variable">$params</span>);</span><br><span class="line">                <span class="variable">$resp</span> = <span class="variable">$resp</span>-&gt;<span class="title function_ invoke__">getBody</span>()-&gt;<span class="title function_ invoke__">getContents</span>();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (\GuzzleHttp\<span class="built_in">Exception</span>\RequestException <span class="variable">$e</span>) &#123;</span><br><span class="line">                <span class="variable">$r</span> = <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getResponse</span>();</span><br><span class="line">                <span class="variable">$resp</span> = <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getBody</span>()-&gt;<span class="title function_ invoke__">getContents</span>();</span><br><span class="line">                <span class="title class_">Log</span>::<span class="title function_ invoke__">channel</span>(<span class="string">&#x27;wechat_notify&#x27;</span>)-&gt;<span class="title function_ invoke__">error</span>(<span class="string">&quot;微信支付创建订单 请求异常&quot;</span>, [<span class="string">&#x27;StatusCode&#x27;</span> =&gt; <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getStatusCode</span>() . <span class="string">&#x27; &#x27;</span> . <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getReasonPhrase</span>(), <span class="string">&#x27;Body&#x27;</span> =&gt; <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getBody</span>(), <span class="string">&#x27;outTradeNo&#x27;</span> =&gt; <span class="variable">$options</span>[<span class="string">&#x27;outTradeNo&#x27;</span>]]);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">                <span class="title class_">Log</span>::<span class="title function_ invoke__">channel</span>(<span class="string">&#x27;wechat_notify&#x27;</span>)-&gt;<span class="title function_ invoke__">error</span>(<span class="string">&quot;微信支付创建订单 异常&quot;</span>, [<span class="string">&#x27;description&#x27;</span> =&gt; <span class="variable">$options</span>[<span class="string">&#x27;subject&#x27;</span>], <span class="string">&#x27;outTradeNo&#x27;</span> =&gt; <span class="variable">$options</span>[<span class="string">&#x27;outTradeNo&#x27;</span>], <span class="string">&#x27;money&#x27;</span> =&gt; <span class="variable">$options</span>[<span class="string">&#x27;totalAmount&#x27;</span>], <span class="string">&#x27;TraceAsString&#x27;</span> =&gt; <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getTraceAsString</span>(), <span class="string">&#x27;msg&#x27;</span> =&gt; <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()]);</span><br><span class="line">                <span class="keyword">throw</span> <span class="variable">$e</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 处理结果</span></span><br><span class="line">            <span class="variable">$res</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$resp</span>, <span class="literal">true</span>);</span><br><span class="line">            <span class="variable">$paySign</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">getPaySign</span>(<span class="variable">$res</span>[<span class="string">&#x27;prepay_id&#x27;</span>]);</span><br><span class="line">            <span class="keyword">return</span> [</span><br><span class="line">                <span class="string">&#x27;appid&#x27;</span>     =&gt; <span class="variable">$appid</span>,</span><br><span class="line">                <span class="string">&#x27;partnerid&#x27;</span> =&gt; <span class="variable">$mchid</span>,</span><br><span class="line">                <span class="string">&#x27;prepayid&#x27;</span>  =&gt; <span class="variable">$res</span>[<span class="string">&#x27;prepay_id&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;package&#x27;</span>   =&gt; <span class="string">&quot;Sign=WXPay&quot;</span>,</span><br><span class="line">                <span class="string">&#x27;noncestr&#x27;</span>  =&gt; <span class="variable">$paySign</span>[<span class="string">&#x27;nonceStr&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;timestamp&#x27;</span> =&gt; <span class="variable">$paySign</span>[<span class="string">&#x27;timeStamp&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;sign&#x27;</span>      =&gt; <span class="variable">$paySign</span>[<span class="string">&#x27;paySign&#x27;</span>],</span><br><span class="line">            ];</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="comment">// 进行错误处理</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$e</span> <span class="keyword">instanceof</span> \GuzzleHttp\<span class="built_in">Exception</span>\RequestException &amp;&amp; <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">hasResponse</span>()) &#123;</span><br><span class="line">                <span class="variable">$r</span> = <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getResponse</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//echo $e-&gt;getTraceAsString(), PHP_EOL;</span></span><br><span class="line">            <span class="title class_">Log</span>::<span class="title function_ invoke__">channel</span>(<span class="string">&#x27;wechat_notify&#x27;</span>)-&gt;<span class="title function_ invoke__">error</span>(<span class="string">&quot;微信支付创建订单 异常&quot;</span>. <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>().<span class="string">&quot;|&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getLine</span>());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">\Exception</span>(<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 微信退单 V3</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $info</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">orderRefund</span>(<span class="params"><span class="variable">$info</span></span>): <span class="title">bool</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$promise</span> = <span class="variable language_">$this</span>-&gt;instance</span><br><span class="line">            -&gt;<span class="title function_ invoke__">chain</span>(<span class="string">&#x27;v3/refund/domestic/refunds&#x27;</span>)</span><br><span class="line">            <span class="comment">// 参数整理 请参考：https://pay.weixin.qq.com/docs/merchant/apis/in-app-payment/create.html</span></span><br><span class="line">            -&gt;<span class="title function_ invoke__">postAsync</span>([</span><br><span class="line">                <span class="string">&#x27;json&#x27;</span> =&gt; [</span><br><span class="line">                    <span class="string">&#x27;transaction_id&#x27;</span> =&gt; (<span class="keyword">string</span>)<span class="variable">$info</span>[<span class="string">&#x27;trade_no&#x27;</span>],  <span class="comment">// 交易号</span></span><br><span class="line">                    <span class="string">&#x27;out_refund_no&#x27;</span>  =&gt; (<span class="keyword">string</span>)<span class="variable">$info</span>[<span class="string">&#x27;order_sn&#x27;</span>],  <span class="comment">// 系统内部订单号</span></span><br><span class="line">                    <span class="string">&#x27;amount&#x27;</span>         =&gt; [</span><br><span class="line">                        <span class="string">&#x27;refund&#x27;</span>   =&gt; <span class="variable">$info</span>[<span class="string">&#x27;actual_price&#x27;</span>] * <span class="number">100</span>,  <span class="comment">// 退款金额，单位为分，只能为整数，不能超过原订单支付金额。</span></span><br><span class="line">                        <span class="string">&#x27;total&#x27;</span>    =&gt; <span class="variable">$info</span>[<span class="string">&#x27;actual_price&#x27;</span>] * <span class="number">100</span>,  <span class="comment">// 原支付交易的订单总金额，单位为分，只能为整数</span></span><br><span class="line">                        <span class="string">&#x27;currency&#x27;</span> =&gt; <span class="string">&#x27;CNY&#x27;</span>,</span><br><span class="line">                    ],</span><br><span class="line">                ],</span><br><span class="line">            ])</span><br><span class="line">            -&gt;<span class="title function_ invoke__">then</span>(<span class="built_in">static</span> function(<span class="variable">$response</span>) &#123;</span><br><span class="line">                <span class="comment">// 正常逻辑回调处理</span></span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$response</span>-&gt;<span class="title function_ invoke__">getBody</span>(), PHP_EOL;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable">$response</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">otherwise</span>(<span class="built_in">static</span> function(<span class="variable">$e</span>) &#123;</span><br><span class="line">                <span class="comment">// 异常错误处理</span></span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>(), PHP_EOL;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable">$e</span> <span class="keyword">instanceof</span> \GuzzleHttp\<span class="built_in">Exception</span>\RequestException &amp;&amp; <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">hasResponse</span>()) &#123;</span><br><span class="line">                    <span class="variable">$r</span> = <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getResponse</span>();</span><br><span class="line">                    <span class="keyword">echo</span> <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getStatusCode</span>() . <span class="string">&#x27; &#x27;</span> . <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getReasonPhrase</span>(), PHP_EOL;</span><br><span class="line">                    <span class="keyword">echo</span> <span class="variable">$r</span>-&gt;<span class="title function_ invoke__">getBody</span>(), PHP_EOL, PHP_EOL, PHP_EOL;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getTraceAsString</span>(), PHP_EOL;</span><br><span class="line">            &#125;);</span><br><span class="line">        <span class="comment">// 同步等待</span></span><br><span class="line">        <span class="variable">$promise</span>-&gt;<span class="title function_ invoke__">wait</span>();</span><br><span class="line">        <span class="title class_">Log</span>::<span class="title function_ invoke__">error</span>(<span class="string">&quot;微信退款结果：&quot;</span>.<span class="title function_ invoke__">json_encode</span>(<span class="variable">$promise</span>));</span><br><span class="line">        <span class="variable">$promise</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$promise</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$promise</span>[<span class="string">&#x27;status&#x27;</span>]) &amp;&amp; <span class="variable">$promise</span>[<span class="string">&#x27;status&#x27;</span>] == <span class="string">&#x27;SUCCESS&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/img/wx.png" alt="谢翔 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/zfb.png" alt="谢翔 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" rel="prev" title="oh-my-zsh的安装与配置">
+      <i class="fa fa-chevron-left"></i> oh-my-zsh的安装与配置
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-V3"><span class="nav-number">1.</span> <span class="nav-text">证书申请 V3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%85%A5%E5%8F%A3%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、入口介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%AF%81%E4%B9%A6%E5%B7%A5%E5%85%B7%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、证书工具下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9%E8%AF%81%E4%B9%A6%E4%BF%9D%E5%AD%98%E5%9C%B0%E5%9D%80"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、修改证书保存地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6%E8%AF%B7%E6%B1%82%E4%B8%B2"><span class="nav-number">1.0.4.</span> <span class="nav-text">4、生成证书请求串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="nav-number">1.0.5.</span> <span class="nav-text">5、生成证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cert-pem%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">cert.pem证书生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BDphp%E4%BE%9D%E8%B5%96"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、下载php依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、运行命令生成证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E5%AF%B9%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">业务对接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/head_img.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ezgx.site/" title="https:&#x2F;&#x2F;ezgx.site&#x2F;" rel="noopener" target="_blank">Aegcbx的博客</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">276k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:11</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/nietzche.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
