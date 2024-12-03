@@ -936,6 +936,13 @@
   </url>
   
   <url>
+    <loc>http://www.xiang007.com/tags/mac/</loc>
+    <lastmod>2024-12-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://www.xiang007.com/tags/nginx/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -951,13 +958,6 @@
   
   <url>
     <loc>http://www.xiang007.com/tags/php/</loc>
-    <lastmod>2024-12-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.xiang007.com/tags/mac/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1071,6 +1071,13 @@
   </url>
   
   <url>
+    <loc>http://www.xiang007.com/categories/mac/</loc>
+    <lastmod>2024-12-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://www.xiang007.com/categories/nginx/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -1086,13 +1093,6 @@
   
   <url>
     <loc>http://www.xiang007.com/categories/php/</loc>
-    <lastmod>2024-12-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.xiang007.com/categories/mac/</loc>
     <lastmod>2024-12-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
