@@ -3772,4 +3772,30 @@
         <tag>php</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python报错 ModuleNotFoundError: No module named &quot;_lzma&quot;</title>
+    <url>/2024/12/03/python%E6%8A%A5%E9%94%99-ModuleNotFoundError-No-module-named-%E2%80%98-lzma%E2%80%98/</url>
+    <content><![CDATA[<pre><code>运行scrapy爬虫项目时报错：ModuleNotFoundError: No module named ‘_lzma‘，很多文章的解决方案是重新安装python，但重新安装后会发现一样还是会报错，报错如下图：
+</code></pre>
+<p><img src="/../img/py1203-01.png" alt="redis"></p>
+<p><strong>解决思路</strong>：用backports.lzma代替_lzma包</p>
+<h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><h4 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install liblzma-dev</span><br></pre></td></tr></table></figure>
+<p>如果报如下镜像404错误，先升级一下apt：sudo apt update</p>
+<h4 id="2、安装替代库-backports-lzma"><a href="#2、安装替代库-backports-lzma" class="headerlink" title="2、安装替代库 backports.lzma"></a>2、安装替代库 backports.lzma</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install backports.lzma</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h4 id="3、修改lzma-py源码"><a href="#3、修改lzma-py源码" class="headerlink" title="3、修改lzma.py源码"></a>3、修改lzma.py源码</h4><p>lzma.py源码文件路径在上图，根据自己的环境位置确定该文件的地址，或者可根据 find &#x2F; -name lzma.py找到源码文件路径</p>
+<p>修改&#x2F;Users&#x2F;xiexiang&#x2F;.pyenv&#x2F;versions&#x2F;3.10.10&#x2F;lib&#x2F;python3.10&#x2F;lzma.py这个文件：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">#修改前</span></span><br><span class="line"><span class="keyword">from</span> _lzma import *</span><br><span class="line"><span class="keyword">from</span> _lzma import _encode_filter_properties, _decode_filter_properties</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改后 </span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> _lzma import *</span><br><span class="line">    <span class="keyword">from</span> _lzma import _encode_filter_properties, _decode_filter_properties</span><br><span class="line">except ImportError:</span><br><span class="line">    <span class="keyword">from</span> backports.lzma import *</span><br><span class="line">    <span class="keyword">from</span> backports.lzma import _encode_filter_properties, _decode_filter_properties</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="4、验证"><a href="#4、验证" class="headerlink" title="4、验证"></a>4、验证</h4><p>爬虫就正常运行了 </p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
