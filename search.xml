@@ -2931,8 +2931,7 @@
   <entry>
     <title>python报错 ModuleNotFoundError: No module named &quot;_lzma&quot;</title>
     <url>/2024/12/03/python%E6%8A%A5%E9%94%99-ModuleNotFoundError-No-module-named-%E2%80%98-lzma%E2%80%98/</url>
-    <content><![CDATA[<pre><code>运行scrapy爬虫项目时报错：ModuleNotFoundError: No module named ‘_lzma‘，很多文章的解决方案是重新安装python，但重新安装后会发现一样还是会报错，报错如下图：
-</code></pre>
+    <content><![CDATA[<p>运行scrapy爬虫项目时报错：ModuleNotFoundError: No module named ‘_lzma‘，很多文章的解决方案是重新安装python，但重新安装后会发现一样还是会报错，报错如下图：</p>
 <p><img src="/../img/py1203-01.png" alt="python"></p>
 <p><strong>解决思路</strong>：用backports.lzma代替_lzma包</p>
 <h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><h4 id="1、安装依赖"><a href="#1、安装依赖" class="headerlink" title="1、安装依赖"></a>1、安装依赖</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install liblzma-dev</span><br></pre></td></tr></table></figure>
