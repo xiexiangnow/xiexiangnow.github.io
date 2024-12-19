@@ -21,23 +21,20 @@
     var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一、安装zsh安装 oh-my-zsh 需要首先安装 zsh  使用以下命令安装zsh，若其他linux系统可以使用yum来安装，不再赘述 12345sudo apt install zsh#或者  sudo yum install zsh  二、安装oh-my-zshoh-my-zsh官网： https:&#x2F;&#x2F;ohmyz.sh&#x2F;#install 执行命令如下命令直接进行安装 1sh -c &amp;quo">
+  <meta name="description" content="php邮件发送比较简单，这里整理了一下，方便小伙伴们收藏后直接开箱即用，当然，如果需要更复杂的配置，可以参考官网文档。  准备工作下载对应的依赖包 1composer require phpmailer&#x2F;phpmailer  代码封装与实现1234567891011121314151617181920212223242526272829303132333435363738394041424344">
 <meta property="og:type" content="article">
-<meta property="og:title" content="oh-my-zsh的安装与配置">
-<meta property="og:url" content="http://www.xiang007.com/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:title" content="php如何发送邮件">
+<meta property="og:url" content="http://www.xiang007.com/2024/12/19/php%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/index.html">
 <meta property="og:site_name" content="翔奕时代">
-<meta property="og:description" content="一、安装zsh安装 oh-my-zsh 需要首先安装 zsh  使用以下命令安装zsh，若其他linux系统可以使用yum来安装，不再赘述 12345sudo apt install zsh#或者  sudo yum install zsh  二、安装oh-my-zshoh-my-zsh官网： https:&#x2F;&#x2F;ohmyz.sh&#x2F;#install 执行命令如下命令直接进行安装 1sh -c &amp;quo">
+<meta property="og:description" content="php邮件发送比较简单，这里整理了一下，方便小伙伴们收藏后直接开箱即用，当然，如果需要更复杂的配置，可以参考官网文档。  准备工作下载对应的依赖包 1composer require phpmailer&#x2F;phpmailer  代码封装与实现1234567891011121314151617181920212223242526272829303132333435363738394041424344">
 <meta property="og:locale">
-<meta property="og:image" content="http://www.xiang007.com/img/2024070301.png">
-<meta property="og:image" content="http://www.xiang007.com/img/2024070302.png">
-<meta property="article:published_time" content="2024-07-03T02:37:15.000Z">
-<meta property="article:modified_time" content="2024-07-03T02:50:29.776Z">
+<meta property="article:published_time" content="2024-12-19T08:47:35.000Z">
+<meta property="article:modified_time" content="2024-12-19T09:01:22.105Z">
 <meta property="article:author" content="谢翔">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="php">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.xiang007.com/img/2024070301.png">
 
-<link rel="canonical" href="http://www.xiang007.com/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+<link rel="canonical" href="http://www.xiang007.com/2024/12/19/php%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>oh-my-zsh的安装与配置 | 翔奕时代</title>
+  <title>php如何发送邮件 | 翔奕时代</title>
   
 
 
@@ -225,7 +222,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/03/oh-my-zsh%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/12/19/php%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head_img.jpg">
@@ -238,7 +235,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          oh-my-zsh的安装与配置
+          php如何发送邮件
         </h1>
 
         <div class="post-meta">
@@ -249,7 +246,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-07-03 10:37:15 / 修改时间：10:50:29" itemprop="dateCreated datePublished" datetime="2024-07-03T10:37:15+08:00">2024-07-03</time>
+              <time title="创建时间：2024-12-19 16:47:35 / 修改时间：17:01:22" itemprop="dateCreated datePublished" datetime="2024-12-19T16:47:35+08:00">2024-12-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +254,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
                 </span>
             </span>
 
@@ -273,13 +270,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.2k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -291,39 +288,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一、安装zsh"><a href="#一、安装zsh" class="headerlink" title="一、安装zsh"></a>一、安装zsh</h2><p>安装 <strong>oh-my-zsh</strong> 需要首先安装 <strong>zsh</strong> </p>
-<p>使用以下命令安装zsh，若其他linux系统可以使用yum来安装，不再赘述</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install zsh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span>  </span><br><span class="line"></span><br><span class="line">sudo yum install zsh</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>php邮件发送比较简单，这里整理了一下，方便小伙伴们收藏后直接开箱即用，当然，如果需要更复杂的配置，可以参考官网文档。</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>下载对应的依赖包</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer <span class="keyword">require</span> phpmailer/phpmailer</span><br></pre></td></tr></table></figure>
 
-<h2 id="二、安装oh-my-zsh"><a href="#二、安装oh-my-zsh" class="headerlink" title="二、安装oh-my-zsh"></a>二、安装oh-my-zsh</h2><p>oh-my-zsh官网： <a target="_blank" rel="noopener" href="https://ohmyz.sh/#install">https://ohmyz.sh/#install</a></p>
-<p>执行命令如下命令直接进行安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
-
-<p>执行之后终端界面已经发生了变化<br><img src="/../img/2024070301.png"></p>
-<span id="more"></span>
-
-<p>至此oh-my-zsh已经安装完毕，为优化使用体验，可安装插件和更换主题</p>
-<h2 id="三、插件安装"><a href="#三、插件安装" class="headerlink" title="三、插件安装"></a>三、插件安装</h2><h4 id="1、-zsh-syntax-highlighting"><a href="#1、-zsh-syntax-highlighting" class="headerlink" title="1、 zsh-syntax-highlighting "></a>1、<span style="color:#098"> zsh-syntax-highlighting </span></h4><p>官网：<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting">https://github.com/zsh-users/zsh-syntax-highlighting</a></p>
-<p>按次序执行以下命令进行安装</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> https:<span class="comment">//github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh&quot;</span> &gt;&gt; $&#123;ZDOTDIR:-<span class="variable">$HOME</span>&#125;/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后可以使用 <strong>source ~&#x2F;.zshrc</strong> 重载配置文件启用插件</p>
-<h4 id="2、-zsh-autosuggestions"><a href="#2、-zsh-autosuggestions" class="headerlink" title="2、 zsh-autosuggestions "></a>2、<span style="color:#098"> zsh-autosuggestions </span></h4><p>官网：<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-autosuggestions">https://github.com/zsh-users/zsh-autosuggestions</a></p>
-<p>使用以下命令进行安装</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> https:<span class="comment">//github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh&quot;</span> &gt;&gt; $&#123;ZDOTDIR:-<span class="variable">$HOME</span>&#125;/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后可以使用 <strong>source ~&#x2F;.zshrc</strong> 重载配置文件启用插件</p>
-<h2 id="四、主题设置"><a href="#四、主题设置" class="headerlink" title="四、主题设置"></a>四、主题设置</h2><p>使用命令编辑zsh配置文件 <strong>~&#x2F;.zshrc</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure>
-<p>找到 ZSH_THEME&#x3D;”” 行，后面引号中即为主题名称</p>
-<p><img src="/../img/2024070302.png"></p>
-<p>也可以使用 ZSH_THEME&#x3D;”random” 使用随机主题</p>
-<p>随机主题下可以使用 source ~&#x2F;.zshrc 重载配置文件来刷新主题</p>
-<p>选出一个合适的主题后 可以使用命令 echo $RANDOM_THEME 来输出当前的主题名称</p>
-
+<h2 id="代码封装与实现"><a href="#代码封装与实现" class="headerlink" title="代码封装与实现"></a>代码封装与实现</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">app</span>\<span class="title class_">services</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPMailer</span>\<span class="title">PHPMailer</span>\<span class="title">PHPMailer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">facade</span>\<span class="title">Log</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 邮件类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailServer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$host</span> = <span class="string">&quot;&quot;</span>; <span class="comment">// smtp服务器地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$username</span> = <span class="string">&quot;&quot;</span>; <span class="comment">// SMTP用户名 （通常为你的邮箱地址）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$smtp_password</span> = <span class="string">&quot;&quot;</span>;  <span class="comment">// SMTP密码;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">int</span> <span class="variable">$port</span> = <span class="number">587</span>;  <span class="comment">// 端口号;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$addresser</span> = <span class="string">&quot;&quot;</span>;  <span class="comment">// 发件人;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">array</span> <span class="variable">$recover_mails</span> = []; <span class="comment">// 收件人</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 发送邮件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $mail_subject  // 邮件主题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $content       // 邮件内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $recover_name  // 收件人姓名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params"><span class="variable">$mail_subject</span>, <span class="variable">$content</span>, <span class="keyword">string</span> <span class="variable">$recover_name</span> = <span class="string">&quot;&quot;</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$mail</span> = <span class="keyword">new</span> <span class="title class_">PHPMailer</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 服务器配置</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPDebug  = <span class="number">0</span>;  <span class="comment">// 启动详细调试输出  2：详细输出 1：简要删除 0：不输出</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">isSMTP</span>();    <span class="comment">// 启用SMTP</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Host       = <span class="built_in">self</span>::<span class="variable">$host</span>; <span class="comment">// smtp服务器地址</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPAuth   = <span class="literal">true</span>;  <span class="comment">// 启用SMTP认证</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Username   = <span class="built_in">self</span>::<span class="variable">$username</span>;    <span class="comment">// SMTP用户名 （通常为你的邮箱地址）</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Password   = <span class="built_in">self</span>::<span class="variable">$smtp_password</span>;    <span class="comment">// SMTP密码</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPSecure = <span class="title class_">PHPMailer</span>::<span class="variable constant_">ENCRYPTION_STARTTLS</span>;  <span class="comment">// 启用TLS加密，`PHPMailer::ENCRYPTION_SMTPS` 代表使用SSL协议</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Port       = <span class="built_in">self</span>::<span class="variable">$port</span>;  <span class="comment">// 端口号</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 邮件发件人配置</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">setFrom</span>(<span class="built_in">self</span>::<span class="variable">$username</span>, <span class="built_in">self</span>::<span class="variable">$addresser</span>); <span class="comment">// 设置发件人信息</span></span><br><span class="line">            <span class="comment">// 添加收件人信息</span></span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">self</span>::<span class="variable">$recover_mails</span> <span class="keyword">as</span> <span class="variable">$mail_add</span>) &#123;</span><br><span class="line">                <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">addAddress</span>(<span class="variable">$mail_add</span>, <span class="variable">$recover_name</span>); <span class="comment">// 添加收件人地址</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 内容</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">isHTML</span>(<span class="literal">true</span>); <span class="comment">// 设置邮件格式为HTML</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;CharSet = <span class="string">&quot;utf-8&quot;</span>;   <span class="comment">// 设置编码防止乱码</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Subject = <span class="variable">$mail_subject</span>; <span class="comment">// 邮件标题</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Body = <span class="variable">$content</span> . <span class="string">&quot; 【remote_phone】&quot;</span>; <span class="comment">// 邮件正文</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发送邮件</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">send</span>()) &#123;</span><br><span class="line">                <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;mail send fail：&quot;</span>.<span class="variable">$mail</span>-&gt;ErrorInfo];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> [<span class="literal">true</span>, <span class="string">&quot;mail send success&quot;</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="title class_">Log</span>::<span class="title function_ invoke__">error</span>(<span class="string">&quot;邮件发送失败：&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;mail send exception：&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -352,7 +323,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/php/" rel="tag"># php</a>
           </div>
 
         
@@ -361,13 +332,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/07/02/Liunx%E5%AE%89%E8%A3%85redis%E6%89%A9%E5%B1%95/" rel="prev" title="Linux安装redis扩展">
-      <i class="fa fa-chevron-left"></i> Linux安装redis扩展
+    <a href="/2024/12/03/python%E6%8A%A5%E9%94%99-ModuleNotFoundError-No-module-named-%E2%80%98-lzma%E2%80%98/" rel="prev" title="python报错 ModuleNotFoundError: No module named "_lzma"">
+      <i class="fa fa-chevron-left"></i> python报错 ModuleNotFoundError: No module named "_lzma"
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/08/15/php%E5%A6%82%E4%BD%95%E5%AF%B9%E6%8E%A5%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98V3%E7%89%88%E6%9C%AC%EF%BC%88%E4%BF%9D%E5%A7%86%E7%BA%A7%E5%88%AB%EF%BC%89/" rel="next" title="php如何对接微信支付V3版本（保姆级别）">
-      php如何对接微信支付V3版本（保姆级别） <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -426,7 +394,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85zsh"><span class="nav-number">1.</span> <span class="nav-text">一、安装zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85oh-my-zsh"><span class="nav-number">2.</span> <span class="nav-text">二、安装oh-my-zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">三、插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-zsh-syntax-highlighting"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、 zsh-syntax-highlighting </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81-zsh-autosuggestions"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、 zsh-autosuggestions </span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">四、主题设置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%B0%81%E8%A3%85%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码封装与实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -219,6 +219,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/12/19/php%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/19/php%E5%A6%82%E4%BD%95%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" class="post-title-link" itemprop="url">php如何发送邮件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-12-19 16:47:35 / 修改时间：17:01:22" itemprop="dateCreated datePublished" datetime="2024-12-19T16:47:35+08:00">2024-12-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>php邮件发送比较简单，这里整理了一下，方便小伙伴们收藏后直接开箱即用，当然，如果需要更复杂的配置，可以参考官网文档。</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>下载对应的依赖包</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer <span class="keyword">require</span> phpmailer/phpmailer</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码封装与实现"><a href="#代码封装与实现" class="headerlink" title="代码封装与实现"></a>代码封装与实现</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">app</span>\<span class="title class_">services</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">PHPMailer</span>\<span class="title">PHPMailer</span>\<span class="title">PHPMailer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">facade</span>\<span class="title">Log</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 邮件类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailServer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$host</span> = <span class="string">&quot;&quot;</span>; <span class="comment">// smtp服务器地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$username</span> = <span class="string">&quot;&quot;</span>; <span class="comment">// SMTP用户名 （通常为你的邮箱地址）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$smtp_password</span> = <span class="string">&quot;&quot;</span>;  <span class="comment">// SMTP密码;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">int</span> <span class="variable">$port</span> = <span class="number">587</span>;  <span class="comment">// 端口号;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">string</span> <span class="variable">$addresser</span> = <span class="string">&quot;&quot;</span>;  <span class="comment">// 发件人;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="keyword">array</span> <span class="variable">$recover_mails</span> = []; <span class="comment">// 收件人</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * - 发送邮件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $mail_subject  // 邮件主题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $content       // 邮件内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $recover_name  // 收件人姓名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params"><span class="variable">$mail_subject</span>, <span class="variable">$content</span>, <span class="keyword">string</span> <span class="variable">$recover_name</span> = <span class="string">&quot;&quot;</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$mail</span> = <span class="keyword">new</span> <span class="title class_">PHPMailer</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 服务器配置</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPDebug  = <span class="number">0</span>;  <span class="comment">// 启动详细调试输出  2：详细输出 1：简要删除 0：不输出</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">isSMTP</span>();    <span class="comment">// 启用SMTP</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Host       = <span class="built_in">self</span>::<span class="variable">$host</span>; <span class="comment">// smtp服务器地址</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPAuth   = <span class="literal">true</span>;  <span class="comment">// 启用SMTP认证</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Username   = <span class="built_in">self</span>::<span class="variable">$username</span>;    <span class="comment">// SMTP用户名 （通常为你的邮箱地址）</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Password   = <span class="built_in">self</span>::<span class="variable">$smtp_password</span>;    <span class="comment">// SMTP密码</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;SMTPSecure = <span class="title class_">PHPMailer</span>::<span class="variable constant_">ENCRYPTION_STARTTLS</span>;  <span class="comment">// 启用TLS加密，`PHPMailer::ENCRYPTION_SMTPS` 代表使用SSL协议</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Port       = <span class="built_in">self</span>::<span class="variable">$port</span>;  <span class="comment">// 端口号</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 邮件发件人配置</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">setFrom</span>(<span class="built_in">self</span>::<span class="variable">$username</span>, <span class="built_in">self</span>::<span class="variable">$addresser</span>); <span class="comment">// 设置发件人信息</span></span><br><span class="line">            <span class="comment">// 添加收件人信息</span></span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">self</span>::<span class="variable">$recover_mails</span> <span class="keyword">as</span> <span class="variable">$mail_add</span>) &#123;</span><br><span class="line">                <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">addAddress</span>(<span class="variable">$mail_add</span>, <span class="variable">$recover_name</span>); <span class="comment">// 添加收件人地址</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 内容</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">isHTML</span>(<span class="literal">true</span>); <span class="comment">// 设置邮件格式为HTML</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;CharSet = <span class="string">&quot;utf-8&quot;</span>;   <span class="comment">// 设置编码防止乱码</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Subject = <span class="variable">$mail_subject</span>; <span class="comment">// 邮件标题</span></span><br><span class="line">            <span class="variable">$mail</span>-&gt;Body = <span class="variable">$content</span> . <span class="string">&quot; 【remote_phone】&quot;</span>; <span class="comment">// 邮件正文</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发送邮件</span></span><br><span class="line">            <span class="keyword">if</span> (!<span class="variable">$mail</span>-&gt;<span class="title function_ invoke__">send</span>()) &#123;</span><br><span class="line">                <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;mail send fail：&quot;</span>.<span class="variable">$mail</span>-&gt;ErrorInfo];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> [<span class="literal">true</span>, <span class="string">&quot;mail send success&quot;</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="title class_">Log</span>::<span class="title function_ invoke__">error</span>(<span class="string">&quot;邮件发送失败：&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">            <span class="keyword">return</span> [<span class="literal">false</span>, <span class="string">&quot;mail send exception：&quot;</span>.<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>()];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/12/03/python%E6%8A%A5%E9%94%99-ModuleNotFoundError-No-module-named-%E2%80%98-lzma%E2%80%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1066,98 +1151,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/06/17/web%E5%89%8D%E7%AB%AFHTML%E6%92%AD%E6%94%BEHLS%E5%9C%A8%E7%BA%BF%E8%A7%86%E9%A2%91%E6%B5%81%EF%BC%88m3u8%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/17/web%E5%89%8D%E7%AB%AFHTML%E6%92%AD%E6%94%BEHLS%E5%9C%A8%E7%BA%BF%E8%A7%86%E9%A2%91%E6%B5%81%EF%BC%88m3u8%EF%BC%89/" class="post-title-link" itemprop="url">web前端HTML播放HLS在线视频流（m3u8）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-06-17 10:31:35 / 修改时间：10:43:33" itemprop="dateCreated datePublished" datetime="2024-06-17T10:31:35+08:00">2024-06-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/html/" itemprop="url" rel="index"><span itemprop="name">html</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>m3u8为视频流文件，里面包含多个ts文件，ts为视频流切片，很多播放器是无法直接播放m3u8文件的，这里提供两种方式进行在线m3u8视频播放（预览）</p>
-<h3 id="1、hls-js"><a href="#1、hls-js" class="headerlink" title="1、hls.js"></a>1、<a target="_blank" rel="noopener" href="https://github.com/video-dev/hls.js">hls.js</a></h3><p>前端页面引入js:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./js/HLC_paly/hls.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>播放代码：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">&quot;HLS_Player&quot;</span> <span class="attr">autoplay</span>=<span class="string">&quot;autoplay&quot;</span> <span class="attr">loop</span> <span class="attr">muted</span> <span class="attr">controls</span>=<span class="string">&quot;controls&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100%&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> &gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	 HLS_Player = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;HLS_Player&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">if</span> (<span class="title class_">Hls</span>.<span class="title function_">isSupported</span>()) &#123;</span></span><br><span class="line"><span class="language-javascript">			HLS_Controller = <span class="keyword">new</span> <span class="title class_">Hls</span>();</span></span><br><span class="line"><span class="language-javascript">			HLS_Controller.<span class="title function_">loadSource</span>(<span class="string">&quot;视屏流地址&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">			HLS_Controller.<span class="title function_">attachMedia</span>(HLS_Player);</span></span><br><span class="line"><span class="language-javascript">			HLS_Controller.<span class="title function_">on</span>(<span class="title class_">Hls</span>.<span class="property">Events</span>.<span class="property">MANIFEST_PARSED</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">			    HLS_Player.<span class="title function_">play</span>();</span></span><br><span class="line"><span class="language-javascript">	        &#125;);</span></span><br><span class="line"><span class="language-javascript">						</span></span><br><span class="line"><span class="language-javascript">	&#125;</span></span><br><span class="line"><span class="language-javascript"><span class="comment">// hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.</span></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element through the `src` property.</span></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// This is using the built-in support of the plain video element, without using hls.js.</span></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// Note: it would be more normal to wait on the &#x27;canplay&#x27; event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven</span></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// white-list before a &#x27;canplay&#x27; event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is &#x27;loadedmetadata&#x27;.</span></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">else</span> <span class="keyword">if</span> (HLS_Player.<span class="title function_">canPlayType</span>(<span class="string">&#x27;application/vnd.apple.mpegurl&#x27;</span>)) &#123;</span></span><br><span class="line"><span class="language-javascript">		HLS_Player.<span class="property">src</span> = <span class="string">&#x27;http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">		HLS_Player.<span class="title function_">addEventListener</span>(<span class="string">&#x27;loadedmetadata&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">		    HLS_Player.<span class="title function_">play</span>();</span></span><br><span class="line"><span class="language-javascript">		&#125;);</span></span><br><span class="line"><span class="language-javascript">	&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/06/17/web%E5%89%8D%E7%AB%AFHTML%E6%92%AD%E6%94%BEHLS%E5%9C%A8%E7%BA%BF%E8%A7%86%E9%A2%91%E6%B5%81%EF%BC%88m3u8%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1228,7 +1221,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1299,12 +1292,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">282k</span>
+    <span title="站点总字数">284k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:16</span>
+    <span title="站点阅读时长">4:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

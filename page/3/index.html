@@ -219,6 +219,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/09/13/php%E5%AE%9E%E7%8E%B0%E5%AF%BC%E5%87%BAexcel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/13/php%E5%AE%9E%E7%8E%B0%E5%AF%BC%E5%87%BAexcel/" class="post-title-link" itemprop="url">php实现导出excel</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-09-13 09:44:21 / 修改时间：10:14:53" itemprop="dateCreated datePublished" datetime="2023-09-13T09:44:21+08:00">2023-09-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>php实现简单的excel导出案例如下，能很方便、便捷的导出所需数据，性能比较好；如需定制化导出，比如需要设置行高宽度、颜色填充、居中等效果建议使用PHPExcel插件去做，该插件具有更强大的定制化功能，能满足你各种样式需求</p>
+</blockquote>
+<p>以下是php导出代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">exportcos</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);          <span class="comment">// 设置长时执行</span></span><br><span class="line">        <span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;memory_limit&#x27;</span>, <span class="string">&#x27;512M&#x27;</span>); <span class="comment">// 设置执行内存</span></span><br><span class="line">        <span class="variable">$fileName</span> = <span class="title function_ invoke__">date</span>(<span class="string">&#x27;ymd&#x27;</span>).<span class="string">&#x27;_cos.csv&#x27;</span>; <span class="comment">// 导出的excel文件名</span></span><br><span class="line">        <span class="comment">//设置header头</span></span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Content-Description: File Transfer&#x27;</span>);</span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type: application/vnd.ms-excel;charset=UTF-8&quot;</span>);</span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Content-Disposition: attachment;filename=&quot;&#x27;</span> . <span class="variable">$fileName</span> . <span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Expires: 0&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_USER_AGENT&#x27;</span>], <span class="string">&#x27;MSIE&#x27;</span>) === <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Cache-Control: no-cache&#x27;</span>);</span><br><span class="line">            <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Pragma: no-cache&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Cache-Control: must-revalidate, post-check=0, pre-check=0&#x27;</span>);</span><br><span class="line">            <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Pragma: public&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//打开php数据输入缓冲区</span></span><br><span class="line">        <span class="variable">$fp</span>     = <span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;php://output&#x27;</span>, <span class="string">&#x27;ab&#x27;</span>);</span><br><span class="line">        <span class="variable">$header</span> = [<span class="string">&#x27;序号&#x27;</span>,<span class="string">&#x27;姓名&#x27;</span>,<span class="string">&#x27;性别&#x27;</span>,<span class="string">&#x27;学校&#x27;</span>,<span class="string">&#x27;班级&#x27;</span>];    <span class="comment">// 设置excel表头</span></span><br><span class="line">        <span class="title function_ invoke__">fwrite</span>(<span class="variable">$fp</span>, <span class="title function_ invoke__">chr</span>(<span class="number">0xEF</span>) . <span class="title function_ invoke__">chr</span>(<span class="number">0xBB</span>) . <span class="title function_ invoke__">chr</span>(<span class="number">0xBF</span>));</span><br><span class="line">        <span class="title function_ invoke__">fputcsv</span>(<span class="variable">$fp</span>, <span class="variable">$header</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 数据列表处理   </span></span><br><span class="line">        <span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">1</span>; <span class="variable">$i</span> &lt;= <span class="number">50000</span>; <span class="variable">$i</span>++) &#123;          <span class="comment">// 如是真实查询数据，加入筛选条件得到过滤后需要的数据</span></span><br><span class="line">            <span class="variable">$item</span>[<span class="string">&#x27;id&#x27;</span>] = <span class="variable">$i</span>;</span><br><span class="line">            <span class="variable">$item</span>[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&quot;谢晨奕&quot;</span>;</span><br><span class="line">            <span class="variable">$item</span>[<span class="string">&#x27;sex&#x27;</span>] = <span class="string">&quot;女&quot;</span>;</span><br><span class="line">            <span class="variable">$item</span>[<span class="string">&#x27;school&#x27;</span>] = <span class="string">&quot;璞普幼儿园&quot;</span>;</span><br><span class="line">            <span class="variable">$item</span>[<span class="string">&#x27;class&#x27;</span>] = <span class="string">&quot;中二班&quot;</span>;</span><br><span class="line">            <span class="title function_ invoke__">fputcsv</span>(<span class="variable">$fp</span>, <span class="variable">$item</span>);  <span class="comment">// 写一行excel</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_ invoke__">fclose</span>(<span class="variable">$fp</span>);  <span class="comment">// 最后关闭缓冲区</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/08/15/PHP%E5%AE%9E%E7%8E%B0JWT%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,94 +1124,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">php结合php-ampqlib做rabbitMQ队列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-03-21 14:16:06 / 修改时间：14:29:37" itemprop="dateCreated datePublished" datetime="2023-03-21T14:16:06+08:00">2023-03-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index"><span itemprop="name">php</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>5.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="内容概述"><a href="#内容概述" class="headerlink" title="内容概述"></a>内容概述</h3><p>php使用rabbitMQ做消息队列，这是一种常见的异步的工作方式，在很多的工作场景都能遇到，在阅读该文章之前，需要提前了解rabbitMQ的工作原理以及下面的几种工作模式，这样更有助于阅读这篇文章，以下代码是通过自行封装对amqplib的各种模式的使用，便于记忆，在此记录。</p>
-<h3 id="composer安装扩展"><a href="#composer安装扩展" class="headerlink" title="composer安装扩展"></a>composer安装扩展</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">composer安装</span><br><span class="line">composer <span class="keyword">require</span>  PHP-amqplib/PHP-amqplib</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/21/php%E7%BB%93%E5%90%88php-ampqlib%E5%81%9ArabbitMQ%E9%98%9F%E5%88%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1198,7 +1194,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1269,12 +1265,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">282k</span>
+    <span title="站点总字数">284k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:16</span>
+    <span title="站点阅读时长">4:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
