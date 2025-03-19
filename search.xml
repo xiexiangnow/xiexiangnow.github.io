@@ -3817,7 +3817,9 @@
   <entry>
     <title>Centos7如何安装python3.10+</title>
     <url>/2025/03/19/Centos7%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85python3-10/</url>
-    <content><![CDATA[<p>在centos7里面安装python3.10+高版本的时候，会报错Centos7如何安装python3.10+,ImportError: Can’t connect to HTTPS URL because the SSL module is not available.<br>原因是centos7里面的openssl是1.0.1版本的，这对于python3以上的版本不再支持，需要我们对系统中的openssl进行升级后才进行安装</p>
+    <content><![CDATA[<blockquote>
+<p>在centos7里面安装python3.10+高版本的时候，会报错Centos7如何安装python3.10+,ImportError: Can’t connect to HTTPS URL because the SSL module is not available.<br>原因是centos7里面的openssl是1.0.1版本的，这对于python3以上的版本不再支持，需要我们对系统中的openssl进行升级后才进行安装</p>
+</blockquote>
 <h3 id="一、OpenSSL版本要求"><a href="#一、OpenSSL版本要求" class="headerlink" title="一、OpenSSL版本要求"></a>一、OpenSSL版本要求</h3><p>Python 3.10需要‌OpenSSL 1.1.1或更高版本‌支持。CentOS 7默认安装的OpenSSL 1.0.2k不兼容，需手动升级‌</p>
 <h3 id="二、升级OpenSSL详细步骤"><a href="#二、升级OpenSSL详细步骤" class="headerlink" title="二、升级OpenSSL详细步骤"></a>二、升级OpenSSL详细步骤</h3><h4 id="1-安装编译依赖"><a href="#1-安装编译依赖" class="headerlink" title="1. 安装编译依赖"></a>1. 安装编译依赖</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum install -y gcc make perl zlib-devel pcre-devel</span><br></pre></td></tr></table></figure>
 
