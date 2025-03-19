@@ -3814,4 +3814,43 @@
         <tag>php</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Centos7如何安装python3.10+</title>
+    <url>/2025/03/19/Centos7%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85python3-10/</url>
+    <content><![CDATA[<p>在centos7里面安装python3.10+高版本的时候，会报错Centos7如何安装python3.10+,ImportError: Can’t connect to HTTPS URL because the SSL module is not available.<br>原因是centos7里面的openssl是1.0.1版本的，这对于python3以上的版本不再支持，需要我们对系统中的openssl进行升级后才进行安装</p>
+<h3 id="一、OpenSSL版本要求"><a href="#一、OpenSSL版本要求" class="headerlink" title="一、OpenSSL版本要求"></a>一、OpenSSL版本要求</h3><p>Python 3.10需要‌OpenSSL 1.1.1或更高版本‌支持。CentOS 7默认安装的OpenSSL 1.0.2k不兼容，需手动升级‌</p>
+<h3 id="二、升级OpenSSL详细步骤"><a href="#二、升级OpenSSL详细步骤" class="headerlink" title="二、升级OpenSSL详细步骤"></a>二、升级OpenSSL详细步骤</h3><h4 id="1-安装编译依赖"><a href="#1-安装编译依赖" class="headerlink" title="1. 安装编译依赖"></a>1. 安装编译依赖</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum install -y gcc make perl zlib-devel pcre-devel</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-下载并解压OpenSSL源码"><a href="#2-下载并解压OpenSSL源码" class="headerlink" title="2. 下载并解压OpenSSL源码"></a>2. 下载并解压OpenSSL源码</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">sudo wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz  # 以最新版为例</span><br><span class="line">sudo tar xzf openssl-*.tar.gz &amp;&amp; cd openssl-*</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-编译安装OpenSSL"><a href="#3-编译安装OpenSSL" class="headerlink" title="3. 编译安装OpenSSL"></a>3. 编译安装OpenSSL</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl</span><br><span class="line">sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-配置系统环境"><a href="#4-配置系统环境" class="headerlink" title="4. 配置系统环境"></a>4. 配置系统环境</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">备份旧版</span></span><br><span class="line">sudo mv /usr/bin/openssl /usr/bin/openssl.bak</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建软链接</span></span><br><span class="line">sudo ln -s /usr/local/openssl/bin/openssl /usr/bin/openssl</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新库路径</span></span><br><span class="line">echo &quot;/usr/local/openssl/lib&quot; | sudo tee /etc/ld.so.conf.d/openssl.conf</span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-验证安装"><a href="#5-验证安装" class="headerlink" title="5. 验证安装"></a>5. 验证安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl version  # 应显示OpenSSL 1.1.1w或更高版本</span><br></pre></td></tr></table></figure>
+
+<p>说明‌：若仍显示旧版，检查PATH环境变量是否包含&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;bin</p>
+<h3 id="三、安装Python-3-10步骤"><a href="#三、安装Python-3-10步骤" class="headerlink" title="三、安装Python 3.10步骤"></a>三、安装Python 3.10步骤</h3><h4 id="1-安装编译依赖-1"><a href="#1-安装编译依赖-1" class="headerlink" title="1. 安装编译依赖"></a>1. 安装编译依赖</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum groupinstall &quot;Development Tools&quot;</span><br><span class="line">sudo yum install -y zlib-devel bzip2-devel ncurses-devel sqlite-devel readline-devel tk-devel libffi-devel</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-下载Python源码"><a href="#2-下载Python源码" class="headerlink" title="2. 下载Python源码"></a>2. 下载Python源码</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/src</span><br><span class="line">sudo wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz</span><br><span class="line">sudo tar xzf Python-3.10.13.tgz &amp;&amp; cd Python-3.10.13</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-配置并编译Python"><a href="#3-配置并编译Python" class="headerlink" title="3. 配置并编译Python"></a>3. 配置并编译Python</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定OpenSSL路径</span></span><br><span class="line">./configure --enable-optimizations --with-openssl=/usr/local/openssl</span><br><span class="line">sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-验证安装"><a href="#4-验证安装" class="headerlink" title="4. 验证安装"></a>4. 验证安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python3.10 --version  # 应显示Python 3.10.13</span><br><span class="line">python3.10 -m ssl     # 检查SSL模块是否可用</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="四、注意事项"><a href="#四、注意事项" class="headerlink" title="四、注意事项"></a>四、注意事项</h3><ul>
+<li>1、‌路径隔离‌：建议将Python 3.10安装到&#x2F;usr&#x2F;local目录，避免覆盖系统默认的Python 2.7</li>
+<li>2、‌依赖冲突‌：若编译Python时提示ssl模块缺失，需确认–with-openssl参数指向正确的OpenSSL路径‌</li>
+<li>3、环境变量‌：可通过alternatives工具或手动创建&#x2F;usr&#x2F;bin&#x2F;python3软链接管理多版本Python</li>
+<li>4、pip3:在使用的时候需要配置源，才可能更顺利的拉取包</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>
