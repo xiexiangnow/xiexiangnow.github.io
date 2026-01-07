@@ -219,6 +219,309 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2026/01/07/OpenSpec%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/01/07/OpenSpec%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">OpenSpec教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-01-07 09:31:20 / 修改时间：09:36:24" itemprop="dateCreated datePublished" datetime="2026-01-07T09:31:20+08:00">2026-01-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ai/" itemprop="url" rel="index"><span itemprop="name">ai</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="OpenSpec-新手入门教程"><a href="#OpenSpec-新手入门教程" class="headerlink" title="OpenSpec 新手入门教程"></a>OpenSpec 新手入门教程</h1><blockquote>
+<p>规范驱动的AI编码助手开发方法</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li>什么是OpenSpec？</li>
+<li>为什么需要OpenSpec？</li>
+<li>准备工作</li>
+<li>快速开始</li>
+<li>核心概念</li>
+<li>完整工作流程</li>
+<li>实际示例</li>
+<li>支持的AI工具</li>
+<li>常用命令</li>
+<li>团队采用指南</li>
+<li>常见问题</li>
+</ol>
+<hr>
+<h2 id="什么是OpenSpec？"><a href="#什么是OpenSpec？" class="headerlink" title="什么是OpenSpec？"></a>什么是OpenSpec？</h2><p>OpenSpec 是一个为AI编码助手设计的<strong>规范驱动开发（Spec-driven development）</strong>工具，它通过轻量级的工作流程，确保人类开发者和AI助手在编写任何代码之前就能对需求达成明确共识。</p>
+<h3 id="核心特点"><a href="#核心特点" class="headerlink" title="核心特点"></a>核心特点</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🚀 轻量级</td>
+<td>无需API密钥，最小化设置</td>
+</tr>
+<tr>
+<td>🔄 现有项目优先</td>
+<td>特别适合修改现有功能 (1→n)</td>
+</tr>
+<tr>
+<td>📋 变更跟踪</td>
+<td>提案、任务和规范差异的完整生命周期管理</td>
+</tr>
+<tr>
+<td>🤖 AI工具集成</td>
+<td>支持多种主流AI编码助手</td>
+</tr>
+<tr>
+<td>📁 双目录结构</td>
+<td>specs&#x2F; 存放真实规范，changes&#x2F; 存放提议变更</td>
+</tr>
+</tbody></table>
+<p><strong>Github地址</strong>：<a target="_blank" rel="noopener" href="https://github.com/Fission-AI/OpenSpec">https://github.com/Fission-AI/OpenSpec</a></p>
+<hr>
+<h2 id="为什么需要OpenSpec？"><a href="#为什么需要OpenSpec？" class="headerlink" title="为什么需要OpenSpec？"></a>为什么需要OpenSpec？</h2><h3 id="传统AI编码助手的问题"><a href="#传统AI编码助手的问题" class="headerlink" title="传统AI编码助手的问题"></a>传统AI编码助手的问题</h3><p>当您使用AI编码助手时，是否遇到过以下情况：</p>
+<ul>
+<li>❌ AI根据模糊提示生成不符合需求的代码</li>
+<li>❌ 遗漏重要功能要求</li>
+<li>❌ 添加了不必要的功能</li>
+<li>❌ 代码行为不可预测</li>
+</ul>
+<h3 id="OpenSpec的解决方案"><a href="#OpenSpec的解决方案" class="headerlink" title="OpenSpec的解决方案"></a>OpenSpec的解决方案</h3><p>OpenSpec通过规范驱动开发解决这些问题：</p>
+<ul>
+<li>✅ <strong>明确共识</strong>：在编码前确定所有要求</li>
+<li>✅ <strong>结构化变更</strong>：所有相关文档集中管理</li>
+<li>✅ <strong>可审查输出</strong>：AI根据明确规范生成代码</li>
+<li>✅ <strong>版本控制</strong>：完整追踪所有变更历史</li>
+</ul>
+<hr>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h3><ul>
+<li>Node.js &gt;&#x3D; 20.19.0</li>
+<li>支持的AI编码助手（见支持的AI工具）</li>
+</ul>
+<h3 id="检查Node-js版本"><a href="#检查Node-js版本" class="headerlink" title="检查Node.js版本"></a>检查Node.js版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node --version</span><br></pre></td></tr></table></figure>
+
+<p>如果版本不符合要求，请访问 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js官网</a> 更新。</p>
+<hr>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="第一步：安装OpenSpec-CLI"><a href="#第一步：安装OpenSpec-CLI" class="headerlink" title="第一步：安装OpenSpec CLI"></a>第一步：安装OpenSpec CLI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @fission-ai/openspec@latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openspec --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：在项目中初始化OpenSpec"><a href="#第二步：在项目中初始化OpenSpec" class="headerlink" title="第二步：在项目中初始化OpenSpec"></a>第二步：在项目中初始化OpenSpec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> your-project-directory</span><br><span class="line">openspec init</span><br></pre></td></tr></table></figure>
+
+<p>初始化过程会：</p>
+<ol>
+<li>询问您使用的AI工具（Claude Code、Cursor等）</li>
+<li>自动配置相应的斜杠命令</li>
+<li>创建 <code>openspec/</code> 目录结构</li>
+<li>生成 <code>AGENTS.md</code> 文件</li>
+</ol>
+<h3 id="第三步：验证设置"><a href="#第三步：验证设置" class="headerlink" title="第三步：验证设置"></a>第三步：验证设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openspec list</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 如果您的AI助手没有立即显示新的斜杠命令，请重启它。</p>
+</blockquote>
+<hr>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="1-双文件夹模型"><a href="#1-双文件夹模型" class="headerlink" title="1. 双文件夹模型"></a>1. 双文件夹模型</h3><p>OpenSpec使用两个主要目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">openspec/</span><br><span class="line">├── specs/          # 当前真理源规范</span><br><span class="line">│   └── auth/</span><br><span class="line">│       └── spec.md</span><br><span class="line">├── changes/        # 变更提案</span><br><span class="line">│   └── feature-name/</span><br><span class="line">│       ├── proposal.md</span><br><span class="line">│       ├── tasks.md</span><br><span class="line">│       └── specs/</span><br><span class="line">└── project.md      # 项目级别约定</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-规范格式"><a href="#2-规范格式" class="headerlink" title="2. 规范格式"></a>2. 规范格式</h3><p>规范使用Markdown格式，包含：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Auth Specification</span></span><br><span class="line"></span><br><span class="line"><span class="section">## Purpose</span></span><br><span class="line">Authentication and session management.</span><br><span class="line"></span><br><span class="line"><span class="section">## Requirements</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Requirement: User Authentication</span></span><br><span class="line">The system SHALL issue a JWT on successful login.</span><br><span class="line"></span><br><span class="line"><span class="section">#### Scenario: Valid credentials</span></span><br><span class="line"><span class="bullet">-</span> WHEN a user submits valid credentials</span><br><span class="line"><span class="bullet">-</span> THEN a JWT is returned</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-变更差异（Delta格式）"><a href="#3-变更差异（Delta格式）" class="headerlink" title="3. 变更差异（Delta格式）"></a>3. 变更差异（Delta格式）</h3><p>变更通过”差异”格式显示：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Delta for Auth</span></span><br><span class="line"></span><br><span class="line"><span class="section">## ADDED Requirements        # 新功能</span></span><br><span class="line"><span class="section">## MODIFIED Requirements     # 行为变更</span></span><br><span class="line"><span class="section">## REMOVED Requirements      # 已废弃功能</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="完整工作流程"><a href="#完整工作流程" class="headerlink" title="完整工作流程"></a>完整工作流程</h2><p>OpenSpec遵循五步工作流程：</p>
+<h3 id="1️⃣-起草变更提案"><a href="#1️⃣-起草变更提案" class="headerlink" title="1️⃣ 起草变更提案"></a>1️⃣ 起草变更提案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用AI助手或直接创建</span></span><br><span class="line">/openspec:proposal Add profile search filters</span><br></pre></td></tr></table></figure>
+
+<p>AI会自动创建：</p>
+<ul>
+<li><code>openspec/changes/feature-name/proposal.md</code> - 变更说明</li>
+<li><code>openspec/changes/feature-name/tasks.md</code> - 实施任务</li>
+<li><code>openspec/changes/feature-name/specs/</code> - 规范差异</li>
+</ul>
+<h3 id="2️⃣-验证与审查"><a href="#2️⃣-验证与审查" class="headerlink" title="2️⃣ 验证与审查"></a>2️⃣ 验证与审查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前活动的变更</span></span><br><span class="line">openspec list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证规范格式</span></span><br><span class="line">openspec validate feature-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看提案、任务和规范差异的详细信息</span></span><br><span class="line">openspec show feature-name</span><br></pre></td></tr></table></figure>
+
+<h3 id="3️⃣-完善规范"><a href="#3️⃣-完善规范" class="headerlink" title="3️⃣ 完善规范"></a>3️⃣ 完善规范</h3><p>与AI迭代，直到规范满足您的需求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">你: &quot;能否为角色和团队过滤器添加验收标准？&quot;</span><br><span class="line">AI: 我来更新规范差异，添加角色和团队过滤器的场景。</span><br><span class="line">[编辑相应文件]</span><br></pre></td></tr></table></figure>
+
+<h3 id="4️⃣-实施变更"><a href="#4️⃣-实施变更" class="headerlink" title="4️⃣ 实施变更"></a>4️⃣ 实施变更</h3><p>当规范确认无误后，让AI开始编码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开始实施</span></span><br><span class="line">/openspec:apply feature-name</span><br></pre></td></tr></table></figure>
+
+<p>AI会按照 <code>tasks.md</code> 中的清单逐步实施，每完成一个任务会标记为 ✓。</p>
+<h3 id="5️⃣-归档已完成的变更"><a href="#5️⃣-归档已完成的变更" class="headerlink" title="5️⃣ 归档已完成的变更"></a>5️⃣ 归档已完成的变更</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 归档完成的变更</span></span><br><span class="line">openspec archive feature-name --<span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p>归档会将批准的变更合并回 <code>openspec/specs/</code> 中，并移动到 <code>archive/</code> 目录。</p>
+<hr>
+<h2 id="实际示例"><a href="#实际示例" class="headerlink" title="实际示例"></a>实际示例</h2><p>让我们通过一个完整的示例来理解整个流程：</p>
+<h3 id="示例：添加双因素认证（2FA）功能"><a href="#示例：添加双因素认证（2FA）功能" class="headerlink" title="示例：添加双因素认证（2FA）功能"></a>示例：添加双因素认证（2FA）功能</h3><h4 id="步骤1：创建变更提案"><a href="#步骤1：创建变更提案" class="headerlink" title="步骤1：创建变更提案"></a>步骤1：创建变更提案</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你：请为添加双因素认证创建一个OpenSpec变更提案</span><br><span class="line">[或使用快捷命令：/openspec:proposal Add two-factor authentication]</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤2：AI生成的文件结构"><a href="#步骤2：AI生成的文件结构" class="headerlink" title="步骤2：AI生成的文件结构"></a>步骤2：AI生成的文件结构</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">openspec/</span><br><span class="line">├── specs/</span><br><span class="line">│   └── auth/</span><br><span class="line">│       └── spec.md           # 系统中已存在的认证规范</span><br><span class="line">└── changes/</span><br><span class="line">    └── add-2fa/              # AI 为此功能创建的整个变更结构</span><br><span class="line">        ├── proposal.md       # 描述变更的原因和内容</span><br><span class="line">        ├── tasks.md          # 实现此功能的任务清单</span><br><span class="line">        └── specs/</span><br><span class="line">            └── auth/</span><br><span class="line">                └── spec.md   # 显示对认证规范的&quot;增量&quot;修改</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤3：AI生成的变更增量文件"><a href="#步骤3：AI生成的变更增量文件" class="headerlink" title="步骤3：AI生成的变更增量文件"></a>步骤3：AI生成的变更增量文件</h4><p>文件路径: <code>openspec/changes/add-2fa/specs/auth/spec.md</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Delta for Auth</span></span><br><span class="line"></span><br><span class="line"><span class="section">## ADDED Requirements</span></span><br><span class="line"></span><br><span class="line"><span class="section">### Requirement: Two-Factor Authentication</span></span><br><span class="line">The system MUST require a second factor during login.</span><br><span class="line"></span><br><span class="line"><span class="section">#### Scenario: OTP required</span></span><br><span class="line"><span class="bullet">-</span> WHEN a user submits valid credentials</span><br><span class="line"><span class="bullet">-</span> THEN an OTP challenge is required</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤4：AI生成的任务清单"><a href="#步骤4：AI生成的任务清单" class="headerlink" title="步骤4：AI生成的任务清单"></a>步骤4：AI生成的任务清单</h4><p>文件路径: <code>openspec/changes/add-2fa/tasks.md</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 1. Database Setup</span></span><br><span class="line"><span class="bullet">-</span> [ ] 1.1 Add OTP secret column to users table</span><br><span class="line"><span class="bullet">-</span> [ ] 1.2 Create OTP verification logs table</span><br><span class="line"></span><br><span class="line"><span class="section">## 2. Backend Implementation</span></span><br><span class="line"><span class="bullet">-</span> [ ] 2.1 Add OTP generation endpoint</span><br><span class="line"><span class="bullet">-</span> [ ] 2.2 Modify login flow to require OTP</span><br><span class="line"><span class="bullet">-</span> [ ] 2.3 Add OTP verification endpoint</span><br><span class="line"></span><br><span class="line"><span class="section">## 3. Frontend Updates</span></span><br><span class="line"><span class="bullet">-</span> [ ] 3.1 Create OTP input component</span><br><span class="line"><span class="bullet">-</span> [ ] 3.2 Update login flow UI</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤5：实施与归档"><a href="#步骤5：实施与归档" class="headerlink" title="步骤5：实施与归档"></a>步骤5：实施与归档</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实施变更</span></span><br><span class="line">/openspec:apply add-2fa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 归档完成的变更</span></span><br><span class="line">openspec archive add-2fa --<span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="支持的AI工具"><a href="#支持的AI工具" class="headerlink" title="支持的AI工具"></a>支持的AI工具</h2><h3 id="原生斜杠命令支持"><a href="#原生斜杠命令支持" class="headerlink" title="原生斜杠命令支持"></a>原生斜杠命令支持</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Code</td>
+<td><code>/openspec:proposal</code>, <code>/openspec:apply</code>, <code>/openspec:archive</code></td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td><code>/openspec-proposal</code>, <code>/openspec-apply</code>, <code>/openspec-archive</code></td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td><code>/openspec-proposal</code>, <code>/openspec-apply</code>, <code>/openspec-archive</code></td>
+</tr>
+<tr>
+<td>Amazon Q Developer</td>
+<td><code>@openspec-proposal</code>, <code>@openspec-apply</code>, <code>@openspec-archive</code></td>
+</tr>
+<tr>
+<td>Qoder (CLI)</td>
+<td><code>/openspec:proposal</code>, <code>/openspec:apply</code>, <code>/openspec:archive</code></td>
+</tr>
+<tr>
+<td>CodeBuddy Code (CLI)</td>
+<td><code>/openspec:proposal</code>, <code>/openspec:apply</code>, <code>/openspec:archive</code></td>
+</tr>
+<tr>
+<td>Cline</td>
+<td>在 <code>.clinerules/</code> 目录中的规则</td>
+</tr>
+<tr>
+<td>Factory Droid</td>
+<td><code>/openspec-proposal</code>, <code>/openspec-apply</code>, <code>/openspec-archive</code></td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td><code>/openspec-proposal</code>, <code>/openspec-apply</code>, <code>/openspec-archive</code></td>
+</tr>
+</tbody></table>
+<h3 id="AGENTS-md兼容工具"><a href="#AGENTS-md兼容工具" class="headerlink" title="AGENTS.md兼容工具"></a>AGENTS.md兼容工具</h3><ul>
+<li>Amp</li>
+<li>Jules</li>
+<li>Gemini CLI</li>
+<li>其他兼容AGENTS.md的工具</li>
+</ul>
+<hr>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="查看和管理变更"><a href="#查看和管理变更" class="headerlink" title="查看和管理变更"></a>查看和管理变更</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openspec list                    <span class="comment"># 查看所有活动变更</span></span><br><span class="line">openspec view                    <span class="comment"># 交互式规范仪表板</span></span><br><span class="line">openspec show &lt;change-name&gt;      <span class="comment"># 显示变更详情</span></span><br><span class="line">openspec validate &lt;change-name&gt;  <span class="comment"># 验证规范格式</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="归档变更"><a href="#归档变更" class="headerlink" title="归档变更"></a>归档变更</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openspec archive &lt;change-name&gt;        <span class="comment"># 交互式归档</span></span><br><span class="line">openspec archive &lt;change-name&gt; --<span class="built_in">yes</span>  <span class="comment"># 非交互式归档</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="工具管理"><a href="#工具管理" class="headerlink" title="工具管理"></a>工具管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openspec update                  <span class="comment"># 刷新AI指导，重新生成斜杠命令</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="团队采用指南"><a href="#团队采用指南" class="headerlink" title="团队采用指南"></a>团队采用指南</h2><h3 id="1-初始化团队项目"><a href="#1-初始化团队项目" class="headerlink" title="1. 初始化团队项目"></a>1. 初始化团队项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在团队仓库中运行</span></span><br><span class="line">openspec init</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-从新功能开始"><a href="#2-从新功能开始" class="headerlink" title="2. 从新功能开始"></a>2. 从新功能开始</h3><p>要求团队成员将即将到来的工作作为变更提案与AI助手讨论。</p>
+<h3 id="3-增量式发展"><a href="#3-增量式发展" class="headerlink" title="3. 增量式发展"></a>3. 增量式发展</h3><p>每个完成的变更都会归档到记录您系统的实时规范中。</p>
+<h3 id="4-保持工具灵活性"><a href="#4-保持工具灵活性" class="headerlink" title="4. 保持工具灵活性"></a>4. 保持工具灵活性</h3><p>不同团队成员可以使用Claude Code、Cursor或任何AGENTS.md兼容工具，同时共享相同的规范。</p>
+<h3 id="5-工具切换"><a href="#5-工具切换" class="headerlink" title="5. 工具切换"></a>5. 工具切换</h3><p>当有人切换到不同AI工具时，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openspec update</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="项目上下文设置（推荐）"><a href="#项目上下文设置（推荐）" class="headerlink" title="项目上下文设置（推荐）"></a>项目上下文设置（推荐）</h2><p>初始化后，建议完善项目上下文：</p>
+<h3 id="使用示例提示"><a href="#使用示例提示" class="headerlink" title="使用示例提示"></a>使用示例提示</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请阅读 openspec/project.md，并帮助我填写关于我的项目、技术栈和约定的详细信息。</span><br></pre></td></tr></table></figure>
+
+<h3 id="project-md-内容示例"><a href="#project-md-内容示例" class="headerlink" title="project.md 内容示例"></a>project.md 内容示例</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Project Context</span></span><br><span class="line"></span><br><span class="line"><span class="section">## Tech Stack</span></span><br><span class="line"><span class="bullet">-</span> Frontend: React + TypeScript</span><br><span class="line"><span class="bullet">-</span> Backend: Node.js + Express</span><br><span class="line"><span class="bullet">-</span> Database: PostgreSQL</span><br><span class="line"><span class="bullet">-</span> Styling: Tailwind CSS</span><br><span class="line"></span><br><span class="line"><span class="section">## Code Conventions</span></span><br><span class="line"><span class="bullet">-</span> 使用 TypeScript 严格模式</span><br><span class="line"><span class="bullet">-</span> 组件名使用 PascalCase</span><br><span class="line"><span class="bullet">-</span> 函数名使用 camelCase</span><br><span class="line"><span class="bullet">-</span> 常量使用 UPPER<span class="emphasis">_SNAKE_</span>CASE</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Q1-AI助手没有显示新的斜杠命令怎么办？"><a href="#Q1-AI助手没有显示新的斜杠命令怎么办？" class="headerlink" title="Q1: AI助手没有显示新的斜杠命令怎么办？"></a>Q1: AI助手没有显示新的斜杠命令怎么办？</h3><p>A: 重启您的AI编码助手，然后运行 <code>openspec update</code> 刷新指导。</p>
+<h3 id="Q2-可以同时处理多个变更吗？"><a href="#Q2-可以同时处理多个变更吗？" class="headerlink" title="Q2: 可以同时处理多个变更吗？"></a>Q2: 可以同时处理多个变更吗？</h3><p>A: 是的，OpenSpec支持同时存在多个变更提案，但一次只能应用一个。</p>
+<h3 id="Q3-如何修改已归档的规范？"><a href="#Q3-如何修改已归档的规范？" class="headerlink" title="Q3: 如何修改已归档的规范？"></a>Q3: 如何修改已归档的规范？</h3><p>A: 创建一个新的变更提案，通过相同的流程来更新现有规范。</p>
+<h3 id="Q4-OpenSpec适用于新项目吗？"><a href="#Q4-OpenSpec适用于新项目吗？" class="headerlink" title="Q4: OpenSpec适用于新项目吗？"></a>Q4: OpenSpec适用于新项目吗？</h3><p>A: OpenSpec特别适合修改现有功能（1→n），但也可用于新项目（0→1）。通常建议从简单功能开始。</p>
+<h3 id="Q5-团队成员使用不同AI工具可以吗？"><a href="#Q5-团队成员使用不同AI工具可以吗？" class="headerlink" title="Q5: 团队成员使用不同AI工具可以吗？"></a>Q5: 团队成员使用不同AI工具可以吗？</h3><p>A: 可以！OpenSpec的AGENTS.md兼容性确保所有AI工具都能理解相同的规范。</p>
+<h3 id="Q6-规范文件的格式要求是什么？"><a href="#Q6-规范文件的格式要求是什么？" class="headerlink" title="Q6: 规范文件的格式要求是什么？"></a>Q6: 规范文件的格式要求是什么？</h3><p>A: </p>
+<ul>
+<li>使用 <code>### Requirement:</code> 作为标题</li>
+<li>每个要求至少需要一个 <code>#### Scenario:</code> 块</li>
+<li>在要求文本中使用 <code>SHALL/MUST</code></li>
+</ul>
+<hr>
+<h2 id="升级和维护"><a href="#升级和维护" class="headerlink" title="升级和维护"></a>升级和维护</h2><h3 id="升级OpenSpec"><a href="#升级OpenSpec" class="headerlink" title="升级OpenSpec"></a>升级OpenSpec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @fission-ai/openspec@latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="刷新AI指导"><a href="#刷新AI指导" class="headerlink" title="刷新AI指导"></a>刷新AI指导</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在每个项目中运行</span></span><br><span class="line">openspec update</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2026/01/05/WebSocket-%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E3%80%81%E5%BF%83%E8%B7%B3%E6%9C%BA%E5%88%B6%E4%B8%8E%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1067,102 +1370,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Linux安装php7.4和nginx配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-07-01 18:08:48" itemprop="dateCreated datePublished" datetime="2024-07-01T18:08:48+08:00">2024-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-14 15:48:48" itemprop="dateModified" datetime="2024-08-14T15:48:48+08:00">2024-08-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>5.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="模块说明"><a href="#模块说明" class="headerlink" title="模块说明"></a>模块说明</h2><p><strong>特别注意</strong>：php7.3开始要求系统libzip的version &gt;&#x3D; 0.11，但是目前通过 yum -y install libzip-devel 安装的是0.10的版本，官方版本从1.4.0开始要依赖cmake安装,对cmake的版本还有要求</p>
-<p>报错如图：<br><img src="/../img/2024070101.jpg"></p>
-<p>下面介绍三种安装方式：</p>
-<h3 id="1、yum安装-不推荐，官方安装都是0-1版本的"><a href="#1、yum安装-不推荐，官方安装都是0-1版本的" class="headerlink" title="1、yum安装(不推荐，官方安装都是0.1版本的)"></a>1、yum安装(不推荐，官方安装都是0.1版本的)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载原有低版本的libzip包</span></span><br><span class="line">sudo yum -y remove libzip libzip-devel</span><br><span class="line"><span class="comment"># 重新安装看看版本是否符合要求</span></span><br><span class="line">sudo yum -y install libzip libzip-devel</span><br><span class="line"><span class="comment"># 否则添加wlnmp源</span></span><br><span class="line">sudo rpm -ivh https:<span class="comment">//mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm</span></span><br><span class="line"><span class="comment"># 安装libzip包,当前wlnmp提供的libzip包版本1.8.0</span></span><br><span class="line">sudo yum install wlibzip</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1233,18 +1440,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">94</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1304,12 +1511,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">295k</span>
+    <span title="站点总字数">300k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:28</span>
+    <span title="站点阅读时长">4:32</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>

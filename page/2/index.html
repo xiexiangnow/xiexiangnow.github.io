@@ -219,6 +219,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Linux安装php7.4和nginx配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-07-01 18:08:48" itemprop="dateCreated datePublished" datetime="2024-07-01T18:08:48+08:00">2024-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-14 15:48:48" itemprop="dateModified" datetime="2024-08-14T15:48:48+08:00">2024-08-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="模块说明"><a href="#模块说明" class="headerlink" title="模块说明"></a>模块说明</h2><p><strong>特别注意</strong>：php7.3开始要求系统libzip的version &gt;&#x3D; 0.11，但是目前通过 yum -y install libzip-devel 安装的是0.10的版本，官方版本从1.4.0开始要依赖cmake安装,对cmake的版本还有要求</p>
+<p>报错如图：<br><img src="/../img/2024070101.jpg"></p>
+<p>下面介绍三种安装方式：</p>
+<h3 id="1、yum安装-不推荐，官方安装都是0-1版本的"><a href="#1、yum安装-不推荐，官方安装都是0-1版本的" class="headerlink" title="1、yum安装(不推荐，官方安装都是0.1版本的)"></a>1、yum安装(不推荐，官方安装都是0.1版本的)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载原有低版本的libzip包</span></span><br><span class="line">sudo yum -y remove libzip libzip-devel</span><br><span class="line"><span class="comment"># 重新安装看看版本是否符合要求</span></span><br><span class="line">sudo yum -y install libzip libzip-devel</span><br><span class="line"><span class="comment"># 否则添加wlnmp源</span></span><br><span class="line">sudo rpm -ivh https:<span class="comment">//mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm</span></span><br><span class="line"><span class="comment"># 安装libzip包,当前wlnmp提供的libzip包版本1.8.0</span></span><br><span class="line">sudo yum install wlibzip</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/07/01/Linux%E5%AE%89%E8%A3%85php7-4%E5%92%8Cnginx%E9%85%8D%E7%BD%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2024/06/24/Docker%E5%AE%89%E8%A3%85ElasticSearch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,107 +1136,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2023/11/28/windows%E5%B9%B3%E5%8F%B0%E5%AE%9E%E6%88%98%E8%A3%85%E6%9C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head_img.jpg">
-      <meta itemprop="name" content="谢翔">
-      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翔奕时代">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/28/windows%E5%B9%B3%E5%8F%B0%E5%AE%9E%E6%88%98%E8%A3%85%E6%9C%BA/" class="post-title-link" itemprop="url">windows平台实战装机</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-11-28 15:42:59 / 修改时间：15:58:36" itemprop="dateCreated datePublished" datetime="2023-11-28T15:42:59+08:00">2023-11-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>269</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>闲来无事，将自己原有的台式机进行了升级，很享受自己diy的这个过程，特别是装机过程；硬件迭代更新很快，本人不太喜欢追求最新硬件，比如刚出的14代cpu，喜欢淘一些二手硬件进行装机，主要是体验装机过程，将自己喜欢的配件全部组装在一起的快感。</p>
-</blockquote>
-<h4 id="升级后的配置信息"><a href="#升级后的配置信息" class="headerlink" title="升级后的配置信息"></a>升级后的配置信息</h4><ul>
-<li>cpu：Intel I5 12400F </li>
-<li>主板：微星B660 迫击炮 wifi版</li>
-<li>内存：刚威 3600hz 16G * 2</li>
-<li>显卡：微星RTX2060 6G</li>
-<li>硬盘：铠侠 NVME m.2 pcie3.0 500G </li>
-<li>电源：酷冷至尊 G600金牌 600w</li>
-<li>cpu散热： 酷冷至尊</li>
-<li>风扇：RGB 集线器控制4个 </li>
-<li>机箱：乔思伯 U4 plus</li>
-</ul>
-<h4 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h4><p><img src="/../img/windows-01.png" alt="装机"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/11/28/windows%E5%B9%B3%E5%8F%B0%E5%AE%9E%E6%88%98%E8%A3%85%E6%9C%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1211,18 +1206,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">94</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1282,12 +1277,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">295k</span>
+    <span title="站点总字数">300k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:28</span>
+    <span title="站点阅读时长">4:32</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
