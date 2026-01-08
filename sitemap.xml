@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.xiang007.com/2026/01/08/%E9%A9%AC%E6%96%AF%E5%85%8B%E6%9C%80%E6%96%B0%E8%AE%BF%E8%B0%88%EF%BC%9A%E6%9C%AA%E6%9D%A5%E7%9A%84%E9%A2%84%E6%B5%8B/</loc>
+    
+    <lastmod>2026-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.xiang007.com/2026/01/07/OpenSpec%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2026-01-07</lastmod>
@@ -904,7 +913,7 @@
 
   <url>
     <loc>http://www.xiang007.com/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -912,140 +921,140 @@
   
   <url>
     <loc>http://www.xiang007.com/tags/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/linux/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/html/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/docker/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/elasticsearch/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/hexo/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/java/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/jquery/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/javascript/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/python/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/mac/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/nginx/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/nodejs/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/php/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/vue/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/mysql/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/redis-php/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/%E5%85%B6%E4%BB%96/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/devops/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/tags/ai/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1054,140 +1063,140 @@
   
   <url>
     <loc>http://www.xiang007.com/categories/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/linux/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/html/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/docker/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/elasticsearch/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/hexo/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/java/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/jquery/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/javascript/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/python/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/mac/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/nginx/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/nodejs/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/php/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/vue/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/mysql/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/redis/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/%E5%85%B6%E4%BB%96/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/devops/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.xiang007.com/categories/ai/</loc>
-    <lastmod>2026-01-07</lastmod>
+    <lastmod>2026-01-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
