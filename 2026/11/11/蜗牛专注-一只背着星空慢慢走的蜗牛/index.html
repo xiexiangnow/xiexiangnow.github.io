@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiang007.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="快节奏的年代里，我做了一只很慢的 App。 它叫蜗牛专注（WoniuFocus），一枚 iOS 原生应用：SwiftUI + SwiftData，支持 iOS 17。它不催你、不卷你，只做一件事——陪你把时间慢下来，把注意力找回来。  慢，不是因为走不动，而是因为背着一片星空，不忍走得太快。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蜗牛专注——一只背着星空慢慢走的蜗牛">
+<meta property="og:url" content="http://www.xiang007.com/2026/11/11/%E8%9C%97%E7%89%9B%E4%B8%93%E6%B3%A8-%E4%B8%80%E5%8F%AA%E8%83%8C%E7%9D%80%E6%98%9F%E7%A9%BA%E6%85%A2%E6%85%A2%E8%B5%B0%E7%9A%84%E8%9C%97%E7%89%9B/index.html">
+<meta property="og:site_name" content="翔奕时代">
+<meta property="og:description" content="快节奏的年代里，我做了一只很慢的 App。 它叫蜗牛专注（WoniuFocus），一枚 iOS 原生应用：SwiftUI + SwiftData，支持 iOS 17。它不催你、不卷你，只做一件事——陪你把时间慢下来，把注意力找回来。  慢，不是因为走不动，而是因为背着一片星空，不忍走得太快。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/01_home.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/02_sound.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/07_spatial.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/03_drawer.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/04_records.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/05_trend.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/06_tags.jpg">
+<meta property="og:image" content="http://www.xiang007.com/img/woniu/08_profile.jpg">
+<meta property="article:published_time" content="2026-11-11T03:17:18.000Z">
+<meta property="article:modified_time" content="2026-11-11T03:19:04.393Z">
+<meta property="article:author" content="谢翔">
+<meta property="article:tag" content="生活">
+<meta property="article:tag" content="App">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.xiang007.com/img/woniu/01_home.jpg">
+
+<link rel="canonical" href="http://www.xiang007.com/2026/11/11/%E8%9C%97%E7%89%9B%E4%B8%93%E6%B3%A8-%E4%B8%80%E5%8F%AA%E8%83%8C%E7%9D%80%E6%98%9F%E7%A9%BA%E6%85%A2%E6%85%A2%E8%B5%B0%E7%9A%84%E8%9C%97%E7%89%9B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>蜗牛专注——一只背着星空慢慢走的蜗牛 | 翔奕时代</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?cb95f8bfa78cc1ef30f30b29db5cf386";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">翔奕时代</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A year's plan starts with spring.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div style="text-align:center;font-size:12px;padding: 10px 5px;background-color: #008080;color: white;">
+    <span id="hitokoto_text"></span>
+    <span id="hitokoto_who"></span>
+    <span id="hitokoto_from"></span>
+</div>
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://www.xiang007.com/2026/11/11/%E8%9C%97%E7%89%9B%E4%B8%93%E6%B3%A8-%E4%B8%80%E5%8F%AA%E8%83%8C%E7%9D%80%E6%98%9F%E7%A9%BA%E6%85%A2%E6%85%A2%E8%B5%B0%E7%9A%84%E8%9C%97%E7%89%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head_img.jpg">
+      <meta itemprop="name" content="谢翔">
+      <meta itemprop="description" content="每一步做到极致 <br> 下一步美好自然呈现">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翔奕时代">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          蜗牛专注——一只背着星空慢慢走的蜗牛
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-11-11 11:17:18 / 修改时间：11:19:04" itemprop="dateCreated datePublished" datetime="2026-11-11T11:17:18+08:00">2026-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>快节奏的年代里，我做了一只很慢的 App。</p>
+<p>它叫<strong>蜗牛专注（WoniuFocus）</strong>，一枚 iOS 原生应用：SwiftUI + SwiftData，支持 iOS 17。它不催你、不卷你，只做一件事——陪你把时间慢下来，把注意力找回来。</p>
+<blockquote>
+<p>慢，不是因为走不动，而是因为背着一片星空，不忍走得太快。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="缘起：为什么是一只蜗牛"><a href="#缘起：为什么是一只蜗牛" class="headerlink" title="缘起：为什么是一只蜗牛"></a>缘起：为什么是一只蜗牛</h2><p>今年春节写杂感时我说，2026 是 AI 正式登场的年份，程序员是最容易被替代的一群人，焦虑是真实的。</p>
+<p>年中以后我换了一种想法：与其焦虑，不如亲手用 AI 做点什么，去验证它到底能带我走多远。于是有了这个小小的实验——<strong>从一张 H5 单屏沉浸式设计稿开始，用 AI 结对，把它一点一点长成一个真正能上架 App Store 的原生 App</strong>。</p>
+<p>名字想了很久，最后定了”蜗牛”。兔子跑得快，可兔子会分心；蜗牛爬得慢，但它爬过的每一寸路，都是数得着的。这正是我想要的专注的样子：<strong>不求快，但求每一步都作数</strong>。</p>
+<p>这也暗合我博客的签名——每一步做到极致，下一步美好自然呈现。蜗牛，就是这句话长出的形状。</p>
+<h2 id="初见：单屏，就是整个世界"><a href="#初见：单屏，就是整个世界" class="headerlink" title="初见：单屏，就是整个世界"></a>初见：单屏，就是整个世界</h2><p>蜗牛专注的首页只有一屏。没有信息流，没有红点，没有”猜你喜欢”。</p>
+<p>最上方是”助眠 &#x2F; 专注”两个小小的 Tab，像白天与黑夜的切换。中间是一张会呼吸的”唱片”——我叫它 MicDial：外圈是灰绿色的盘，上面缀着几颗弧形小标签，每 30 秒缓缓转完一圈；中环是一圈厚重的黑，嵌着一道米黄色的音量弧；正中心，是一颗青色的按钮，颜色是 <code>#10dff9</code>，像深海里的一点光。</p>
+<p>手指点下去，光晕泛开，涟漪一圈圈散出去，细小的尘埃在轨道上漂浮，唱针轻轻落下——音乐起了，时间开始有了形状。</p>
+<p><img src="/../img/woniu/01_home.jpg" alt="首页：一屏一世界"></p>
+<p>很多人第一次打开都会愣一下：这是一个工具，还是一件小艺术品？我的答案是——<strong>专注本身，就值得被好好对待</strong>。背景是 6 套主题轮播的星空：夜空、晨曦、极光、湖泊、雪山、海边，三十多张底图，每 18 秒悄然切换一次，用 2.5 秒的时间交叉溶解，像云在走，月在移。</p>
+<h2 id="听：把世界调成你喜欢的音量"><a href="#听：把世界调成你喜欢的音量" class="headerlink" title="听：把世界调成你喜欢的音量"></a>听：把世界调成你喜欢的音量</h2><p>声音，是这只蜗牛的壳。</p>
+<p>它有两条”声音的路”，可以混在一起播：一条是<strong>音乐</strong>——专注曲《浅序》《相遇》《呢喃》《雨弦》《雨叙》《月栖》《云憩》《涧音》，助眠曲《山涧空灵》，还有几首有歌词的原创民谣，《绿老头》《相遇又走散》《你不在重庆》《写关于自己的歌》，播到动情处，歌词会像溪水一样一行行淌过屏幕；另一条是<strong>白噪音</strong>——雨声、海浪、海鸥、蛐蛐、蛙声，可以多选叠加，雨点落在海面上，大抵就是这个声音。</p>
+<p><img src="/../img/woniu/02_sound.jpg" alt="声音面板：双路混音"></p>
+<p>最让我得意的一个小设计，是<strong>空间声场</strong>：在那个小圆盘上拖动每一颗声音，它在你耳边的位置真的会动。把”雨声”拖到左边，雨就下在左耳；把”海浪”推远，浪就退到了天边。上下拖，还有远近的变化。这不是什么黑科技，只是一点点声像算法的温柔——<strong>让耳朵，也能”看见”位置</strong>。</p>
+<p>还有一个细节：默认音量是反复试出来的——白噪音 38%，音乐 68%。白噪音打底，音乐主导，互不抢戏，像茶与水，浓淡刚刚好。</p>
+<p><img src="/../img/woniu/07_spatial.jpg" alt="空间声场：拖动声音的位置"></p>
+<h2 id="行：一只会爬的蜗牛，和一场有始有终的专注"><a href="#行：一只会爬的蜗牛，和一场有始有终的专注" class="headerlink" title="行：一只会爬的蜗牛，和一场有始有终的专注"></a>行：一只会爬的蜗牛，和一场有始有终的专注</h2><p>左滑，抽出一只专注抽屉：选一个标签——学习、工作、写代码、写作、冥想、哄睡……十六种人生状态，各配一枚小图标；再选一个时长，25 &#x2F; 45 &#x2F; 60 &#x2F; 90，都是经典的番茄模样，也可以自己拖到 5～90 分钟之间的任意长度。</p>
+<p><img src="/../img/woniu/03_drawer.jpg" alt="专注抽屉：标签与时长"></p>
+<p>按下开始，顶端会浮起一条细细的进度横幅，上面有一只<strong>纯手绘的小白蜗牛</strong>，没有用一张图片，全是代码一笔笔画出来的：圆润的大壳、三圈螺旋的壳纹、V 字形的两根触角。它骑在进度线上，每 0.6 秒轻轻蠕动一下，一寸一寸往前爬。你专注多久，它就爬多远；你暂停，它就停下来等你，一动不动，绝不催促。</p>
+<p>快结束的最后一分钟，声音会像退潮一样慢慢低下去，而不是”叮”一声把你惊醒。播完的那一刻，这段时光会被轻轻收进本地的记录里——SwiftData 存着，断网也在。</p>
+<p><img src="/../img/woniu/04_records.jpg" alt="专注记录：每一段时光都被收好"></p>
+<p>日子久了，这些碎片会长成曲线：看看自己这个月哪几天最自律，看看深夜的”助眠”多，还是午后的”写代码”多；看看十六个标签里，哪一种生活被你过得最多。</p>
+<p><img src="/../img/woniu/05_trend.jpg" alt="趋势：时间长出的曲线"></p>
+<p><img src="/../img/woniu/06_tags.jpg" alt="标签：十六种人生状态"></p>
+<p>而当你锁屏、切出去回微信，专注并不会断：灵动岛上、锁屏横幅上，那只蜗牛还在爬，还剩几分几秒，一抬眼就知道。这大概是 iOS 给”自律”最浪漫的一块小屏幕。</p>
+<p><img src="/../img/woniu/08_profile.jpg" alt="个人中心：安静的一隅"></p>
+<h2 id="长大：它是在-AI-的陪伴下长大的"><a href="#长大：它是在-AI-的陪伴下长大的" class="headerlink" title="长大：它是在 AI 的陪伴下长大的"></a>长大：它是在 AI 的陪伴下长大的</h2><p>说说它的”成长史”，也是我今年最深的一段体会。</p>
+<p>它的前身是一张 H5 单页——一个 HTML 文件里写满了主题色、玻璃拟态、唱片转动的 CSS。那是它的”梦”。而要把梦带进 App Store，得用 SwiftUI 把它重做一遍：两万多行代码，三十多个文件，音乐双路播放、歌词滚动、倒计时、灵动岛、Widget 小组件、中英双语、换图标、订阅、登录……</p>
+<p>工程是用 XcodeGen 管的，一份 <code>project.yml</code> 就是全部真相，改配置只改它，再重新生成。主 App 和 Widget 小组件是两个独立的二进制，却共享同一份源码——改一个字段，两边一起生效，永远不漂移。</p>
+<p>开发的过程，就是不断”驯服细节”的过程，几件事至今记得：</p>
+<ul>
+<li><strong>糊掉的星空</strong>。最早背景切换时，整个页面又糊又卡。查了很久才发现：12 秒的淡入、20 秒一切——60% 的时间里两张大图是以半透明叠在一起的，又重影又烧 GPU。改成静止 18 秒、只用 2.5 秒缓缓化开，世界一下就清澈了。原来”慢过渡”和”快切换”之间，只差一个数字。</li>
+<li><strong>被压住的唱针</strong>。唱针组件最早挂在唱片下面，结果转盘一转，唱臂就被盖住了。把它提出来，放到最高的一层，针尖才终于落在了正确的位置上。做 UI 和做人一样——<strong>位置对了，关系才对</strong>。</li>
+<li><strong>上架前的登录之战</strong>。苹果登录需要付费开发者账号，免费 Team 的包会直接编译失败。于是把登录能力做成环境开关：免费包走游客模式全流程可跑，付费账号下来后打开一行注释，就能真机联调。这个小小的”门”，让我第一次真切摸到了”上架”两个字的重量。</li>
+</ul>
+<p>从第一行提交（10 月 30 日）到”上架准备”（11 月 4 日），满打满算不到一周。但每天深夜，看着模拟器里那只小蜗牛一拱一拱往前爬，听着《浅序》混着雨声从笔记本音箱里流出来——<strong>那种感觉不像在写代码，像在院子里，陪一只真的蜗牛散步</strong>。</p>
+<p>这正是 AI 时代给我最大的触动：它没有让我失业，它让我从”搬砖的人”，变成了”养蜗牛的人”。重复的、繁琐的、查文档的活，结对的 AI 都接了过去；而我，只需要负责那些真正属于人的东西——这个弧度美不美，这处渐弱温不温柔，这只蜗牛，可不可爱。</p>
+<h2 id="尾声：慢慢走，比较快"><a href="#尾声：慢慢走，比较快" class="headerlink" title="尾声：慢慢走，比较快"></a>尾声：慢慢走，比较快</h2><p>蜗牛专注现在已经准备上架了。它还很小，还有很多不会的东西：自定义背景、更多白噪音、Apple Watch 联动……都还在路上。</p>
+<p>但没关系，蜗牛嘛，本来就走得慢。</p>
+<p>如果你也常常觉得时间碎了一地，注意力像沙一样漏走，不妨试试这只蜗牛：选一段 25 分钟，选一首《浅序》加一点雨声，看着它替你把这 25 分钟，一寸一寸地爬完。</p>
+<p>愿我们都能像蜗牛一样——</p>
+<blockquote>
+<p>背着小小的壳，装着大大的星空，<br>不慌，不忙，一步一步，<br>把平凡的日子，走成诗。</p>
+</blockquote>
+<p><em>—— 谢翔，写于 2026 年初冬，伴着窗外的雨声和《浅序》的第 N 次循环。</em></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/img/wx.png" alt="谢翔 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/img/zfb.png" alt="谢翔 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag"># 生活</a>
+              <a href="/tags/App/" rel="tag"># App</a>
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/10/2026%E5%B9%B4%E6%98%A5%E8%8A%82%E6%9D%82%E6%84%9F/" rel="prev" title="2026年春节杂感">
+      <i class="fa fa-chevron-left"></i> 2026年春节杂感
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%98%E8%B5%B7%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%80%E5%8F%AA%E8%9C%97%E7%89%9B"><span class="nav-number">1.</span> <span class="nav-text">缘起：为什么是一只蜗牛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%A7%81%EF%BC%9A%E5%8D%95%E5%B1%8F%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%95%B4%E4%B8%AA%E4%B8%96%E7%95%8C"><span class="nav-number">2.</span> <span class="nav-text">初见：单屏，就是整个世界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AC%EF%BC%9A%E6%8A%8A%E4%B8%96%E7%95%8C%E8%B0%83%E6%88%90%E4%BD%A0%E5%96%9C%E6%AC%A2%E7%9A%84%E9%9F%B3%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">听：把世界调成你喜欢的音量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%EF%BC%9A%E4%B8%80%E5%8F%AA%E4%BC%9A%E7%88%AC%E7%9A%84%E8%9C%97%E7%89%9B%EF%BC%8C%E5%92%8C%E4%B8%80%E5%9C%BA%E6%9C%89%E5%A7%8B%E6%9C%89%E7%BB%88%E7%9A%84%E4%B8%93%E6%B3%A8"><span class="nav-number">4.</span> <span class="nav-text">行：一只会爬的蜗牛，和一场有始有终的专注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%BF%E5%A4%A7%EF%BC%9A%E5%AE%83%E6%98%AF%E5%9C%A8-AI-%E7%9A%84%E9%99%AA%E4%BC%B4%E4%B8%8B%E9%95%BF%E5%A4%A7%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">长大：它是在 AI 的陪伴下长大的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BE%E5%A3%B0%EF%BC%9A%E6%85%A2%E6%85%A2%E8%B5%B0%EF%BC%8C%E6%AF%94%E8%BE%83%E5%BF%AB"><span class="nav-number">6.</span> <span class="nav-text">尾声：慢慢走，比较快</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="谢翔"
+      src="/images/head_img.jpg">
+  <p class="site-author-name" itemprop="name">谢翔</p>
+  <div class="site-description" itemprop="description">每一步做到极致 <br> 下一步美好自然呈现</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xiexiangnow/xiexiangnow.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xiexiangnow&#x2F;xiexiangnow.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://haofly.net/" title="https:&#x2F;&#x2F;haofly.net&#x2F;" rel="noopener" target="_blank">豪翔天下</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.caohj.cn/" title="https:&#x2F;&#x2F;blog.caohj.cn&#x2F;" rel="noopener" target="_blank">红军博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.cqops.club/" title="http:&#x2F;&#x2F;www.cqops.club&#x2F;" rel="noopener" target="_blank">重庆运维.俱乐部</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ezgx.site/" title="https:&#x2F;&#x2F;ezgx.site&#x2F;" rel="noopener" target="_blank">Aegcbx的博客</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢翔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">305k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:38</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+
+
+<script>
+  fetch('https://v1.hitokoto.cn?c=b')
+    .then(response => response.json())
+    .then(data => {
+      const hitokoto = document.getElementById('hitokoto_text')
+      hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+      hitokoto.innerText = data.hitokoto
+    })
+    .catch(console.error)
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/nietzche.model.json"},"display":{"position":"right","width":150,"height":300,"hOffset":-15,"vOffset":-15},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
